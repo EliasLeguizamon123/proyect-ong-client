@@ -4,8 +4,8 @@ import {
 	Switch,
 	Route,
 } from 'react-router-dom'
-import Home from '../components/Home.js'
-import About from '../components/About.js'
+import Home from '../screen/Home.js'
+import About from '../screen/About.js'
 
 export default function Router() {
 	return(
