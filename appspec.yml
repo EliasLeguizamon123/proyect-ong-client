@@ -1,18 +1,22 @@
-Version: 0.0.1
+version: 0.0.1
 os: linux
 files:
   - source: /
-    destination: /var/www/html
+    destination: /home/ubuntu/Sites/ngine
 hooks:
-  BeforeInstall:
-    - location: scripts/before_install.sh
+  ApplicationStop:
+    - location: scripts/stop_server.sh
       timeout: 300
       runas: ubuntu
+  # BeforeInstall:
+  #   - location: scripts/before_install.sh
+  #     timeout: 300
+  #     runas: ubuntu
   AfterInstall:
-    - location: scripts/after_install.sh
+    - location: scripts/install_dependencies.sh
       timeout: 300
       runas: ubuntu
   ApplicationStart:
-    - location: scripts/application_start.sh
+    - location: scripts/start_server.sh
       timeout: 300
       runas: ubuntu
