@@ -12,6 +12,7 @@
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
     "axios": "^0.22.0",
+    "formik": "^2.2.9",
     "framer-motion": "^4.1.17",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
