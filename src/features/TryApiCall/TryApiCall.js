@@ -10,14 +10,16 @@ const TryApiCall = () => {
 
     const response = await sendRequest('get', route);
 
-    console.log(response);
+    alert(response);
   };
 
   return (
     <div className="cont-try-api">
       <div className="cont-input">
-        <label htmlFor="inp-route">Route GET</label>
-        <input type="text" id="inp-route" />
+        <label htmlFor="inp-route">
+          Route GET
+          <input type="text" id="inp-route" />
+        </label>
       </div>
       <Button onClick={handleClick} colorScheme="blue">
         Button

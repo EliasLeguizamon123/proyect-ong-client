@@ -5,7 +5,7 @@ const baseUrl = 'http://localhost:3000';
 export const sendRequest = async (method, relativeUrl, data) => {
   const url = baseUrl + relativeUrl;
 
-  let headers = {};
+  const headers = {};
   const token = localStorage.getItem('token');
 
   // If the token exists it adds it to the authorization header
@@ -26,11 +26,11 @@ export const sendRequest = async (method, relativeUrl, data) => {
     if (error.response) {
       // Got response from server
       const errorData = error.response.data;
-      if (errorData.msg) console.error(errorData.msg);
-      if (errorData.errors) console.error(errorData.errors);
+      if (errorData.msg) throw errorData.msg;
+      if (errorData.errors) throw errorData.errors;
     } else {
       // Communication error
-      console.error("Request didn't go through");
+      alert("Request didn't go through");
     }
     return null;
   }
