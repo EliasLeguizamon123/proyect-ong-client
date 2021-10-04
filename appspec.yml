@@ -1,18 +1,14 @@
 version: 0.0
 os: linux
+
 files:
-  - source: /
-    destination: /home/ubuntu/Sites/ngine
+  - source: ./
+    destination: /opt/apps
+
 hooks:
-  ApplicationStop:
-    - location: shells/stop_server.sh
-      timeout: 300
-      runas: ubuntu
-  AfterInstall:
-    - location: shells/install_dependencies.sh
-      timeout: 300
-      runas: ubuntu
   ApplicationStart:
-    - location: shells/start_server.sh
-      timeout: 300
-      runas: ubuntu
+    - location: scripts/start_server.sh
+      runas: root
+  ApplicationStop:
+    - location: scripts/stop_server.sh
+      runas: root
