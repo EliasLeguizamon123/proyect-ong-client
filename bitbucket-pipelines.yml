@@ -32,7 +32,6 @@ pipelines:
                   COMMAND: "upload"
                   APPLICATION_NAME: $APPLICATION_NAME
                   ZIP_FILE: "production.zip"
-                  VERSION_LABEL: 'react-app-1.0.0'
         - step:
             name: Deploy with CodeDeploy
             services:
