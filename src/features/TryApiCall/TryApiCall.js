@@ -1,4 +1,5 @@
 import React from 'react';
+import { Button } from '@chakra-ui/react';
 import './TryApiCall.css';
 
 import { sendRequest } from '../../utils/sendRequest';
@@ -18,8 +19,10 @@ const TryApiCall = () => {
         <label htmlFor="inp-route">Route GET</label>
         <input type="text" id="inp-route" />
       </div>
-
-      <button onClick={handleClick}>Try api call</button>
+      <Button onClick={handleClick} colorScheme="blue">
+        Button
+      </Button>
+      {/* <button onClick={handleClick}>Try api call</button> */}
     </div>
   );
 };
