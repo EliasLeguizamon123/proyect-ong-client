@@ -16,7 +16,6 @@ pipelines:
             script:
               - npm install
               - npm run lint:fix
-              - npm run format
             caches:
               - node
     # - step:
