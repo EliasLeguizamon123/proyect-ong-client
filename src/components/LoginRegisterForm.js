@@ -30,18 +30,15 @@ const FormSchema = Yup.object().shape({
 
 const LoginRegisterForm = ({ isRegister }) => {
   const handleSubmit = (firstName, lastName, email, password) => {
-    let user = {}
     if (isRegister) {
-      user = {
+      return {
         firstName,
         lastName,
         email,
         password,
       }
-    } else {
-      user = { email, password }
     }
-    return user
+    return { email, password }
   }
 
   const conditionallyRender = () => {
