@@ -1,6 +1,6 @@
-import React from 'react'
-import { Formik, Form } from 'formik'
-import * as Yup from 'yup'
+import React from 'react';
+import { Formik, Form } from 'formik';
+import * as Yup from 'yup';
 import {
   Button,
   Flex,
@@ -8,10 +8,10 @@ import {
   Stack,
   Heading,
   Box,
-  Text
-} from '@chakra-ui/react'
-import { Link } from 'react-router-dom'
-import ChakraInput from './ChakraInput'
+  Text,
+} from '@chakra-ui/react';
+import { Link } from 'react-router-dom';
+import ChakraInput from './ChakraInput';
 
 const FormSchema = Yup.object().shape({
   firstName: Yup.string()
@@ -22,88 +22,65 @@ const FormSchema = Yup.object().shape({
     .min(2, 'Too Short!')
     .max(50, 'Too Long!')
     .required('Last name is requided'),
-  email: Yup.string()
-    .email('Invalid email')
-    .required('Email is required'),
+  email: Yup.string().email('Invalid email').required('Email is required'),
   password: Yup.string()
     .min(6, 'Password must have at least 6 characters')
-    .required('Required')
-})
+    .required('Required'),
+});
 
 const LoginRegisterForm = ({ isRegister }) => {
   const handleSubmit = (firstName, lastName, email, password) => {
-    let user = {}
+    let user = {};
     if (isRegister) {
       user = {
         firstName,
         lastName,
         email,
-        password
-      }
+        password,
+      };
     } else {
-      user = { email, password }
+      user = { email, password };
     }
 
-    return user
-  }
-
-  const conditionallyRender = () => {
-    if (isRegister) {
-      return (
-        <Text align='center'>
-          {`You've already have an account? `}
-          <Link to='/login'>
-            <Box>Login</Box>
-          </Link>
-        </Text>
-      )
-    }
-    return (
-      <Text align='center'>
-        {`Don't have an account?`}
-        <Link to='/register'>
-          <Box>Sign In</Box>
-        </Link>
-      </Text>
-    )
-  }
+    return user;
+  };
 
   const conditionallyRender = () => {
     if (isRegister) {
       return (
-        <Text align='center'>
+        <Text align="center">
           {`You've already have an account? `}
-          <Link to='/login'>
+          <Link to="/login">
             <Box>Login</Box>
           </Link>
         </Text>
-      )
+      );
     }
     return (
-      <Text align='center'>
+      <Text align="center">
         {`Don't have an account?`}
-        <Link to='/register'>
+        <Link to="/register">
           <Box>Sign In</Box>
         </Link>
       </Text>
-    )
-  }
+    );
+  };
 
   return (
     <Flex
-      minH='100vh'
-      align='center'
-      justify='center'
+      minH="100vh"
+      align="center"
+      justify="center"
       bg={useColorModeValue('gray.50', 'gray.800')}
     >
-      <Stack spacing={8} mx='auto' maxW='lg' py={12} px={6}>
-        <Stack align='center' width='20rem'>
-          <Heading fontSize='4xl'>{isRegister ? 'Sign In' : 'Login'}</Heading>
+      <Stack spacing={8} mx="auto" maxW="lg" py={12} px={6}>
+        <Stack align="center" width="20rem">
+          <Heading fontSize="4xl">{isRegister ? 'Sign In' : 'Login'}</Heading>
         </Stack>
         <Box
-          rounded='lg'
+          rounded="lg"
           bg={useColorModeValue('white', 'gray.700')}
-          boxShadow='lg'
+          boxShadow="lg"
           p={8}
         >
           <Formik
@@ -111,38 +88,38 @@ const LoginRegisterForm = ({ isRegister }) => {
               firstName: '',
               lastName: '',
               email: '',
-              password: ''
+              password: '',
             }}
             validationSchema={FormSchema}
-            onSubmit={values => {
+            onSubmit={(values) => {
               handleSubmit(
                 values.firstName,
                 values.lastName,
                 values.email,
                 values.password
-              )
+              );
             }}
           >
             <Form>
               {isRegister ? (
                 <div>
                   <ChakraInput
-                    name='firstName'
-                    type='text'
-                    label='First Name'
+                    name="firstName"
+                    type="text"
+                    label="First Name"
                   />
-                  <ChakraInput name='lastName' type='text' label='Last Name' />
+                  <ChakraInput name="lastName" type="text" label="Last Name" />
                 </div>
               ) : null}
-              <ChakraInput name='email' type='email' label='Email' />
-              <ChakraInput name='password' type='password' label='Password' />
+              <ChakraInput name="email" type="email" label="Email" />
+              <ChakraInput name="password" type="password" label="Password" />
               <Button
-                bg='blue.400'
-                color='white'
-                width='100%'
-                marginTop='10px'
+                bg="blue.400"
+                color="white"
+                width="100%"
+                marginTop="10px"
                 _hover={{
-                  bg: 'blue.500'
+                  bg: 'blue.500',
                 }}
               >
                 {isRegister ? 'Sign In' : 'Log In'}
@@ -153,7 +130,7 @@ const LoginRegisterForm = ({ isRegister }) => {
         {conditionallyRender()}
       </Stack>
     </Flex>
-  )
-}
+  );
+};
 
-export default LoginRegisterForm
+export default LoginRegisterForm;
