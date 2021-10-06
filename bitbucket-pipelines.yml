@@ -10,7 +10,7 @@ pipelines:
               - node
             script:
               - npm install
-              - npm test
+              - npm run test:nowatch
         - step:
             name: Code linting
             script:
