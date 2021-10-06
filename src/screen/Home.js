@@ -1,6 +1,6 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import TryApiCall from '../features/TryApiCall/TryApiCall';
+import React from 'react'
+import { Link } from 'react-router-dom'
+import TryApiCall from '../features/TryApiCall/TryApiCall'
 
 export default function Home() {
   return (
@@ -12,5 +12,5 @@ export default function Home() {
         </li>
       </ul>
     </div>
-  );
+  )
 }

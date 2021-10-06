@@ -1,6 +1,6 @@
-import React from 'react';
-import { Formik, Form } from 'formik';
-import * as Yup from 'yup';
+import React from 'react'
+import { Formik, Form } from 'formik'
+import * as Yup from 'yup'
 import {
   Button,
   Flex,
@@ -9,9 +9,9 @@ import {
   Heading,
   Box,
   Text,
-} from '@chakra-ui/react';
-import { Link } from 'react-router-dom';
-import ChakraInput from './ChakraInput';
+} from '@chakra-ui/react'
+import { Link } from 'react-router-dom'
+import ChakraInput from './ChakraInput'
 
 const FormSchema = Yup.object().shape({
   firstName: Yup.string()
@@ -26,24 +26,23 @@ const FormSchema = Yup.object().shape({
   password: Yup.string()
     .min(6, 'Password must have at least 6 characters')
     .required('Required'),
-});
+})
 
 const LoginRegisterForm = ({ isRegister }) => {
   const handleSubmit = (firstName, lastName, email, password) => {
-    let user = {};
+    let user = {}
     if (isRegister) {
       user = {
         firstName,
         lastName,
         email,
         password,
-      };
+      }
     } else {
-      user = { email, password };
+      user = { email, password }
     }
-
-    return user;
-  };
+    return user
+  }
 
   const conditionallyRender = () => {
     if (isRegister) {
@@ -54,7 +53,7 @@ const LoginRegisterForm = ({ isRegister }) => {
             <Box>Login</Box>
           </Link>
         </Text>
-      );
+      )
     }
     return (
       <Text align="center">
@@ -63,8 +62,8 @@ const LoginRegisterForm = ({ isRegister }) => {
           <Box>Sign In</Box>
         </Link>
       </Text>
-    );
-  };
+    )
+  }
 
   return (
     <Flex
@@ -97,7 +96,7 @@ const LoginRegisterForm = ({ isRegister }) => {
                 values.lastName,
                 values.email,
                 values.password
-              );
+              )
             }}
           >
             <Form>
@@ -130,7 +129,7 @@ const LoginRegisterForm = ({ isRegister }) => {
         {conditionallyRender()}
       </Stack>
     </Flex>
-  );
-};
+  )
+}
 
-export default LoginRegisterForm;
+export default LoginRegisterForm

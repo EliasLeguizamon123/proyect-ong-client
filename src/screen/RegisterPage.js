@@ -1,6 +1,6 @@
-import React from 'react';
-import LoginRegisterForm from '../components/LoginRegisterForm';
+import React from 'react'
+import LoginRegisterForm from '../components/LoginRegisterForm'
 
-const RegisterPage = () => <LoginRegisterForm isRegister />;
+const RegisterPage = () => <LoginRegisterForm isRegister />
 
-export default RegisterPage;
+export default RegisterPage
