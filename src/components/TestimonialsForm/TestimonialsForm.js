@@ -1,6 +1,6 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
-import { useParams } from 'react-router'
+import { useParams } from 'react-router-dom'
 
 import { Formik, Form } from 'formik'
 import { FormSchema } from './testimonialsValidationSchema'

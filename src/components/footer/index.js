@@ -28,13 +28,20 @@ export default function Footer({
   //states
   const [socialNetworks, setSocialNetworks] = useState([])
   const [organization, setOrganization] = useState({})
-  useEffect(() => {
-    sendRequest('GET', '/organizations/1/public').then((res) => {
-      setSocialNetworks(res[0].OrganizationLinks)
-      const { name, image } = res[0]
-      setOrganization({ name, image })
+
+  const getLinks = () =>
+    sendRequest('GET', '/organizations/1').then((res) => {
+      if (res && res.length) {
+        setSocialNetworks(res[0].OrganizationLinks)
+        const { name, image } = res[0]
+        setOrganization({ name, image })
+      }
     })
+
+  useEffect(() => {
+    getLinks()
   }, [])
+
   return (
     <Box bg={useColorModeValue(bgColor)} color={useColorModeValue(textColor)}>
       <Container as={Stack} maxW={'6xl'} py={10}>
