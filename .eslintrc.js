@@ -22,10 +22,10 @@ module.exports = {
       'error',
       {
         endOfLine: 'auto',
+        semi: false,
       },
     ],
     'react/prop-types': 0,
-    semi: 0,
     'no-console': 2,
     'react-hooks/rules-of-hooks': 'error', // Checks rules of Hooks
     'react-hooks/exhaustive-deps': 'warn', // Checks effect dependencies
