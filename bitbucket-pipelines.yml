@@ -33,7 +33,7 @@ pipelines:
               enabled: false
             script:
               # Sync files to S3 bucket
-              - pipe: atlassian/aws-s3-deploy:0.4.
+              - pipe: atlassian/aws-s3-deploy:0.4.4
                 variables:
                   AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY_ID
                   AWS_SECRET_ACCESS_KEY: $AWS_SECRET_ACCESS_KEY
