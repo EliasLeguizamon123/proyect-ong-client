@@ -2,13 +2,26 @@
 image: node:10.15.3
 
 pipelines:
+  # branches:
+  #     dev:
+  #       - step:
+  #           name: Installing & Running Tests
+  #           caches:
+  #             - node
+  #           script:
+  #             - rm -rf package-lock.json
+  #             - rm -rf node_modules
+  #             - npm install
+  #             - npm run test
   pull-requests:
     "**":
       - step:
-          name: Test
+          name: Installing & Running Test
           caches:
             - node
           script:
+            - rm -rf package-lock.json
+            - rm -rf node_modules
             - npm install
             - npm run test:nowatch
       - step:
@@ -18,62 +31,80 @@ pipelines:
             - npm run lint
           caches:
             - node
-  # default:
-  #   - parallel:
-  #       - step:
-  #           name: Build and Test
-  #           caches:
-  #             - node
-  #           script:
-  #             - npm install
-  #             - npm run test:nowatch
-  #       - step:
-  #           name: Code linting
-  #           script:
-  #             - npm install
-  #             - npm run lint
-  #           caches:
-  #             - node
-    # - step:
-    #     name: Build
-    #     script:
-    #       - zip -r myapp.zip *
-    #     artifacts:
-    #       - myapp.zip
-
-    # - step:
-    #     name: Upload to S3
-    #     services:
-    #       - docker
-    #     script:
-    #       # Test upload
-    #       - pipe: atlassian/aws-code-deploy:0.2.10
-    #         variables:
-    #           AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY_ID
-    #           AWS_SECRET_ACCESS_KEY: $AWS_SECRET_ACCESS_KEY
-    #           AWS_DEFAULT_REGION: $AWS_DEFAULT_REGION
-    #           S3_BUCKET: $S3_BUCKET
-    #           COMMAND: "upload"
-    #           APPLICATION_NAME: $APPLICATION_NAME
-    #           ZIP_FILE: "myapp.zip"
-
-    # - step:
-    #     name: Deploy with CodeDeploy
-    #     deployment: production
-    #     services:
-    #     - docker
-    #     script:
-    #     - echo "Environment ${REPOSITORY_VARIABLE}"
-    #     # Test upload
-    #     - pipe: atlassian/aws-code-deploy:0.2.10
-    #       variables:
-    #         AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY_ID
-    #         AWS_SECRET_ACCESS_KEY: $AWS_SECRET_ACCESS_KEY
-    #         AWS_DEFAULT_REGION: $AWS_DEFAULT_REGION
-    #         S3_BUCKET: $S3_BUCKET
-    #         COMMAND: "deploy"
-    #         APPLICATION_NAME: $APPLICATION_NAME
-    #         DEPLOYMENT_GROUP: $DEPLOYMENT_GROUP
-    #         IGNORE_APPLICATION_STOP_FAILURES: "true"
-    #         FILE_EXISTS_BEHAVIOR: "OVERWRITE"
-    #         WAIT: "true"
+  custom: # Pipelines that can only be triggered manually
+    # staging:
+    #   - step:
+    #       name: Installing & Running Tests
+    #       caches:
+    #         - node
+    #       script:
+    #         - rm -rf package-lock.json
+    #         - rm -rf node_modules
+    #         - npm install
+    #         - npm run test:nowatch
+    #   - step:
+    #       name: Build
+    #       script:
+    #         - npm install --production
+    #         - REACT_APP_ENVIRONMENT=staging npm run build
+    #       artifacts:
+    #         - build/**
+    #   - step:
+    #       name: Deploy to S3
+    #       deployment: staging
+    #       script:
+    #         - pipe: atlassian/aws-s3-deploy:0.2.4
+    #           variables:
+    #             AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY_ID
+    #             AWS_SECRET_ACCESS_KEY: $AWS_SECRET_ACCESS_KEY
+    #             AWS_DEFAULT_REGION: $AWS_DEFAULT_REGION
+    #             S3_BUCKET: $STAGING_BUCKET_NAME
+    #             ACL: "public-read"
+    #             LOCAL_PATH: "build"
+    #   - step:
+    #       name: Invalidate Cloudfront caches
+    #       script:
+    #         - pipe: atlassian/aws-cloudfront-invalidate:0.1.1
+    #           variables:
+    #             AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY_ID
+    #             AWS_SECRET_ACCESS_KEY: $AWS_SECRET_ACCESS_KEY
+    #             AWS_DEFAULT_REGION: $AWS_DEFAULT_REGION
+    #             DISTRIBUTION_ID: $STAGING_DISTRIBUTION_ID
+    production:
+      - step:
+          name: Installing & Running Tests
+          caches:
+            - node
+          script:
+            - rm -rf package-lock.json
+            - rm -rf node_modules
+            - npm install
+            - npm run test:nowatch
+      - step:
+          name: Build
+          script:
+            - npm install --production
+            - REACT_APP_ENVIRONMENT=production npm run build
+          artifacts:
+            - build/**
+      - step:
+          name: Deploy to S3
+          deployment: production
+          script:
+            - pipe: atlassian/aws-s3-deploy:0.2.4
+              variables:
+                AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY_ID
+                AWS_SECRET_ACCESS_KEY: $AWS_SECRET_ACCESS_KEY
+                AWS_DEFAULT_REGION: $AWS_DEFAULT_REGION
+                S3_BUCKET: $PRODUCTION_BUCKET_NAME
+                ACL: "public-read"
+                LOCAL_PATH: "build"
+      - step:
+          name: Invalidate Cloudfront Cache
+          script:
+            - pipe: atlassian/aws-cloudfront-invalidate:0.1.1
+              variables:
+                AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY_ID
+                AWS_SECRET_ACCESS_KEY: $AWS_SECRET_ACCESS_KEY
+                AWS_DEFAULT_REGION: $AWS_DEFAULT_REGION
+                DISTRIBUTION_ID: $PRODUCTION_DISTRIBUTION_ID
