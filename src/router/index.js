@@ -6,7 +6,7 @@ import RegisterPage from '../screen/RegisterPage'
 import LoginPage from '../screen/LoginPage'
 import TestimonialsForm from '../components/TestimonialsForm/TestimonialsForm'
 import Footer from '../components/footer'
-import { Flex, Box } from '@chakra-ui/react'
+import { Box } from '@chakra-ui/react'
 
 export default function Router() {
   return (

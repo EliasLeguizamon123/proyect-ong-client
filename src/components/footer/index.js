@@ -52,7 +52,7 @@ export default function Footer({
         >
           <Stack spacing={6}>
             <Box width="100px">
-              <img src={organization.image}></img>
+              <img src={organization.image} alt="organization"></img>
             </Box>
             <Text fontSize={'lg'} fontWeight={'700'}>
               {organization.name}
