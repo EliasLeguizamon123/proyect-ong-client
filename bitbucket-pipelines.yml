@@ -1,5 +1,5 @@
 # image: atlassian/default-image:2
-image: node:10.15.3
+image: nikolaik/python:nodejs
 
 pipelines:
   branches:
