@@ -3,49 +3,52 @@ image: node:10.15.3
 
 pipelines:
   branches:
-    develop:
-      - parallel:
-        - step:
-            name: Installing & Running Tests
-            caches:
-              - node
-            script:
-              - npm install
-              - npm run test:nowatch
-        - step:
-            name: Build
-            script:
-              - npm install
-              - npm run build
-            artifacts:
-              - build/**
-        - step:
-            name: Security Scan
-            script:
-              # Run a security scan for sensitive data.
-              # See more security tools at https://bitbucket.org/product/features/pipelines/integrations?&category=security
-              - pipe: atlassian/git-secrets-scan:0.4.3
-        - step:
-            name: Deploy to Production
-            deployment: Production
-            clone:
-              enabled: false
-            script:
-              # Sync files to S3 bucket
-              - pipe: atlassian/aws-s3-deploy:0.4.4
-                variables:
-                  AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY_ID
-                  AWS_SECRET_ACCESS_KEY: $AWS_SECRET_ACCESS_KEY
-                  AWS_DEFAULT_REGION: $AWS_DEFAULT_REGION
-                  S3_BUCKET: $PRODUCTION_BUCKET_NAME
-                  LOCAL_PATH: 'build'
-              # triggering a distribution invalidation to refresh the CDN caches
-              - pipe: atlassian/aws-cloudfront-invalidate:0.1.1
-                variables:
-                  AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY_ID
-                  AWS_SECRET_ACCESS_KEY: $AWS_SECRET_ACCESS_KEY
-                  AWS_DEFAULT_REGION: $AWS_DEFAULT_REGION
-                  DISTRIBUTION_ID: $PRODUCTION_DISTRIBUTION_ID
+    release:
+      # - parallel:
+      #   # - step:
+      #   #     name: Installing & Running Tests
+      #   #     caches:
+      #   #       - node
+      #   #     script:
+      #   #       - npm install
+      #   #       - npm run test:nowatch
+      - step:
+          caches:
+            - node
+          name: Build and deploy to S3
+          script:
+            - npm install
+            - npm run build
+            - pip install awscli --upgrade --ignore-installed six
+            - aws s3 sync ./build s3://$PRODUCTION_BUCKET_NAME/
+            - aws s3 cp --cache-control max-age=0 ./build/service-worker.js s3://$PRODUCTION_BUCKET_NAME/
+        # - step:
+        #     name: Security Scan
+        #     script:
+        #       # Run a security scan for sensitive data.
+        #       # See more security tools at https://bitbucket.org/product/features/pipelines/integrations?&category=security
+        #       - pipe: atlassian/git-secrets-scan:0.4.3
+        # - step:
+        #     name: Deploy to Production
+        #     deployment: Production
+        #     clone:
+        #       enabled: false
+        #     script:
+        #       # Sync files to S3 bucket
+        #       - pipe: atlassian/aws-s3-deploy:0.4.4
+        #         variables:
+        #           AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY_ID
+        #           AWS_SECRET_ACCESS_KEY: $AWS_SECRET_ACCESS_KEY
+        #           AWS_DEFAULT_REGION: $AWS_DEFAULT_REGION
+        #           S3_BUCKET: $PRODUCTION_BUCKET_NAME
+        #           LOCAL_PATH: 'build'
+        #       # triggering a distribution invalidation to refresh the CDN caches
+        #       - pipe: atlassian/aws-cloudfront-invalidate:0.1.1
+        #         variables:
+        #           AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY_ID
+        #           AWS_SECRET_ACCESS_KEY: $AWS_SECRET_ACCESS_KEY
+        #           AWS_DEFAULT_REGION: $AWS_DEFAULT_REGION
+        #           DISTRIBUTION_ID: $PRODUCTION_DISTRIBUTION_ID
   pull-requests:
     "**":
       - step:
