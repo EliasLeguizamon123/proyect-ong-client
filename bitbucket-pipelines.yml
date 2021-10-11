@@ -1,5 +1,5 @@
 # image: atlassian/default-image:2
-image: nikolaik/python:nodejs
+image: nikolaik/python-nodejs
 
 pipelines:
   branches:
