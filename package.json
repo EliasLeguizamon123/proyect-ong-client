@@ -17,6 +17,7 @@
     "formik": "^2.2.9",
     "framer-motion": "^4.1.17",
     "react": "^16.13.1",
+    "react-aws-s3": "^1.5.0",
     "react-dom": "^16.13.1",
     "react-loader-spinner": "^4.0.0",
     "react-redux": "^7.1.3",
