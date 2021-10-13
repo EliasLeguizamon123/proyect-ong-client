@@ -25,7 +25,8 @@
     "react-router-dom": "^5.3.0",
     "react-scripts": "3.4.3",
     "sweetalert2-react": "^0.8.3",
-    "yup": "^0.32.9"
+    "yup": "^0.32.9",
+    "yup-phone": "^1.2.19"
   },
   "scripts": {
     "start": "react-scripts start",
