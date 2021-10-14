@@ -24,8 +24,8 @@ export default function Router() {
         <Route exact path="/novedades/:id" component={NewsDetail} />
         <Route exact path="/s3test" component={S3Test} />
         <Route path="/testimonials/:id?" component={TestimonialsForm} />
+        <Route path="/contacto" component={ContactPage} />
         <Route path="/activities/:id?" component={ActivitiesForm} />
-        <Route path="/contact" component={ContactPage} />
       </Switch>
       <Footer />
     </BrowserRouter>

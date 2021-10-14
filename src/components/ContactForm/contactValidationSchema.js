@@ -3,8 +3,8 @@ import 'yup-phone'
 
 const contactSchema = Yup.object().shape({
   name: Yup.string()
-    .min(2, 'Demasiado corto!')
-    .max(255, 'demasiado largo!')
+    .min(2, 'Debe ingresar mas de dos caracteres')
+    .max(255, 'El nombre es demasiado extenso')
     .required('Debe ingresar un nombre'),
   email: Yup.string()
     .email('Debe ingresar un email válido')
