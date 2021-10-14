@@ -1,38 +1,24 @@
 import React from 'react'
 import { Formik, Form } from 'formik'
-import * as Yup from 'yup'
+
 import {
-  Button,
   Flex,
   useColorModeValue,
   Stack,
   Heading,
   Box,
   Text,
+  Input,
 } from '@chakra-ui/react'
 import { Link } from 'react-router-dom'
-import ChakraInput from './ChakraInput'
-
-const FormSchema = Yup.object().shape({
-  firstName: Yup.string()
-    .min(2, 'Too Short!')
-    .max(50, 'Too Long!')
-    .required('First name is required'),
-  lastName: Yup.string()
-    .min(2, 'Too Short!')
-    .max(50, 'Too Long!')
-    .required('Last name is requided'),
-  email: Yup.string().email('Invalid email').required('Email is required'),
-  password: Yup.string()
-    .min(6, 'Password must have at least 6 characters')
-    .required('Required'),
-})
+import ChakraInput from '../ChakraInput'
+import { LoginRegisterSchema } from './LoginRegisterSchema'
 
 const LoginRegisterForm = ({ isRegister }) => {
-  const handleSubmit = (firstName, lastName, email, password) => {
+  const handleSubmit = ({ firstName, lastName, email, password }) => {
     let user = {}
     if (isRegister) {
-      return {
+      user = {
         firstName,
         lastName,
         email,
@@ -41,7 +27,6 @@ const LoginRegisterForm = ({ isRegister }) => {
     } else {
       user = { email, password }
     }
-
     return user
   }
 
@@ -50,18 +35,14 @@ const LoginRegisterForm = ({ isRegister }) => {
       return (
         <Text align="center">
           {`You've already have an account? `}
-          <Link to="/login">
-            <Box>Login</Box>
-          </Link>
+          <Link to="/login">Login</Link>
         </Text>
       )
     }
     return (
       <Text align="center">
         {`Don't have an account?`}
-        <Link to="/register">
-          <Box>Sign In</Box>
-        </Link>
+        <Link to="/register">Sign In</Link>
       </Text>
     )
   }
@@ -90,15 +71,8 @@ const LoginRegisterForm = ({ isRegister }) => {
               email: '',
               password: '',
             }}
-            validationSchema={FormSchema}
-            onSubmit={(values) => {
-              handleSubmit(
-                values.firstName,
-                values.lastName,
-                values.email,
-                values.password
-              )
-            }}
+            validationSchema={LoginRegisterSchema}
+            onSubmit={handleSubmit}
           >
             <Form>
               {isRegister ? (
@@ -113,7 +87,8 @@ const LoginRegisterForm = ({ isRegister }) => {
               ) : null}
               <ChakraInput name="email" type="email" label="Email" />
               <ChakraInput name="password" type="password" label="Password" />
-              <Button
+              <Input
+                type="submit"
                 bg="blue.400"
                 color="white"
                 width="100%"
@@ -121,9 +96,8 @@ const LoginRegisterForm = ({ isRegister }) => {
                 _hover={{
                   bg: 'blue.500',
                 }}
-              >
-                {isRegister ? 'Sign In' : 'Log In'}
-              </Button>
+                value={isRegister ? 'Sign In' : 'Log In'}
+              />
             </Form>
           </Formik>
         </Box>

@@ -1,29 +1,26 @@
 import React, { useEffect, useState } from 'react'
 import { SimpleGrid } from '@chakra-ui/react'
 import Paginator from '../components/Paginator'
-import NewsCard from '../components/NewsCard'
+import NewsCard from '../components/News/NewsCard'
 import { Link } from 'react-router-dom'
 import { sendRequest } from '../utils/sendRequest'
 
 const NewsPage = () => {
+  const [fetchAllNews, setFetchAllNews] = useState([])
   const [items, setItems] = useState([])
   const [pageCount, setPageCount] = useState(0)
   const limit = 8
 
   useEffect(() => {
     const getNews = async () => {
-      const res = await sendRequest('get', `/news?skip=0&limit=${limit}`)
+      const res = await sendRequest('get', `/news`)
       const total = res.count
       setPageCount(Math.ceil(total / limit))
-      setItems(res.rows)
+      setFetchAllNews(res.rows)
+      setItems(res.rows.slice(0, limit))
     }
     getNews()
   }, [pageCount])
-
-  const fetchPosts = async (offSet) => {
-    const res = await sendRequest('get', `/news?skip=${offSet}&limit=${limit}`)
-    return res.rows
-  }
 
   const renderCards = () => {
     return items.map((item) => {
@@ -36,9 +33,8 @@ const NewsPage = () => {
   }
 
   const handlePageClick = async (data) => {
-    let offSet = data.selected * limit
-    const newsFromServer = await fetchPosts(offSet)
-    setItems(newsFromServer)
+    let currentPage = data.selected * limit
+    setItems(fetchAllNews.slice(currentPage, currentPage + limit))
   }
 
   return (
