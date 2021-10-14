@@ -11,7 +11,7 @@ const NewsCard = ({ title, image }) => {
   return (
     <SimpleGrid
       sx={{
-        _hover: { bg: '#e1e1e1' },
+        _hover: { bg: '#e1e1e1', transform: 'scale(1.05)' },
         transition: '.3s ease-in-out',
         margin: '1rem',
       }}
@@ -27,6 +27,7 @@ const NewsCard = ({ title, image }) => {
       <Center>
         <Image
           rounded="lg"
+          maxH={'10rem'}
           src={image}
           fallbackSrc="https://via.placeholder.com/200"
         />
