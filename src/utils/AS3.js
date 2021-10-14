@@ -10,9 +10,9 @@ export const uploadFile = (file) => {
   }
 
   const ReactS3Client = new S3(config)
-  ReactS3Client.uploadFile(file)
-    .then(/*data => console.log(data)*/)
-    .catch(/* err => console.log(err)*/)
+  return ReactS3Client.uploadFile(file)
+  // .then((data) => console.log(data))
+  // .catch((err) => console.log(err))
 }
 
 // FYI: this is the response you will get from S3 after upload a file
