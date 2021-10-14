@@ -11,6 +11,7 @@ import NewsPage from '../screen/NewsPage'
 import NewsDetail from '../screen/NewsDetail'
 import Footer from '../components/footer'
 import ContactPage from '../screen/ContactPage'
+import Categories from '../components/Categories/Categories'
 
 export default function Router() {
   return (
@@ -26,6 +27,7 @@ export default function Router() {
         <Route path="/testimonials/:id?" component={TestimonialsForm} />
         <Route path="/contacto" component={ContactPage} />
         <Route path="/activities/:id?" component={ActivitiesForm} />
+        <Route path="/backoffice/categories" component={Categories} />
       </Switch>
       <Footer />
     </BrowserRouter>
