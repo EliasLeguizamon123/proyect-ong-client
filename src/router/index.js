@@ -7,6 +7,7 @@ import LoginPage from '../screen/LoginPage'
 import S3Test from '../screen/S3Test'
 import TestimonialsForm from '../components/TestimonialsForm/TestimonialsForm'
 import ActivitiesForm from '../components/ActivitiesForm/ActivitiesForm'
+import ActivityDetail from '../screen/ActivityDetail'
 import NewsPage from '../screen/NewsPage'
 import NewsDetail from '../screen/NewsDetail'
 import Footer from '../components/footer'
@@ -23,6 +24,7 @@ export default function Router() {
         <Route exact path="/login" component={LoginPage} />
         <Route exact path="/novedades" component={NewsPage} />
         <Route exact path="/novedades/:id" component={NewsDetail} />
+        <Route exact path="/actividades/:id" component={ActivityDetail} />
         <Route exact path="/s3test" component={S3Test} />
         <Route path="/testimonials/:id?" component={TestimonialsForm} />
         <Route path="/contacto" component={ContactPage} />
