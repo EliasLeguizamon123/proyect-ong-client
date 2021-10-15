@@ -11,6 +11,7 @@ import ActivityDetail from '../screen/ActivityDetail'
 import NewsPage from '../screen/NewsPage'
 import NewsDetail from '../screen/NewsDetail'
 import Footer from '../components/footer'
+import Header from '../components/header'
 import ContactPage from '../screen/ContactPage'
 import BackContactPage from '../screen/BackContactPage'
 import Categories from '../components/Categories/Categories'
@@ -18,6 +19,16 @@ import Categories from '../components/Categories/Categories'
 export default function Router() {
   return (
     <BrowserRouter>
+      <Header
+        webLinks={[
+          { name: 'Home', path: '/' },
+          { name: 'about', path: '/about' },
+        ]}
+        userLinks={[
+          { name: 'register', path: '/register' },
+          { name: 'login', path: '/login' },
+        ]}
+      />
       <Switch>
         <Route exact path="/" component={Home} />
         <Route exact path="/about" component={About} />
