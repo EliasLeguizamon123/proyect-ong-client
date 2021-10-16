@@ -12,7 +12,7 @@ import {
 } from '@chakra-ui/react'
 import { Link } from 'react-router-dom'
 import ChakraInput from '../ChakraInput'
-import { useHistory } from 'react-router'
+import { useHistory } from 'react-router-dom'
 import authentication from '../../utils/authentication'
 import { LoginSchema, RegisterSchema } from './LoginRegisterSchema'
 

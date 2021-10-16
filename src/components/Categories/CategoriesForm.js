@@ -14,7 +14,7 @@ import ChakraTextArea from '../ContactForm/ChakraTextArea'
 import { alertSuccess, alertError } from '../../utils/alerts'
 import { sendRequest } from '../../utils/sendRequest'
 import Spinner from '../../utils/Spinner'
-import { useParams } from 'react-router'
+import { useParams } from 'react-router-dom'
 
 const FormSchema = Yup.object().shape({
   name: Yup.string()

@@ -29,7 +29,6 @@ export default function Home() {
   }, [])
   return (
     <div>
-      <SlideShow />
       <Heading fontSize="4xl" my="10px">
         {welcome}
       </Heading>
