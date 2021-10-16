@@ -1,21 +1,48 @@
 import React, { useEffect, useState } from 'react'
 import CategoriesCard from './CategoriesCard'
 import { sendRequest } from '../../utils/sendRequest'
-import { Center, Spinner, Heading, Text } from '@chakra-ui/react'
+import { Center, Spinner, Heading, Text, Container } from '@chakra-ui/react'
+import { alertError, Swal } from '../../utils/alerts'
 
 const Categories = () => {
-  const [categories, setCategories] = useState()
+  const [categories, setCategories] = useState([])
+  const [update, setUpdate] = useState(false)
 
   useEffect(() => {
     const getCategories = async () => {
-      const response = await sendRequest('get', '/categories')
-      if (response) setCategories(response)
+      try {
+        const response = await sendRequest('get', '/categories')
+        setCategories(response)
+      } catch (error) {}
     }
     getCategories()
-  }, [])
+  }, [update])
+
+  const handleDelete = async (id) => {
+    const res = await Swal.fire({
+      title: 'Estas seguro?',
+      text: 'No podrás deshacer esta acción',
+      type: 'warning',
+      showCancelButton: true,
+      cancelButtonText: 'Cancelar',
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Si. Estoy seguro!',
+    })
+    if (res.value) {
+      try {
+        await sendRequest('delete', `/categories/${id}`)
+        setUpdate(true)
+        Swal.fire('Eliminada!', 'Categoría eliminada correctamente.', 'success')
+        setUpdate(false)
+      } catch (error) {
+        alertError('Error', error.message)
+      }
+    }
+  }
 
   return (
-    <div id="categories">
+    <Container id="categories" borderRadius={'lg'} boxShadow={'lg'}>
       <Center h="10rem">
         <Heading size="lg" fontSize="3rem">
           <Text as={'span'} background={'#DB5752'}>
@@ -32,6 +59,7 @@ const Categories = () => {
       {categories ? (
         categories.map((category) => (
           <CategoriesCard
+            handleDelete={() => handleDelete(category.id)}
             name={category.name}
             description={category.description}
             key={category.id}
@@ -42,7 +70,7 @@ const Categories = () => {
           <Spinner size="xl" />
         </Center>
       )}
-    </div>
+    </Container>
   )
 }
 
