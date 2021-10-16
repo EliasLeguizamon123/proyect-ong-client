@@ -14,6 +14,7 @@ import Footer from '../components/footer'
 import NewsForm from '../components/News/NewsForm'
 import Header from '../components/header'
 import ContactPage from '../screen/ContactPage'
+import CategoriesForm from '../components/Categories/CategoriesForm'
 import NewsListEdit from '../screen/NewsListEdit'
 import BackContactPage from '../screen/BackContactPage'
 import Categories from '../components/Categories/Categories'
@@ -48,6 +49,11 @@ export default function Router() {
         <Route path="/contacto" component={ContactPage} />
         <Route path="/activities/:id?" component={ActivitiesForm} />
         <Route path="/backoffice/categories" component={Categories} />
+        <Route
+          path="/backoffice/categories/form/:id"
+          component={CategoriesForm}
+        />
+        <Route path="/backoffice/categories/form" component={CategoriesForm} />
         <Route path="/nosotros" component={Members} />
       </Switch>
       <Footer />
