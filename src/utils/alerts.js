@@ -1,11 +1,11 @@
 import Swal_class from 'sweetalert2'
 
 export const alertError = (title, message) => {
-  Swal_class.fire(title, message, 'error')
+  return Swal_class.fire(title, message, 'error')
 }
 
 export const alertSuccess = (title, message) => {
-  Swal_class.fire(title, message, 'success')
+  return Swal_class.fire(title, message, 'success')
 }
 
 // Exports the entire class to be able to use all customizations

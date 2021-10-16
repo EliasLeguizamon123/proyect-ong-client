@@ -1,5 +1,5 @@
 import React from 'react'
-import LoginRegisterForm from '../components/LoginRegisterForm'
+import LoginRegisterForm from '../components/LoginOrRegister/LoginRegisterForm'
 
 const LoginPage = () => <LoginRegisterForm />
 

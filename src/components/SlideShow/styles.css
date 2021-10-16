@@ -1,0 +1,65 @@
+.slideContainer {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+}
+.slideShowContainer {
+  max-width: 80rem; /*1280 px */
+
+  overflow: hidden;
+  position: relative;
+}
+.slides {
+  display: flex;
+  flex-wrap: nowrap;
+}
+.slide {
+  min-width: 100%;
+  height: auto;
+  overflow: hidden;
+  transition: 0.3s ease all;
+  max-height: 31.25rem;
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+.textSlide {
+  background: rgba(0, 0, 0, 0.5);
+  color: #fff;
+  width: 100%;
+  padding: 0.65rem 3.75rem;
+  text-align: center;
+  position: absolute;
+  bottom: 0;
+  font-size: 1.4rem;
+}
+.slide > img {
+  vertical-align: top;
+
+  object-fit: cover;
+}
+.controls {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  font-size: 3rem;
+  font-weight: bold;
+  color: #fff;
+}
+.controls > button {
+  width: 50px;
+  height: 100%;
+  position: absolute;
+  transition: 0.3s ease all;
+}
+.controls > button:hover {
+  background: rgba(0, 0, 0, 0.4);
+}
+.btnLeft {
+  left: 0;
+}
+.btnRight {
+  right: 0;
+}
