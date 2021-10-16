@@ -10,7 +10,7 @@ pipelines:
           name: Build and deploy to S3
           script:
             - npm install
-            - echo $ENV_ENCODED | base64 -d > .env
+            - base64 --decode $ENV_ENCODED > .env
             - npm run build
             - pip install awscli --upgrade --ignore-installed six
             - aws s3 sync ./build s3://$PRODUCTION_BUCKET_NAME/
