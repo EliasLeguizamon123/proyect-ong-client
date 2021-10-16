@@ -49,10 +49,11 @@ const SlideShow = () => {
       }
     })
   useEffect(() => {
-    intervalSlideShow.current = setInterval(() => {
+    const interval = (intervalSlideShow.current = setInterval(() => {
       next()
-    }, 5000)
+    }, 5000))
     getSlides()
+    return () => clearInterval(interval)
   }, [])
   return (
     <div className="slideContainer">

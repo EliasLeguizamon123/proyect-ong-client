@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { sendRequest } from '../utils/sendRequest'
 import SlideShow from '../components/SlideShow'
+import { sendRequest } from '../utils/sendRequest'
 import NewsCard from '../components/News/NewsCard'
 import { Heading } from '@chakra-ui/react'
 
@@ -29,6 +29,7 @@ export default function Home() {
   }, [])
   return (
     <div>
+      <SlideShow />
       <Heading fontSize="4xl" my="10px">
         {welcome}
       </Heading>
