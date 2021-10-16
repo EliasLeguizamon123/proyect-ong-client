@@ -1,6 +1,9 @@
 import axios from 'axios'
 
-const baseUrl = process.env.REACT_APP_BASE_URL
+const baseUrl =
+  process.env.ENV === 'DEVELOPMENT'
+    ? process.env.REACT_APP_BASE_URL_LOCAL
+    : process.env.REACT_APP_BASE_URL_LOCAL
 
 export const sendRequest = async (method, relativeUrl, data) => {
   const url = baseUrl + relativeUrl
