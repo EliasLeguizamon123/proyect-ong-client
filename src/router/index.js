@@ -46,6 +46,7 @@ export default function Router() {
         <Route exact path="/actividades/:id" component={ActivityDetail} />
         <Route exact path="/s3test" component={S3Test} />
         <Route path="/testimonials/:id?" component={TestimonialsForm} />
+        <Route path="/users/:id?" component={EditUserForm} />
         <PrivateRoute
           path="/backoffice/contactos"
           component={BackContactPage}
@@ -60,6 +61,7 @@ export default function Router() {
         <Route path="/contacto" component={ContactPage} />
         <Route path="/activities/:id?" component={ActivitiesForm} />
         <Route path="/backoffice/categories" component={Categories} />
+        <Route path="/users/:id?" component={EditUserForm} />
         <Route
           path="/backoffice/categories/form/:id"
           component={CategoriesForm}
