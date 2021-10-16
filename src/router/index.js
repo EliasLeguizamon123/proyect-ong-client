@@ -17,6 +17,7 @@ import ContactPage from '../screen/ContactPage'
 import NewsListEdit from '../screen/NewsListEdit'
 import BackContactPage from '../screen/BackContactPage'
 import Categories from '../components/Categories/Categories'
+import Members from '../components/Members/Members'
 
 export default function Router() {
   return (
@@ -47,6 +48,7 @@ export default function Router() {
         <Route path="/contacto" component={ContactPage} />
         <Route path="/activities/:id?" component={ActivitiesForm} />
         <Route path="/backoffice/categories" component={Categories} />
+        <Route path="/nosotros" component={Members} />
       </Switch>
       <Footer />
     </BrowserRouter>
