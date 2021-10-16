@@ -12,9 +12,12 @@ import {
 } from '@chakra-ui/react'
 import { Link } from 'react-router-dom'
 import ChakraInput from '../ChakraInput'
+import { useHistory } from 'react-router'
+import authentication from '../../utils/authentication'
 import { LoginSchema, RegisterSchema } from './LoginRegisterSchema'
 
 const LoginRegisterForm = ({ isRegister }) => {
+  const history = useHistory()
   const handleSubmit = ({ firstName, lastName, email, password }) => {
     let user = {}
     if (isRegister) {
@@ -27,6 +30,7 @@ const LoginRegisterForm = ({ isRegister }) => {
     } else {
       user = { email, password }
     }
+    authentication(isRegister, user, history)
 
     return user
   }
