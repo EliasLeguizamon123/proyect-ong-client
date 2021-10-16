@@ -12,7 +12,7 @@ import {
 } from '@chakra-ui/react'
 import { Link } from 'react-router-dom'
 import ChakraInput from '../ChakraInput'
-import { LoginRegisterSchema } from './LoginRegisterSchema'
+import { LoginSchema, RegisterSchema } from './LoginRegisterSchema'
 
 const LoginRegisterForm = ({ isRegister }) => {
   const handleSubmit = ({ firstName, lastName, email, password }) => {
@@ -27,6 +27,7 @@ const LoginRegisterForm = ({ isRegister }) => {
     } else {
       user = { email, password }
     }
+
     return user
   }
 
@@ -47,6 +48,22 @@ const LoginRegisterForm = ({ isRegister }) => {
     )
   }
 
+  const initialValues = () => {
+    if (isRegister) {
+      return {
+        firstName: '',
+        lastName: '',
+        email: '',
+        password: '',
+      }
+    } else {
+      return {
+        email: '',
+        password: '',
+      }
+    }
+  }
+
   return (
     <Flex
       minH="100vh"
@@ -65,13 +82,8 @@ const LoginRegisterForm = ({ isRegister }) => {
           p={8}
         >
           <Formik
-            initialValues={{
-              firstName: '',
-              lastName: '',
-              email: '',
-              password: '',
-            }}
-            validationSchema={LoginRegisterSchema}
+            initialValues={initialValues()}
+            validationSchema={isRegister ? RegisterSchema : LoginSchema}
             onSubmit={handleSubmit}
           >
             <Form>
