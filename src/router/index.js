@@ -14,6 +14,7 @@ import Footer from '../components/footer'
 import NewsForm from '../components/News/NewsForm'
 import Header from '../components/header'
 import ContactPage from '../screen/ContactPage'
+import NewsListEdit from '../screen/NewsListEdit'
 import BackContactPage from '../screen/BackContactPage'
 import Categories from '../components/Categories/Categories'
 
@@ -37,6 +38,7 @@ export default function Router() {
         <Route exact path="/login" component={LoginPage} />
         <Route exact path="/novedades" component={NewsPage} />
         <Route exact path="/novedades/:id" component={NewsDetail} />
+        <Route exact path="/backoffice/novedades" component={NewsListEdit} />
         <Route exact path="/actividades/:id" component={ActivityDetail} />
         <Route exact path="/s3test" component={S3Test} />
         <Route path="/testimonials/:id?" component={TestimonialsForm} />
