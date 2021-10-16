@@ -20,15 +20,16 @@ import ChakraInput from '../ChakraInput'
 
 import { sendRequest } from '../../utils/sendRequest'
 
+const iniValues = {
+  imageUrl: '',
+  text: '',
+  order: '',
+  organizationId: '',
+}
+
 const SliderForm = () => {
   const [imgData, setImgData] = useState(null)
   const [loadedFile, setLoadedFile] = useState(null)
-  const [iniValues, setIniValues] = useState({
-    imageUrl: '',
-    text: '',
-    order: '',
-    organizationId: '',
-  })
 
   const handleSubmit = async (values) => {
     try {
