@@ -19,6 +19,7 @@ import CategoriesForm from '../components/Categories/CategoriesForm'
 import NewsListEdit from '../screen/NewsListEdit'
 import BackContactPage from '../screen/BackContactPage'
 import Categories from '../components/Categories/Categories'
+import PrivateRoute from './PrivateRouter'
 import Members from '../components/Members/Members'
 
 export default function Router() {
@@ -45,6 +46,13 @@ export default function Router() {
         <Route exact path="/actividades/:id" component={ActivityDetail} />
         <Route exact path="/s3test" component={S3Test} />
         <Route path="/testimonials/:id?" component={TestimonialsForm} />
+        <PrivateRoute
+          path="/backoffice/contactos"
+          component={BackContactPage}
+        />
+        <Route path="/contacto" component={ContactPage} />
+        <Route path="/activities/:id?" component={ActivitiesForm} />
+        <PrivateRoute path="/backoffice/categories" component={Categories} />
         <Route path="/slides" component={SlideForm} />
         <Route path="/contact" component={ContactPage} />
         <Route path="/novedad/:id?" component={NewsForm} />
