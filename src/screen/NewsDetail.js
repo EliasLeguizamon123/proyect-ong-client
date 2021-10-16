@@ -1,13 +1,14 @@
 import {
+  Box,
   Center,
   Heading,
   Image,
   Stack,
-  Text,
   useColorModeValue,
 } from '@chakra-ui/react'
 import React, { useEffect, useState } from 'react'
 import { sendRequest } from '../utils/sendRequest'
+import parse from 'html-react-parser'
 
 const NewsDetail = (props) => {
   const [novedad, setNovedad] = useState({})
@@ -42,7 +43,7 @@ const NewsDetail = (props) => {
           }}
         />
         <Heading textAlign="center">{novedad.name}</Heading>
-        <Text>{novedad.content}</Text>
+        <Box>{novedad.content ? parse(novedad.content) : null}</Box>
       </Stack>
     </Center>
   )
