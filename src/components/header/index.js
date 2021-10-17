@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Flex, Button, IconButton, Image, Spacer } from '@chakra-ui/react'
-import { useRouteMatch } from 'react-router-dom'
+import { Link, useRouteMatch } from 'react-router-dom'
 import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons'
 import { sendRequest } from '../../utils/sendRequest'
 
@@ -47,17 +47,19 @@ const Header = ({
     <nav>
       <Flex>
         <Flex display={['none', 'none', 'flex', 'flex']}>
-          <Image
-            src={image.image}
-            alt={image.alt}
-            maxW="40px"
-            mt={1}
-            ml={1}
-            mr={3}
-            borderRadius="full"
-            maxh="30px"
-            fallbackSrc="https://via.placeholder.com/150"
-          />
+          <Link to="/">
+            <Image
+              src={image.image}
+              alt={image.alt}
+              maxW="5rem"
+              mt={1}
+              ml={1}
+              mr={3}
+              borderRadius={'5px'}
+              maxh="30px"
+              fallbackSrc="https://via.placeholder.com/150"
+            />
+          </Link>
           {itemsNav}
         </Flex>
         <Spacer />

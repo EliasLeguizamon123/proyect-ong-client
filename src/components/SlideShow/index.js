@@ -61,7 +61,7 @@ const SlideShow = () => {
         <div className="slides" ref={slideshow}>
           {slides.map((slide) => (
             <div key={slide.id} className="slide">
-              <img src={slide.imageUrl} />
+              <img src={slide.imageUrl} alt="slide" />
               <div className="textSlide">
                 <p>{slide.text}</p>
               </div>

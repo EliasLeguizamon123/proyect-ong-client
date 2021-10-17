@@ -37,11 +37,11 @@ export default function Router() {
       <Header
         webLinks={[
           { name: 'Home', path: '/' },
-          { name: 'about', path: '/about' },
+          { name: 'About', path: '/about' },
         ]}
         userLinks={[
-          { name: 'register', path: '/register' },
-          { name: 'login', path: '/login' },
+          { name: 'Registrarse', path: '/register' },
+          { name: 'Login', path: '/login' },
         ]}
       />
       <Suspense fallback={<Spinner type="ThreeDots" />}>
@@ -64,11 +64,7 @@ export default function Router() {
           <Route path="/slides" component={SlideForm} />
           <Route path="/nosotros" component={Members} />
           <Route
-            path="/backoffice/categories/form/:id"
-            component={CategoriesForm}
-          />
-          <Route
-            path="/backoffice/categories/form"
+            path="/backoffice/categories/form/:id?"
             component={CategoriesForm}
           />
 
