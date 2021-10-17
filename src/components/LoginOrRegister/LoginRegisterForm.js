@@ -1,15 +1,7 @@
 import React from 'react'
 import { Formik, Form } from 'formik'
 
-import {
-  Flex,
-  useColorModeValue,
-  Stack,
-  Heading,
-  Box,
-  Text,
-  Input,
-} from '@chakra-ui/react'
+import { Flex, Stack, Heading, Box, Text, Input } from '@chakra-ui/react'
 import { Link } from 'react-router-dom'
 import ChakraInput from '../ChakraInput'
 import { useHistory } from 'react-router-dom'
@@ -31,8 +23,6 @@ const LoginRegisterForm = ({ isRegister }) => {
       user = { email, password }
     }
     authentication(isRegister, user, history)
-
-    return user
   }
 
   const conditionallyRender = () => {
@@ -69,22 +59,12 @@ const LoginRegisterForm = ({ isRegister }) => {
   }
 
   return (
-    <Flex
-      minH="100vh"
-      align="center"
-      justify="center"
-      bg={useColorModeValue('gray.50', 'gray.800')}
-    >
+    <Flex minH="100vh" align="center" justify="center" bg={'white'}>
       <Stack spacing={8} mx="auto" maxW="lg" py={12} px={6}>
         <Stack align="center" width="20rem">
           <Heading fontSize="4xl">{isRegister ? 'Sign In' : 'Login'}</Heading>
         </Stack>
-        <Box
-          rounded="lg"
-          bg={useColorModeValue('white', 'gray.700')}
-          boxShadow="lg"
-          p={8}
-        >
+        <Box rounded="lg" bg={'white'} boxShadow="lg" p={8}>
           <Formik
             initialValues={initialValues()}
             validationSchema={isRegister ? RegisterSchema : LoginSchema}

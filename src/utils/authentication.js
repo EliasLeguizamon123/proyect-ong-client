@@ -13,12 +13,11 @@ const authentication = async (isRegister, userData, history) => {
         email: userData.email,
         password: userData.password,
       })
-
   if (response.ok) {
-    history.push('/home')
+    history.push('/')
     localStorage.setItem('token', response.token)
   } else {
-    alertError('wrong credentials', 'something was wrong')
+    alertError('Error', response.msg)
   }
 }
 
