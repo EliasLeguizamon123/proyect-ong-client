@@ -39,8 +39,11 @@ export default function Router() {
     <BrowserRouter>
       <Header
         webLinks={[
-          { name: 'Home', path: '/' },
-          { name: 'About', path: '/about' },
+          { name: 'Nosotros', path: '/nosotros' },
+          { name: 'Novedades', path: '/novedades' },
+          { name: 'Actividades', path: '/actividades' },
+          { name: 'Testimonios', path: '/testimoniales' },
+          { name: 'Contacto', path: '/contacto' },
         ]}
         userLinks={[
           { name: 'Registrarse', path: '/register' },
@@ -55,13 +58,13 @@ export default function Router() {
           <Route exact path="/login" component={LoginPage} />
           <Route exact path="/novedades" component={NewsPage} />
           <Route exact path="/novedades/:id" component={NewsDetail} />
-          <Route path="/novedad/:id?" component={NewsForm} />
+          <Route path="/novedades/:id?" component={NewsForm} />
           <Route exact path="/actividades/:id" component={ActivityDetail} />
           <Route path="/testimoniales/:id?" component={TestimonialsForm} />
           <Route path="/backoffice/contactos" component={BackContactPage} />
           <Route path="/contacto" component={ContactPage} />
           <Route path="/activities/:id?" component={ActivitiesForm} />
-          <Route path="/backoffice/categories" component={Categories} />
+          <Route path="/backoffice/categorias" component={Categories} />
           <Route exact path="/backoffice/novedades" component={NewsListEdit} />
           <Route path="/users/:id?" component={EditUserForm} />
           <Route path="/slides" component={SlideForm} />
