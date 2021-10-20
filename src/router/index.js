@@ -30,6 +30,9 @@ const NewsListEdit = lazy(() => import('../screen/NewsListEdit'))
 const PrivateRoute = lazy(() => import('./PrivateRouter'))
 const Members = lazy(() => import('../components/Members/Members'))
 const EditUserForm = lazy(() => import('../components/EditUserForm'))
+const BackTestimonialsPage = lazy(() =>
+  import('../screen/BackTestimonialsPage')
+)
 
 export default function Router() {
   return (
@@ -66,6 +69,10 @@ export default function Router() {
           <Route
             path="/backoffice/categories/form/:id?"
             component={CategoriesForm}
+          />
+          <Route
+            path="/backoffice/testimonials"
+            component={BackTestimonialsPage}
           />
 
           <PrivateRoute path="/backoffice/categories" component={Categories} />
