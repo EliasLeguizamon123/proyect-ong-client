@@ -57,7 +57,7 @@ export default function Router() {
           <Route exact path="/novedades/:id" component={NewsDetail} />
           <Route path="/novedad/:id?" component={NewsForm} />
           <Route exact path="/actividades/:id" component={ActivityDetail} />
-          <Route path="/testimonials/:id?" component={TestimonialsForm} />
+          <Route path="/testimoniales/:id?" component={TestimonialsForm} />
           <Route path="/backoffice/contactos" component={BackContactPage} />
           <Route path="/contacto" component={ContactPage} />
           <Route path="/activities/:id?" component={ActivitiesForm} />
