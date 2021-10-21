@@ -33,6 +33,9 @@ const EditUserForm = lazy(() => import('../components/EditUserForm'))
 const BackTestimonialsPage = lazy(() =>
   import('../screen/BackTestimonialsPage')
 )
+const OrganizationForm = lazy(() =>
+  import('../components/Organization/OrganizationForm')
+)
 
 export default function Router() {
   return (
@@ -76,6 +79,10 @@ export default function Router() {
           <Route
             path="/backoffice/testimonials"
             component={BackTestimonialsPage}
+          />
+          <Route
+            path="/backoffice/edit-organization"
+            component={OrganizationForm}
           />
 
           <PrivateRoute path="/backoffice/categories" component={Categories} />
