@@ -15,7 +15,7 @@ import {
 import { DeleteIcon, EditIcon } from '@chakra-ui/icons'
 import Paginator from '../components/Paginator'
 import { sendRequest } from '../utils/sendRequest'
-import { alertError, alertSuccess } from '../utils/alerts'
+import { alertSuccess, alertConfirm } from '../utils/alerts'
 
 const NewsListEdit = () => {
   let history = useHistory()
@@ -40,15 +40,17 @@ const NewsListEdit = () => {
     const sliceStart = selected * limit
     setItemsToShow(allNnews.slice(sliceStart, sliceStart + limit))
   }
-
-  const handleDelete = async (id) => {
-    try {
-      await sendRequest('delete', `/news/${id}`)
-      await alertSuccess('Novedad borrada con éxito')
-      fetchNews()
-    } catch (error) {
-      alertError(error.message)
-    }
+  const handleDelete = (id) => {
+    alertConfirm(
+      'Seguro deseas borrar esta novedad?',
+      'Esta accion es irreversible',
+      async () => {
+        await sendRequest('delete', `/news/${id}`)
+        await alertSuccess('Novedad borrada con éxito')
+        fetchNews()
+        history.push('/')
+      }
+    )
   }
 
   const handleEdit = (id) => {
