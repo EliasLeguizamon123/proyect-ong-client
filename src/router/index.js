@@ -1,6 +1,7 @@
 import React, { lazy, Suspense } from 'react'
 import { BrowserRouter, Switch, Route } from 'react-router-dom'
 import Header from '../components/header'
+import MyProfile from '../screen/MyProfile'
 import Spinner from '../utils/Spinner'
 
 const Home = lazy(() => import('../screen/Home'))
@@ -72,6 +73,7 @@ export default function Router() {
           <Route path="/users/:id?" component={EditUserForm} />
           <Route path="/slides" component={SlideForm} />
           <Route path="/nosotros" component={Members} />
+          <Route path="/perfil" component={MyProfile} />
           <Route
             path="/backoffice/categories/form/:id?"
             component={CategoriesForm}

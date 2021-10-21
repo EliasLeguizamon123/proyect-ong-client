@@ -8,9 +8,14 @@ import { useHistory } from 'react-router-dom'
 import authentication from '../../utils/authentication'
 import { LoginSchema, RegisterSchema } from './LoginRegisterSchema'
 
+import { useDispatch } from 'react-redux'
+import { login } from '../../features/user/userSlice'
+
 const LoginRegisterForm = ({ isRegister }) => {
   const history = useHistory()
-  const handleSubmit = ({ firstName, lastName, email, password }) => {
+  const dispatch = useDispatch()
+
+  const handleSubmit = async ({ firstName, lastName, email, password }) => {
     let user = {}
     if (isRegister) {
       user = {
@@ -22,7 +27,14 @@ const LoginRegisterForm = ({ isRegister }) => {
     } else {
       user = { email, password }
     }
-    authentication(isRegister, user, history)
+    const token = await authentication(isRegister, user)
+
+    if (token) {
+      // If the user contains the password delete it not to store it raw in the state
+      delete user.password
+      dispatch(login({ userData: user, token }))
+      history.push('/')
+    }
   }
 
   const conditionallyRender = () => {

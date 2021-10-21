@@ -17,12 +17,14 @@ import { Link, useRouteMatch } from 'react-router-dom'
 import { HamburgerIcon, CloseIcon, ChevronDownIcon } from '@chakra-ui/icons'
 import { sendRequest } from '../../utils/sendRequest'
 import { useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { logout } from '../../features/user/userSlice'
 
 const Header = ({
   webLinks = [{ name: 'Nosotros', path: '/nosotros' }],
   userLinks = [{ name: 'registro', path: '/registro' }],
 }) => {
+  const dispatch = useDispatch()
   const activeTextColor = 'blue.200'
   //states
   const [display, changeDisplay] = useState('none')
@@ -41,7 +43,6 @@ const Header = ({
   )
 
   const isAuth = useSelector((state) => state.user.authenticated)
-
   let itemsNav = webLinks.map((link, index) => (
     <ActiveLink
       key={index}
@@ -63,6 +64,11 @@ const Header = ({
   useEffect(() => {
     getImage()
   }, [])
+
+  const handleLogout = () => {
+    dispatch(logout())
+  }
+
   return (
     <nav>
       <Flex>
@@ -114,9 +120,9 @@ const Header = ({
               <MenuDivider />
               {/* I can insert event onClick inside menuItem component */}
               <MenuItem>
-                <Link to="/">Cuenta</Link>
+                <Link to="/perfil">Cuenta</Link>
               </MenuItem>
-              <MenuItem color="red" onClick={logout}>
+              <MenuItem color="red" onClick={handleLogout}>
                 Desconectarse
               </MenuItem>
             </MenuList>
