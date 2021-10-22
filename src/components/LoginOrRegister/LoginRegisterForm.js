@@ -27,11 +27,9 @@ const LoginRegisterForm = ({ isRegister }) => {
     } else {
       user = { email, password }
     }
-    const { token, roleId } = await authentication(isRegister, user)
-
-    const isAdmin = roleId === 1
-    if (token) {
-      dispatch(login({ userData: { isAdmin }, token }))
+    const fetchedData = await authentication(isRegister, user)
+    if (fetchedData.token) {
+      dispatch(login(fetchedData))
       history.push('/')
     }
   }

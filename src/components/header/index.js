@@ -38,12 +38,9 @@ const Header = ({
       }
     })
 
-  const { firstName, lastName, profileImage } = useSelector(
-    (state) => state.user.userData
-  )
-
+  const userData = useSelector((state) => state.user.userData)
   const isAuth = useSelector((state) => state.user.authenticated)
-  const { isAdmin } = useSelector((state) => state.user.userData)
+
   let itemsNav = webLinks.map((link, index) => (
     <ActiveLink
       key={index}
@@ -103,23 +100,23 @@ const Header = ({
               cursor={'pointer'}
               minW={0}
             >
-              <Avatar size={'sm'} src={profileImage} />
+              <Avatar size={'sm'} src={userData.image} />
               <ChevronDownIcon />
             </MenuButton>
             <MenuList alignItems={'center'}>
               <br />
               <Center>
-                <Avatar size={'2xl'} src={profileImage} />
+                <Avatar size={'2xl'} src={userData.image} />
               </Center>
               <br />
               <Center>
                 <p>
-                  {firstName} {lastName}
+                  {userData.firstName} {userData.lastName}
                 </p>
               </Center>
               <br />
               <MenuDivider />
-              {isAdmin && (
+              {userData.isAdmin && (
                 <MenuItem>
                   <Link to="/backoffice">Administrar</Link>
                 </MenuItem>
