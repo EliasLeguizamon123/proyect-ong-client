@@ -27,12 +27,11 @@ const LoginRegisterForm = ({ isRegister }) => {
     } else {
       user = { email, password }
     }
-    const token = await authentication(isRegister, user)
+    const { token, roleId } = await authentication(isRegister, user)
 
+    const isAdmin = roleId === 1
     if (token) {
-      // If the user contains the password delete it not to store it raw in the state
-      delete user.password
-      dispatch(login({ userData: user, token }))
+      dispatch(login({ userData: { isAdmin }, token }))
       history.push('/')
     }
   }

@@ -43,6 +43,7 @@ const Header = ({
   )
 
   const isAuth = useSelector((state) => state.user.authenticated)
+  const { isAdmin } = useSelector((state) => state.user.userData)
   let itemsNav = webLinks.map((link, index) => (
     <ActiveLink
       key={index}
@@ -118,7 +119,11 @@ const Header = ({
               </Center>
               <br />
               <MenuDivider />
-              {/* I can insert event onClick inside menuItem component */}
+              {isAdmin && (
+                <MenuItem>
+                  <Link to="/backoffice">Administrar</Link>
+                </MenuItem>
+              )}
               <MenuItem>
                 <Link to="/perfil">Cuenta</Link>
               </MenuItem>

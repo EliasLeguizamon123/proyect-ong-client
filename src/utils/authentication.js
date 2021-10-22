@@ -5,7 +5,8 @@ const authentication = async (isRegister, userData) => {
   try {
     const route = isRegister ? 'register' : 'login'
     const response = await sendRequest('post', `/auth/${route}`, userData)
-    return response.token
+
+    return { token: response.token, roleId: response.userData.roleId }
   } catch (err) {
     alertError('Error', err.message)
   }
