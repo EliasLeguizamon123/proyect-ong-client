@@ -3,7 +3,7 @@
 
 npm run test:nowatch
 npm run lint:fix
-git add .
+# git add .
 
 
 

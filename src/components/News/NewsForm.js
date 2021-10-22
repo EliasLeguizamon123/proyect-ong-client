@@ -127,6 +127,7 @@ const NewsForm = () => {
                     props.setFieldValue('categoryId', value.target.value)
                     props.initialValues.categoryId = value.target.value
                   }}
+                  placeholder="Selecciona una categoría"
                   name="categoryId"
                   label="Categoría"
                   handleOptions={handleCategories}

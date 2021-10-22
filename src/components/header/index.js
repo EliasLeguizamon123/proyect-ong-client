@@ -1,13 +1,30 @@
 import React, { useState, useEffect } from 'react'
-import { Flex, Button, IconButton, Image, Spacer } from '@chakra-ui/react'
+import {
+  Flex,
+  Button,
+  IconButton,
+  Image,
+  Spacer,
+  Menu,
+  MenuButton,
+  Avatar,
+  MenuList,
+  Center,
+  MenuDivider,
+  MenuItem,
+} from '@chakra-ui/react'
 import { Link, useRouteMatch } from 'react-router-dom'
-import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons'
+import { HamburgerIcon, CloseIcon, ChevronDownIcon } from '@chakra-ui/icons'
 import { sendRequest } from '../../utils/sendRequest'
+import { useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
+import { logout } from '../../features/user/userSlice'
 
 const Header = ({
-  webLinks = [{ name: 'Home', path: '/' }],
+  webLinks = [{ name: 'Nosotros', path: '/nosotros' }],
   userLinks = [{ name: 'registro', path: '/registro' }],
 }) => {
+  const dispatch = useDispatch()
   const activeTextColor = 'blue.200'
   //states
   const [display, changeDisplay] = useState('none')
@@ -21,6 +38,11 @@ const Header = ({
       }
     })
 
+  const { firstName, lastName, profileImage } = useSelector(
+    (state) => state.user.userData
+  )
+
+  const isAuth = useSelector((state) => state.user.authenticated)
   let itemsNav = webLinks.map((link, index) => (
     <ActiveLink
       key={index}
@@ -39,10 +61,14 @@ const Header = ({
       activeTextColor={activeTextColor}
     />
   ))
-
   useEffect(() => {
     getImage()
   }, [])
+
+  const handleLogout = () => {
+    dispatch(logout())
+  }
+
   return (
     <nav>
       <Flex>
@@ -63,10 +89,46 @@ const Header = ({
           {itemsNav}
         </Flex>
         <Spacer />
-        <Flex align="center" ml="auto" mr={5}>
-          <Flex display={['none', 'none', 'flex', 'flex']}>{userNav}</Flex>
-        </Flex>
-        <Flex>
+        {!isAuth ? (
+          <Flex align="center" ml="auto" mr={5}>
+            <Flex display={['none', 'none', 'flex', 'flex']}>{userNav}</Flex>
+          </Flex>
+        ) : (
+          <Menu>
+            <MenuButton
+              as={Button}
+              rounded={'full'}
+              variant={'link'}
+              cursor={'pointer'}
+              minW={0}
+            >
+              <Avatar size={'sm'} src={profileImage} />
+              <ChevronDownIcon />
+            </MenuButton>
+            <MenuList alignItems={'center'}>
+              <br />
+              <Center>
+                <Avatar size={'2xl'} src={profileImage} />
+              </Center>
+              <br />
+              <Center>
+                <p>
+                  {firstName} {lastName}
+                </p>
+              </Center>
+              <br />
+              <MenuDivider />
+              {/* I can insert event onClick inside menuItem component */}
+              <MenuItem>
+                <Link to="/perfil">Cuenta</Link>
+              </MenuItem>
+              <MenuItem color="red" onClick={handleLogout}>
+                Desconectarse
+              </MenuItem>
+            </MenuList>
+          </Menu>
+        )}
+        <Flex m={2} p={2}>
           <IconButton
             aria-label="Open Menu"
             size="lg"
