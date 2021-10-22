@@ -16,17 +16,17 @@ pipelines:
             - aws s3 cp --cache-control max-age=0 ./build/service-worker.js s3://$PRODUCTION_BUCKET_NAME/
   pull-requests:
     "**":
+      # - step:
+      #     name: Installing & Running Test
+      #     caches:
+      #       - node
+      #     script:
+      #       - rm -rf package-lock.json
+      #       - rm -rf node_modules
+      #       - npm install
+      #       - npm run test:nowatch
       - step:
-          name: Installing & Running Test
-          caches:
-            - node
-          script:
-            - rm -rf package-lock.json
-            - rm -rf node_modules
-            - npm install
-            - npm run test:nowatch
-      - step:
-          name: Code linting
+          name: Installing & Code linting
           script:
             - npm install
             - npm run lint
