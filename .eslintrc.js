@@ -14,17 +14,10 @@ module.exports = {
     ecmaVersion: 2020,
     sourceType: 'module',
   },
-  extends: ['plugin:react/recommended', 'plugin:prettier/recommended'],
+  extends: ['plugin:react/recommended'],
   plugins: ['react-hooks'],
   // add your custom rules here
   rules: {
-    'prettier/prettier': [
-      'error',
-      {
-        endOfLine: 'auto',
-        semi: false,
-      },
-    ],
     'react/prop-types': 0,
     'no-console': 2,
     'react-hooks/rules-of-hooks': 'error', // Checks rules of Hooks
