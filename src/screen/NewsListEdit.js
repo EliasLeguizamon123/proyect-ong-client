@@ -11,8 +11,10 @@ import {
   Image,
   Flex,
   Center,
+  Heading,
+  Stack,
 } from '@chakra-ui/react'
-import { DeleteIcon, EditIcon } from '@chakra-ui/icons'
+import { AddIcon, ArrowBackIcon, DeleteIcon, EditIcon } from '@chakra-ui/icons'
 import Paginator from '../components/Paginator'
 import { sendRequest } from '../utils/sendRequest'
 import { alertSuccess, alertConfirm } from '../utils/alerts'
@@ -40,7 +42,7 @@ const NewsListEdit = () => {
     const sliceStart = selected * limit
     setItemsToShow(allNnews.slice(sliceStart, sliceStart + limit))
   }
-  const handleDelete = (id) => {
+  const handleDelete = id => {
     alertConfirm(
       'Seguro deseas borrar esta novedad?',
       'Esta accion es irreversible',
@@ -53,18 +55,38 @@ const NewsListEdit = () => {
     )
   }
 
-  const handleEdit = (id) => {
+  const handleEdit = id => {
     history.push(`/backoffice/novedades/${id}`)
   }
 
   return (
     <>
-      <Center minH="70vh">
+      <Center minH='70vh' display='flex' flexDirection='column'>
+        <Stack
+          width='70%'
+          align='center'
+          display='flex'
+          flexDir='row'
+          justifyContent='space-between'
+        >
+          <IconButton
+            icon={<ArrowBackIcon />}
+            colorScheme='gray'
+            width='2rem'
+            onClick={() => history.goBack()}
+          />
+          <Heading>Listado de Novedades</Heading>
+          <IconButton
+            icon={<AddIcon />}
+            colorScheme='blue'
+            onClick={() => history.push('/backoffice/novedades')}
+          />
+        </Stack>
         <Table
-          bg="white"
-          rounded="lg"
-          boxShadow="lg"
-          margin="10px 0"
+          bg='white'
+          rounded='lg'
+          boxShadow='lg'
+          margin='10px 0'
           w={['100%', '90%', '80%']}
         >
           <Thead>
@@ -76,32 +98,32 @@ const NewsListEdit = () => {
             </Tr>
           </Thead>
           <Tbody>
-            {itemsToShow?.map((element) => {
+            {itemsToShow?.map(element => {
               return (
                 <Tr key={element.id} _hover={{ boxShadow: 'lg' }}>
                   <Td>{element.name}</Td>
-                  <Td padding="10px">
-                    <Image src={element.image} maxH="130px" />
+                  <Td padding='10px'>
+                    <Image src={element.image} maxH='130px' />
                   </Td>
                   <Td display={['none', 'table-cell']}>
                     {element.createdAt.slice(8, 10)}/
                     {element.createdAt.slice(5, 7)}
                   </Td>
                   <Td>
-                    <Flex direction="column" maxW="50px">
+                    <Flex direction='column' maxW='50px'>
                       <IconButton
-                        variant="outline"
-                        margin="10px"
-                        aria-label="Borrar novedad"
-                        fontSize="20px"
+                        variant='outline'
+                        margin='10px'
+                        aria-label='Borrar novedad'
+                        fontSize='20px'
                         icon={<DeleteIcon />}
                         onClick={() => handleDelete(element.id)}
                       />
                       <IconButton
-                        variant="outline"
-                        margin="10px"
-                        aria-label="Editar novedad"
-                        fontSize="20px"
+                        variant='outline'
+                        margin='10px'
+                        aria-label='Editar novedad'
+                        fontSize='20px'
                         icon={<EditIcon />}
                         onClick={() => handleEdit(element.id)}
                       />
