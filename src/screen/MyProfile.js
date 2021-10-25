@@ -2,7 +2,7 @@ import React from 'react'
 import { useState, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { logout } from '../features/user/userSlice'
-import { useHistory } from 'react-router'
+import { useHistory } from 'react-router-dom'
 
 import { Formik, Form } from 'formik'
 import * as Yup from 'yup'

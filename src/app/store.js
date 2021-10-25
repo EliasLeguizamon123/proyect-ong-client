@@ -5,6 +5,7 @@ const store = configureStore({
   reducer: {
     user: userReducer,
   },
+  preloadedState: JSON.parse(localStorage.getItem('redux-state')) || {},
 })
 
 let currentAuthState
@@ -17,8 +18,8 @@ function handleChange() {
 
   // We will only act if the authenticated property changed
   if (previousAuthState !== currentAuthState) {
-    if (currentAuthState === false) localStorage.removeItem('token')
-    else localStorage.setItem('token', state.user.token)
+    if (currentAuthState === false) localStorage.removeItem('redux-state')
+    else localStorage.setItem('redux-state', JSON.stringify(state))
   }
 }
 

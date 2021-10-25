@@ -27,12 +27,9 @@ const LoginRegisterForm = ({ isRegister }) => {
     } else {
       user = { email, password }
     }
-    const token = await authentication(isRegister, user)
-
-    if (token) {
-      // If the user contains the password delete it not to store it raw in the state
-      delete user.password
-      dispatch(login({ userData: user, token }))
+    const fetchedData = await authentication(isRegister, user)
+    if (fetchedData.token) {
+      dispatch(login(fetchedData))
       history.push('/')
     }
   }

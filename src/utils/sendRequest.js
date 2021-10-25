@@ -9,12 +9,15 @@ export const sendRequest = async (method, relativeUrl, data) => {
   const url = baseUrl + relativeUrl
 
   const headers = {}
-  const token = localStorage.getItem('token')
+  const state = JSON.parse(localStorage.getItem('redux-state') || '{}')
 
-  // If the token exists it adds it to the authorization header
-  if (token) headers.Authorization = `Bearer ${token}`
+  let token = null
+  if (state.user && state.user.token) token = state.user.token
 
   try {
+    // If the token exists it adds it to the authorization header
+    if (token) headers.Authorization = `Bearer ${token}`
+
     const response = await axios({
       method,
       url,
