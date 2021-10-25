@@ -9,12 +9,12 @@ const cardList = [
   {
     title: 'Novedades',
     img: newsImg,
-    path: '/backoffice/novedades',
+    path: '/backoffice/listado-novedades/',
   },
   {
     title: 'Actividades',
     img: newsImg,
-    path: '/backoffice/actividades',
+    path: '/backoffice/activities-list',
   },
   {
     title: 'Categorías',
@@ -24,12 +24,12 @@ const cardList = [
   {
     title: 'Testimonios',
     img: newsImg,
-    path: '/backoffice/testimonios',
+    path: '/backoffice/testimonials-list',
   },
   {
     title: 'Organización',
     img: newsImg,
-    path: '/backoffice/organizacion',
+    path: '/backoffice/edit-organization',
   },
   {
     title: 'Slides',

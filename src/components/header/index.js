@@ -13,7 +13,7 @@ import {
   MenuDivider,
   MenuItem,
 } from '@chakra-ui/react'
-import { Link, useRouteMatch } from 'react-router-dom'
+import { Link, useRouteMatch, useHistory } from 'react-router-dom'
 import { HamburgerIcon, CloseIcon, ChevronDownIcon } from '@chakra-ui/icons'
 import { sendRequest } from '../../utils/sendRequest'
 import { useSelector } from 'react-redux'
@@ -29,17 +29,17 @@ const Header = ({
   //states
   const [display, changeDisplay] = useState('none')
   const [image, setImage] = useState({})
-
+  const history = useHistory()
   const getImage = () =>
-    sendRequest('GET', '/organizations/1').then((res) => {
+    sendRequest('GET', '/organizations/1').then(res => {
       if (res && res.length) {
         const { image, alt } = res[0]
         setImage({ image, alt })
       }
     })
 
-  const userData = useSelector((state) => state.user.userData)
-  const isAuth = useSelector((state) => state.user.authenticated)
+  const userData = useSelector(state => state.user.userData)
+  const isAuth = useSelector(state => state.user.authenticated)
 
   let itemsNav = webLinks.map((link, index) => (
     <ActiveLink
@@ -65,30 +65,31 @@ const Header = ({
 
   const handleLogout = () => {
     dispatch(logout())
+    history.push('/')
   }
 
   return (
     <nav>
       <Flex>
         <Flex display={['none', 'none', 'flex', 'flex']}>
-          <Link to="/">
+          <Link to='/'>
             <Image
               src={image.image}
               alt={image.alt}
-              maxW="5rem"
+              maxW='5rem'
               mt={1}
               ml={1}
               mr={3}
               borderRadius={'5px'}
-              maxh="30px"
-              fallbackSrc="https://via.placeholder.com/150"
+              maxh='30px'
+              fallbackSrc='https://via.placeholder.com/150'
             />
           </Link>
           {itemsNav}
         </Flex>
         <Spacer />
         {!isAuth ? (
-          <Flex align="center" ml="auto" mr={5}>
+          <Flex align='center' ml='auto' mr={5}>
             <Flex display={['none', 'none', 'flex', 'flex']}>{userNav}</Flex>
           </Flex>
         ) : (
@@ -118,13 +119,13 @@ const Header = ({
               <MenuDivider />
               {userData.isAdmin && (
                 <MenuItem>
-                  <Link to="/backoffice">Administrar</Link>
+                  <Link to='/backoffice'>Administrar</Link>
                 </MenuItem>
               )}
               <MenuItem>
-                <Link to="/perfil">Cuenta</Link>
+                <Link to='/perfil'>Cuenta</Link>
               </MenuItem>
-              <MenuItem color="red" onClick={handleLogout}>
+              <MenuItem color='red' onClick={handleLogout}>
                 Desconectarse
               </MenuItem>
             </MenuList>
@@ -132,8 +133,8 @@ const Header = ({
         )}
         <Flex m={2} p={2}>
           <IconButton
-            aria-label="Open Menu"
-            size="lg"
+            aria-label='Open Menu'
+            size='lg'
             mr={2}
             my={3}
             icon={<HamburgerIcon />}
@@ -142,28 +143,28 @@ const Header = ({
           />
         </Flex>
         <Flex
-          w="100vw"
-          bgColor="gray.50"
+          w='100vw'
+          bgColor='gray.50'
           zIndex={20}
-          h="100vh"
-          pos="fixed"
-          top="0"
-          left="0"
-          overflowY="auto"
-          flexDir="column"
+          h='100vh'
+          pos='fixed'
+          top='0'
+          left='0'
+          overflowY='auto'
+          flexDir='column'
           display={display}
         >
-          <Flex justify="flex-end">
+          <Flex justify='flex-end'>
             <IconButton
-              aria-label="Close Menu"
+              aria-label='Close Menu'
               mt={3}
               mr={3}
-              size="md"
+              size='md'
               icon={<CloseIcon />}
               onClick={() => changeDisplay('none')}
             />
           </Flex>
-          <Flex flexDir="column" align="center">
+          <Flex flexDir='column' align='center'>
             {itemsNav}
             <hr />
             {userNav}
@@ -173,7 +174,7 @@ const Header = ({
     </nav>
   )
 }
-function ActiveLink({ activeOnlyWhenExact, to, label, activeTextColor }) {
+function ActiveLink ({ activeOnlyWhenExact, to, label, activeTextColor }) {
   let activeMatch = useRouteMatch({
     path: to,
     exact: activeOnlyWhenExact,
@@ -181,11 +182,11 @@ function ActiveLink({ activeOnlyWhenExact, to, label, activeTextColor }) {
   if (activeMatch) {
     return (
       <Button
-        as="a"
+        as='a'
         href={to}
-        variant="ghost"
+        variant='ghost'
         my={3}
-        w="100%"
+        w='100%'
         color={activeTextColor}
       >
         {label}
@@ -194,7 +195,7 @@ function ActiveLink({ activeOnlyWhenExact, to, label, activeTextColor }) {
   } else {
     return (
       <div>
-        <Button as="a" variant="ghost" my={3} w="100%" href={to}>
+        <Button as='a' variant='ghost' my={3} w='100%' href={to}>
           {label}
         </Button>
       </div>

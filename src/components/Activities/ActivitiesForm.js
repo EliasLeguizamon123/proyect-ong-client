@@ -13,6 +13,7 @@ import {
   Box,
   Input,
   Image,
+  IconButton,
 } from '@chakra-ui/react'
 import ChakraInput from '../ChakraInput'
 import ChakraInputCKEditor from './ChakraInputCKEditor'
@@ -21,6 +22,8 @@ import { uploadFile } from '../../utils/AS3'
 
 import { sendRequest } from '../../utils/sendRequest'
 import { alertError, alertSuccess } from '../../utils/alerts'
+import { CloseIcon } from '@chakra-ui/icons'
+import { useHistory } from 'react-router-dom'
 
 const ActivitiesForm = () => {
   const [isUpdate, setIsUpdate] = useState(false)
@@ -32,10 +35,11 @@ const ActivitiesForm = () => {
     content: '',
   })
   const { id } = useParams()
+  const history = useHistory()
 
   useEffect(() => {
     if (id) {
-      async function fetchData() {
+      async function fetchData () {
         const response = await sendRequest('get', `/activities/${id}`)
 
         if (response && response.id) {
@@ -54,7 +58,7 @@ const ActivitiesForm = () => {
     } else setIsUpdate(false)
   }, [id])
 
-  const handleSubmit = async (values) => {
+  const handleSubmit = async values => {
     try {
       if (loadedFile) {
         // Uploads image to S3 and gets the uploaded file url
@@ -83,19 +87,30 @@ const ActivitiesForm = () => {
 
   return (
     <Flex
-      minH="100vh"
-      align="center"
-      justify="center"
+      minH='100vh'
+      align='center'
+      justify='center'
       bg={useColorModeValue('gray.50', 'gray.800')}
     >
-      <Stack spacing={8} mx="auto" maxW="lg" py={12} px={6} minW="60vw">
-        <Stack align="center">
-          <Heading fontSize="4xl">Actividades</Heading>
+      <Stack spacing={8} mx='auto' maxW='lg' py={12} px={6} minW='60vw'>
+        <Stack
+          align='center'
+          display='flex'
+          flexDir='row'
+          justifyContent='space-between'
+        >
+          <Heading fontSize='4xl'>Actividades</Heading>
+          <IconButton
+            icon={<CloseIcon />}
+            colorScheme='red'
+            width='2rem'
+            onClick={() => history.goBack()}
+          />
         </Stack>
         <Box
-          rounded="lg"
+          rounded='lg'
           bg={useColorModeValue('white', 'gray.700')}
-          boxShadow="lg"
+          boxShadow='lg'
           p={8}
         >
           <Formik
@@ -105,26 +120,26 @@ const ActivitiesForm = () => {
             onSubmit={handleSubmit}
           >
             <Form>
-              <ChakraInput name="name" type="text" label="Título" />
+              <ChakraInput name='name' type='text' label='Título' />
               {(imgData || iniValues.image) && (
                 <Image
-                  rounded="sm"
+                  rounded='sm'
                   src={imgData || iniValues.image}
-                  marginTop="20px"
+                  marginTop='20px'
                 />
               )}
               <ImageInput
                 buttonText={isUpdate ? 'Cambiar imagen' : 'Cargar imagen'}
                 onImageLoad={handleOnImageLoad}
               />
-              <ChakraInputCKEditor name="content" label="Contenido" />
+              <ChakraInputCKEditor name='content' label='Contenido' />
 
               <Input
-                type="submit"
-                bg="blue.400"
-                color="white"
-                width="100%"
-                marginTop="10px"
+                type='submit'
+                bg='blue.400'
+                color='white'
+                width='100%'
+                marginTop='10px'
                 _hover={{
                   bg: 'blue.500',
                 }}

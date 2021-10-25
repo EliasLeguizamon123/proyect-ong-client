@@ -3,31 +3,29 @@ import BackTestimonialCard from '../components/Testimonials/BackTestimonialCard'
 import { sendRequest } from '../utils/sendRequest'
 import Paginator from '../components/Paginator'
 import { Heading } from '@chakra-ui/react'
-import { useHistory } from 'react-router-dom'
 
-const BackTestimonialsPage = () => {
+const BackActivitiesPage = () => {
   const [allData, setAllData] = useState([])
   const [items, setItems] = useState([])
   const [pageCount, setPageCount] = useState(0)
   const limit = 8
-  const history = useHistory()
 
   useEffect(() => {
-    const getTestimonials = async () => {
-      const res = await sendRequest('get', '/testimonials')
+    const getActivities = async () => {
+      const res = await sendRequest('get', '/activities')
       setAllData(res.rows)
       const total = res.count
       setPageCount(Math.ceil(total / limit))
       setItems(res.rows.slice(0, limit))
     }
-    getTestimonials()
-  }, [allData.length, pageCount])
+    getActivities()
+  }, [pageCount])
 
   const handleDelete = id => {
     // console.log(id)
   }
   const handleEdit = id => {
-    history.push(`/backoffice/testimonials/${id}`)
+    // console.log(id)
   }
 
   const renderData = () => {
@@ -51,7 +49,7 @@ const BackTestimonialsPage = () => {
   return (
     <div>
       <Heading textAlign='center' p={4}>
-        Listado de Testimonios
+        Listado de Actividades
       </Heading>
       {renderData()}
       <Paginator onPageChange={handlePageClick} pageCount={pageCount} />
@@ -59,4 +57,4 @@ const BackTestimonialsPage = () => {
   )
 }
 
-export default BackTestimonialsPage
+export default BackActivitiesPage

@@ -44,7 +44,7 @@ const MyProfile = () => {
   })
   const [userId, setUserId] = useState(null)
 
-  async function fetchData() {
+  async function fetchData () {
     try {
       const response = await sendRequest('get', '/auth/me')
       const { firstName, lastName, email, id } = response
@@ -59,9 +59,9 @@ const MyProfile = () => {
     fetchData()
   }, [])
 
-  const handleSubmit = async (values) => {
+  const handleSubmit = async values => {
     try {
-      await sendRequest('put', `/users/${userId}`, { ...values })
+      await sendRequest('patch', `/users/${userId}`, { ...values })
       alertSuccess('La información se actualizó exitosamente')
     } catch (error) {
       alertError('Algo salió mal', error.message)
@@ -81,19 +81,19 @@ const MyProfile = () => {
 
   return (
     <Flex
-      minH="100vh"
-      align="center"
-      justify="center"
+      minH='100vh'
+      align='center'
+      justify='center'
       bg={useColorModeValue('gray.50', 'gray.800')}
     >
-      <Stack spacing={8} mx="auto" maxW="lg" py={12} px={6} minW="60vw">
-        <Stack align="center">
-          <Heading fontSize="4xl">Mi perfil</Heading>
+      <Stack spacing={8} mx='auto' maxW='lg' py={12} px={6} minW='60vw'>
+        <Stack align='center'>
+          <Heading fontSize='4xl'>Mi perfil</Heading>
         </Stack>
         <Box
-          rounded="lg"
+          rounded='lg'
           bg={useColorModeValue('white', 'gray.700')}
-          boxShadow="lg"
+          boxShadow='lg'
           p={8}
         >
           <Formik
@@ -103,32 +103,32 @@ const MyProfile = () => {
             onSubmit={handleSubmit}
           >
             <Form>
-              <ChakraInput name="firstName" type="text" label="Nombre" />
-              <ChakraInput name="lastName" type="text" label="Apellido" />
-              <ChakraInput name="email" type="email" label="Email" />
+              <ChakraInput name='firstName' type='text' label='Nombre' />
+              <ChakraInput name='lastName' type='text' label='Apellido' />
+              <ChakraInput name='email' type='email' label='Email' />
 
               <Input
-                type="submit"
-                bg="blue.400"
-                color="white"
-                width="100%"
-                marginTop="10px"
+                type='submit'
+                bg='blue.400'
+                color='white'
+                width='100%'
+                marginTop='10px'
                 _hover={{
                   bg: 'blue.500',
                 }}
-                value="Editar datos"
+                value='Editar datos'
               />
               <Input
-                type="button"
+                type='button'
                 onClick={handleDelete}
-                bg="red.400"
-                color="white"
-                width="100%"
-                marginTop="10px"
+                bg='red.400'
+                color='white'
+                width='100%'
+                marginTop='10px'
                 _hover={{
                   bg: 'red.500',
                 }}
-                value="Eliminar cuenta"
+                value='Eliminar cuenta'
               />
             </Form>
           </Formik>
