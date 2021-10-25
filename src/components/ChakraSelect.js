@@ -13,6 +13,7 @@ const ChakraSelect = ({
   onChange,
   handleOptions,
   iniValues,
+  placeholder,
   ...rest
 }) => (
   <Field name={name}>
@@ -22,7 +23,7 @@ const ChakraSelect = ({
         <Select
           onChange={onChange}
           name={name}
-          placeholder={'Selecciona una categoría'}
+          placeholder={placeholder}
           value={iniValues[name]}
           {...field}
           {...rest}

@@ -7,11 +7,13 @@ import {
   Th,
   Td,
   IconButton,
+  Flex,
   Box,
 } from '@chakra-ui/react'
-import { ViewIcon } from '@chakra-ui/icons'
+import { ViewIcon, DeleteIcon } from '@chakra-ui/icons'
 import Paginator from '../Paginator'
 import { sendRequest } from '../../utils/sendRequest'
+import { alertSuccess, alertConfirm } from '../../utils/alerts'
 
 export default function ContactTable({ viewMessage }) {
   const [data, setData] = useState()
@@ -32,6 +34,18 @@ export default function ContactTable({ viewMessage }) {
     const pageOffset = data.selected * limit
     setOffset(pageOffset)
   }
+  //I need create Route to delete contacts
+  const handleDelete = (id) => {
+    alertConfirm(
+      'Seguro deseas borrar esta novedad?',
+      'Esta accion es irreversible',
+      async () => {
+        await sendRequest('delete', `/contacts/${id}`)
+        await alertSuccess('Novedad borrada con éxito')
+        fetchData()
+      }
+    )
+  }
 
   useEffect(() => {
     if (!data) {
@@ -44,8 +58,8 @@ export default function ContactTable({ viewMessage }) {
   }, [offset, fetchData])
 
   return (
-    <>
-      <Box marginBottom="10px" overflow="overflowX" w="100vw" overflowX="auto">
+    <Flex direction="column">
+      <Box marginBottom="10px" overflow="overflowX" w="150vh" overflowX="auto">
         <Table
           w={['100%', '100%', '80%', '60%']}
           bg="white"
@@ -69,14 +83,25 @@ export default function ContactTable({ viewMessage }) {
                   <Td>{element.email}</Td>
                   <Td>{element.phone}</Td>
                   <Td>
-                    <IconButton
-                      variant="outline"
-                      colorScheme="teal"
-                      aria-label="Ver mensaje"
-                      fontSize="20px"
-                      icon={<ViewIcon />}
-                      onClick={() => viewMessage(element)}
-                    />
+                    <Flex direction="column" maxW="50px">
+                      <IconButton
+                        variant="outline"
+                        aria-label="Borrar mensaje"
+                        fontSize="20px"
+                        icon={<DeleteIcon />}
+                        m={1}
+                        onClick={() => handleDelete(element.id)}
+                      />
+                      <IconButton
+                        variant="outline"
+                        colorScheme="teal"
+                        aria-label="Ver mensaje"
+                        fontSize="20px"
+                        icon={<ViewIcon />}
+                        m={1}
+                        onClick={() => viewMessage(element)}
+                      />
+                    </Flex>
                   </Td>
                 </Tr>
               )
@@ -85,6 +110,6 @@ export default function ContactTable({ viewMessage }) {
         </Table>
       </Box>
       <Paginator onPageChange={handlePageChange} pageCount={pageTotal} />
-    </>
+    </Flex>
   )
 }

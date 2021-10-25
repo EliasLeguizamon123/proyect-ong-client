@@ -2,8 +2,8 @@
 . "$(dirname "$0")/_/husky.sh"
 
 npm run test:nowatch
-npm run lint:fix
-git add .
+npm run lint
+# git add .
 
 
 
