@@ -1,8 +1,9 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
-import { logout } from '../features/user/userSlice'
+import { login, logout } from '../features/user/userSlice'
 import { useHistory } from 'react-router-dom'
+import { uploadFile } from '../utils/AS3'
 
 import { Formik, Form } from 'formik'
 import * as Yup from 'yup'
@@ -14,11 +15,22 @@ import {
   Heading,
   Box,
   Input,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+  useDisclosure,
+  FormControl,
+  Button,
 } from '@chakra-ui/react'
 import ChakraInput from '../components/ChakraInput'
+import DropImage from '../components/DropImage'
 
 import { sendRequest } from '../utils/sendRequest'
 import { alertError, alertSuccess } from '../utils/alerts'
+import authentication from '../utils/authentication'
 
 const FormSchema = Yup.object().shape({
   firstName: Yup.string()
@@ -41,14 +53,16 @@ const MyProfile = () => {
     firstName: '',
     lastName: '',
     email: '',
+    image: '',
   })
   const [userId, setUserId] = useState(null)
-
+  const [password, setPassword] = useState('')
+  const isRegister = false
   async function fetchData () {
     try {
       const response = await sendRequest('get', '/auth/me')
-      const { firstName, lastName, email, id } = response
-      setIniValues({ firstName, lastName, email })
+      const { firstName, lastName, email, image, id } = response
+      setIniValues({ firstName, lastName, email, image })
       setUserId(id)
     } catch (error) {
       alertError('Algo salió mal', error.message)
@@ -59,10 +73,48 @@ const MyProfile = () => {
     fetchData()
   }, [])
 
+  const { isOpen, onOpen, onClose } = useDisclosure()
+
+  const handlePasswordModal = values => {
+    return (
+      <Modal isOpen={isOpen} onClose={onClose}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalBody>
+            <FormControl mt={4}>
+              <Input
+                placeholder='Ingrese su contraseña'
+                type='password'
+                onChange={e => setPassword(e.target.value)}
+              />
+            </FormControl>
+          </ModalBody>
+
+          <ModalFooter>
+            <Button
+              colorScheme='blue'
+              mr={3}
+              onClick={() => handleSubmit(values)}
+            >
+              Editar datos
+            </Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
+    )
+  }
+
   const handleSubmit = async values => {
     try {
+      const user = { email: values.email, password }
       await sendRequest('patch', `/users/${userId}`, { ...values })
-      alertSuccess('La información se actualizó exitosamente')
+      const fetchedData = await authentication(isRegister, user)
+      if (fetchedData.token) {
+        dispatch(login(fetchedData))
+        onClose()
+        await alertSuccess('La información se actualizó exitosamente')
+        history.replace('/')
+      }
     } catch (error) {
       alertError('Algo salió mal', error.message)
     }
@@ -102,35 +154,48 @@ const MyProfile = () => {
             validationSchema={FormSchema}
             onSubmit={handleSubmit}
           >
-            <Form>
-              <ChakraInput name='firstName' type='text' label='Nombre' />
-              <ChakraInput name='lastName' type='text' label='Apellido' />
-              <ChakraInput name='email' type='email' label='Email' />
+            {props => (
+              <Form>
+                <ChakraInput name='firstName' type='text' label='Nombre' />
+                <ChakraInput name='lastName' type='text' label='Apellido' />
+                <ChakraInput name='email' type='email' label='Email' />
+                <DropImage
+                  name='image'
+                  image={iniValues.image}
+                  onDrop={async file => {
+                    const res = await uploadFile(file[0])
 
-              <Input
-                type='submit'
-                bg='blue.400'
-                color='white'
-                width='100%'
-                marginTop='10px'
-                _hover={{
-                  bg: 'blue.500',
-                }}
-                value='Editar datos'
-              />
-              <Input
-                type='button'
-                onClick={handleDelete}
-                bg='red.400'
-                color='white'
-                width='100%'
-                marginTop='10px'
-                _hover={{
-                  bg: 'red.500',
-                }}
-                value='Eliminar cuenta'
-              />
-            </Form>
+                    props.setFieldValue('image', res.location)
+                    props.initialValues.image = res.location
+                  }}
+                />
+                <Input
+                  type='button'
+                  onClick={onOpen}
+                  bg='blue.400'
+                  color='white'
+                  width='100%'
+                  marginTop='10px'
+                  _hover={{
+                    bg: 'blue.500',
+                  }}
+                  value='Editar datos'
+                />
+                <Input
+                  type='button'
+                  onClick={handleDelete}
+                  bg='red.400'
+                  color='white'
+                  width='100%'
+                  marginTop='10px'
+                  _hover={{
+                    bg: 'red.500',
+                  }}
+                  value='Eliminar cuenta'
+                />
+                {handlePasswordModal(props.values)}
+              </Form>
+            )}
           </Formik>
         </Box>
       </Stack>

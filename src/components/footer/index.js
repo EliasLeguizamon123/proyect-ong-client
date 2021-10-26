@@ -20,7 +20,7 @@ const ListHeader = ({ text }) => {
   )
 }
 
-export default function Footer({
+export default function Footer ({
   webLinks = [{ name: 'Home', path: '/Home' }],
   bgColor = 'gray.50',
   textColor = 'gray.700',
@@ -30,12 +30,10 @@ export default function Footer({
   const [organization, setOrganization] = useState({})
 
   const getLinks = () =>
-    sendRequest('GET', '/organizations/1').then((res) => {
-      if (res && res.length) {
-        setSocialNetworks(res[0].OrganizationLinks)
-        const { name, image } = res[0]
-        setOrganization({ name, image })
-      }
+    sendRequest('GET', '/organizations/1').then(res => {
+      setSocialNetworks(res.OrganizationLinks)
+      const { name, image } = res
+      setOrganization({ name, image })
     })
 
   useEffect(() => {
@@ -51,23 +49,23 @@ export default function Footer({
           spacing={8}
         >
           <Stack spacing={6}>
-            <Box width="100px">
-              <img src={organization.image} alt="organization"></img>
+            <Box width='100px'>
+              <img src={organization.image} alt='organization'></img>
             </Box>
             <Text fontSize={'lg'} fontWeight={'700'}>
               {organization.name}
             </Text>
           </Stack>
           <Stack align={'flex-center'}>
-            <ListHeader text="Social Networks" />
-            {socialNetworks.map((social) => (
-              <Link key={social.id} href={social.link} target="_blank">
+            <ListHeader text='Social Networks' />
+            {socialNetworks.map(social => (
+              <Link key={social.id} href={social.link} target='_blank'>
                 {social.socialNetwork}
               </Link>
             ))}
           </Stack>
           <Stack align={'flex-center'}>
-            <ListHeader text="Links" />
+            <ListHeader text='Links' />
             {webLinks.map((links, index) => (
               <Link key={index} href={links.path}>
                 {links.name}

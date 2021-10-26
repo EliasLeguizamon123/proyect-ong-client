@@ -25,21 +25,19 @@ const Header = ({
   userLinks = [{ name: 'registro', path: '/registro' }],
 }) => {
   const dispatch = useDispatch()
-  const activeTextColor = 'blue.200'
+  const activeTextColor = '#DB5752'
   //states
   const [display, changeDisplay] = useState('none')
   const [image, setImage] = useState({})
   const history = useHistory()
   const getImage = () =>
     sendRequest('GET', '/organizations/1').then(res => {
-      if (res && res.length) {
-        const { image, alt } = res[0]
-        setImage({ image, alt })
-      }
+      const { image, alt } = res
+      setImage({ image, alt })
     })
-
   const userData = useSelector(state => state.user.userData)
   const isAuth = useSelector(state => state.user.authenticated)
+  const profileImage = useSelector(state => state.user.userData.image)
 
   let itemsNav = webLinks.map((link, index) => (
     <ActiveLink
@@ -61,7 +59,7 @@ const Header = ({
   ))
   useEffect(() => {
     getImage()
-  }, [])
+  }, [userData])
 
   const handleLogout = () => {
     dispatch(logout())
@@ -89,7 +87,7 @@ const Header = ({
         </Flex>
         <Spacer />
         {!isAuth ? (
-          <Flex align='center' ml='auto' mr={5}>
+          <Flex ml='auto' mr={5}>
             <Flex display={['none', 'none', 'flex', 'flex']}>{userNav}</Flex>
           </Flex>
         ) : (
@@ -101,13 +99,13 @@ const Header = ({
               cursor={'pointer'}
               minW={0}
             >
-              <Avatar size={'sm'} src={userData.image} />
+              <Avatar size={'sm'} src={profileImage} />
               <ChevronDownIcon />
             </MenuButton>
             <MenuList alignItems={'center'}>
               <br />
               <Center>
-                <Avatar size={'2xl'} src={userData.image} />
+                <Avatar size={'2xl'} src={profileImage} />
               </Center>
               <br />
               <Center>
