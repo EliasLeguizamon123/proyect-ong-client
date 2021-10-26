@@ -10,7 +10,7 @@ export default function Spinner({
   timeout = 4000  //4 seg
 }) {
   return (
-    <Box align="center" justify="center" spacing={4}>
+    <Box align="center" justify="center" spacing={4} margin="120px">
       <Loader
         type={type}
         color={color}
