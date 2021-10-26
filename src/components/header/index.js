@@ -32,10 +32,8 @@ const Header = ({
   const history = useHistory()
   const getImage = () =>
     sendRequest('GET', '/organizations/1').then(res => {
-      if (res && res.length) {
-        const { image, alt } = res[0]
-        setImage({ image, alt })
-      }
+      const { image, alt } = res
+      setImage({ image, alt })
     })
 
   const userData = useSelector(state => state.user.userData)

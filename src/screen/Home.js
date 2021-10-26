@@ -5,18 +5,18 @@ import { sendRequest } from '../utils/sendRequest'
 import NewsCard from '../components/News/NewsCard'
 import { Heading } from '@chakra-ui/react'
 
-export default function Home() {
+export default function Home () {
   const [news, setNews] = useState([])
   const [welcome, setWelcome] = useState('')
   const getMessage = () => {
-    sendRequest('GET', '/organizations/1').then((res) => {
+    sendRequest('GET', '/organizations/1').then(res => {
       if (res) {
-        setWelcome(res[0].welcomeText)
+        setWelcome(res.welcomeText)
       }
     })
   }
   const getNews = () =>
-    sendRequest('GET', '/news').then((res) => {
+    sendRequest('GET', '/news').then(res => {
       if (res) {
         const newArray = res.rows.slice(0, 4)
         setNews(newArray)
@@ -29,11 +29,11 @@ export default function Home() {
   }, [])
   return (
     <div>
-      <Heading fontSize="4xl" my="10px">
+      <Heading fontSize='4xl' my='10px'>
         {welcome}
       </Heading>
       <SlideShow />
-      {news.map((neew) => (
+      {news.map(neew => (
         <Link key={neew.id} to={`/novedades/${neew.id}`}>
           <NewsCard title={neew.name} image={neew.image} />
         </Link>
