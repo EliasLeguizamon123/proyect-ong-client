@@ -16,6 +16,7 @@ export default function Spinner({
         color={color}
         height={height}
         width={width}
+        timeout={timeout}
       />
       <Text fontSize="xl" >Cargando ...</Text>
     </Box>
