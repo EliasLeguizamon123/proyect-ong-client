@@ -39,6 +39,7 @@ const BackTestimonialsPage = lazy(() =>
 const OrganizationForm = lazy(() =>
   import('../components/Organization/OrganizationForm')
 )
+const Activities = lazy(() => import('../screen/Activities'))
 const MyProfile = lazy(() => import('../screen/MyProfile'))
 const LayoutBackoffice = lazy(() => import('../screen/LayoutBackoffice'))
 const ActivitiesPage = lazy(() => import('../screen/ActivitiesPage'))
@@ -131,6 +132,10 @@ export default function Router () {
             <PrivateRoute
               path='/backoffice/categories'
               component={Categories}
+            />
+            <PrivateRoute
+              path='/backoffice/activities'
+              component={Activities}
             />
           </Box>
         </Switch>
