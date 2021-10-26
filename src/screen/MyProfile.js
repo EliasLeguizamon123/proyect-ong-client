@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { logout } from '../features/user/userSlice'
 import { useHistory } from 'react-router-dom'
+import { uploadFile } from '../utils/AS3'
 
 import { Formik, Form } from 'formik'
 import * as Yup from 'yup'
@@ -16,6 +17,7 @@ import {
   Input,
 } from '@chakra-ui/react'
 import ChakraInput from '../components/ChakraInput'
+import DropImage from '../components/DropImage'
 
 import { sendRequest } from '../utils/sendRequest'
 import { alertError, alertSuccess } from '../utils/alerts'
@@ -41,14 +43,15 @@ const MyProfile = () => {
     firstName: '',
     lastName: '',
     email: '',
+    image: '',
   })
   const [userId, setUserId] = useState(null)
 
   async function fetchData () {
     try {
       const response = await sendRequest('get', '/auth/me')
-      const { firstName, lastName, email, id } = response
-      setIniValues({ firstName, lastName, email })
+      const { firstName, lastName, email, image, id } = response
+      setIniValues({ firstName, lastName, email, image })
       setUserId(id)
     } catch (error) {
       alertError('Algo salió mal', error.message)
@@ -63,6 +66,7 @@ const MyProfile = () => {
     try {
       await sendRequest('patch', `/users/${userId}`, { ...values })
       alertSuccess('La información se actualizó exitosamente')
+      window.location.replace('/')
     } catch (error) {
       alertError('Algo salió mal', error.message)
     }
@@ -102,11 +106,21 @@ const MyProfile = () => {
             validationSchema={FormSchema}
             onSubmit={handleSubmit}
           >
-            <Form>
+            {props => (
+              <Form>
               <ChakraInput name='firstName' type='text' label='Nombre' />
               <ChakraInput name='lastName' type='text' label='Apellido' />
               <ChakraInput name='email' type='email' label='Email' />
+              <DropImage
+                  name='image'
+                  image={iniValues.image}
+                  onDrop={async file => {
+                    const res = await uploadFile(file[0])
 
+                    props.setFieldValue('image', res.location)
+                    props.initialValues.image = res.location
+                  }}
+                />
               <Input
                 type='submit'
                 bg='blue.400'
@@ -131,6 +145,7 @@ const MyProfile = () => {
                 value='Eliminar cuenta'
               />
             </Form>
+            )}
           </Formik>
         </Box>
       </Stack>

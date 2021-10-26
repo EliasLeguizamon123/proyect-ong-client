@@ -35,9 +35,9 @@ const Header = ({
       const { image, alt } = res
       setImage({ image, alt })
     })
-
   const userData = useSelector(state => state.user.userData)
   const isAuth = useSelector(state => state.user.authenticated)
+  const profileImage = useSelector(state => state.user.userData.image)
 
   let itemsNav = webLinks.map((link, index) => (
     <ActiveLink
@@ -59,7 +59,7 @@ const Header = ({
   ))
   useEffect(() => {
     getImage()
-  }, [])
+  }, [image])
 
   const handleLogout = () => {
     dispatch(logout())
@@ -99,13 +99,13 @@ const Header = ({
               cursor={'pointer'}
               minW={0}
             >
-              <Avatar size={'sm'} src={userData.image} />
+              <Avatar size={'sm'} src={profileImage} />
               <ChevronDownIcon />
             </MenuButton>
             <MenuList alignItems={'center'}>
               <br />
               <Center>
-                <Avatar size={'2xl'} src={userData.image} />
+                <Avatar size={'2xl'} src={profileImage} />
               </Center>
               <br />
               <Center>
