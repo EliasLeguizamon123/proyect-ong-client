@@ -179,23 +179,20 @@ function ActiveLink ({ activeOnlyWhenExact, to, label, activeTextColor }) {
   })
   if (activeMatch) {
     return (
-      <Button
-        as='a'
-        href={to}
-        variant='ghost'
-        my={3}
-        w='100%'
-        color={activeTextColor}
-      >
-        {label}
-      </Button>
+      <Link to={to}>
+        <Button variant='ghost' my={3} w='100%' color={activeTextColor}>
+          {label}
+        </Button>
+      </Link>
     )
   } else {
     return (
       <div>
-        <Button as='a' variant='ghost' my={3} w='100%' href={to}>
-          {label}
-        </Button>
+        <Link to={to}>
+          <Button variant='ghost' my={3} w='100%'>
+            {label}
+          </Button>
+        </Link>
       </div>
     )
   }

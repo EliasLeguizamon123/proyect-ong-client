@@ -16,20 +16,20 @@ const NewsCard = ({ title, image }) => {
         margin: '1rem',
       }}
       columns={{ sm: 1, md: 2 }}
-      rounded="lg"
+      rounded='lg'
       bg={useColorModeValue('white', 'gray.700')}
-      boxShadow="lg"
+      boxShadow='lg'
       p={4}
     >
       <Center>
-        <Heading>{title}</Heading>
+        <Heading size={'md'}>{title}</Heading>
       </Center>
       <Center>
         <Image
           height={'13rem'}
-          rounded="lg"
+          rounded='lg'
           src={image}
-          fallbackSrc="https://via.placeholder.com/200"
+          fallbackSrc='https://via.placeholder.com/200'
         />
       </Center>
     </SimpleGrid>
