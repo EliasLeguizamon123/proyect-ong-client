@@ -88,7 +88,7 @@ const Header = ({
         </Flex>
         <Spacer />
         {!isAuth ? (
-          <Flex align="center" ml="auto" mr={5}>
+          <Flex ml="auto" mr={5}>
             <Flex display={['none', 'none', 'flex', 'flex']}>{userNav}</Flex>
           </Flex>
         ) : (

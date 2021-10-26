@@ -39,14 +39,14 @@ const LoginRegisterForm = ({ isRegister }) => {
       return (
         <Text align="center">
           {`You've already have an account? `}
-          <Link to="/login">Login</Link>
+          <Link to="/login"> Login</Link>
         </Text>
       )
     }
     return (
-      <Text align="center">
+      <Text align="center"> {{a{ color: red; }}}
         {`Don't have an account?`}
-        <Link to="/register">Sign In</Link>
+        <Link to="/register" > Sign In</Link>
       </Text>
     )
   }
