@@ -13,7 +13,7 @@ const authentication = async (isRegister, userData) => {
 
     return { token: response.token, userData: data }
   } catch (err) {
-    alertError('Error', err.message)
+    alertError('', 'Error de credenciales')
   }
 }
 

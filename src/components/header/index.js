@@ -59,7 +59,7 @@ const Header = ({
   ))
   useEffect(() => {
     getImage()
-  }, [image])
+  }, [userData])
 
   const handleLogout = () => {
     dispatch(logout())
@@ -87,7 +87,7 @@ const Header = ({
         </Flex>
         <Spacer />
         {!isAuth ? (
-          <Flex ml="auto" mr={5}>
+          <Flex ml='auto' mr={5}>
             <Flex display={['none', 'none', 'flex', 'flex']}>{userNav}</Flex>
           </Flex>
         ) : (
