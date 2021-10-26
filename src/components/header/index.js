@@ -25,7 +25,7 @@ const Header = ({
   userLinks = [{ name: 'registro', path: '/registro' }],
 }) => {
   const dispatch = useDispatch()
-  const activeTextColor = 'blue.200'
+  const activeTextColor = '#DB5752'
   //states
   const [display, changeDisplay] = useState('none')
   const [image, setImage] = useState({})
