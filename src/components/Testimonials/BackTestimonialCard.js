@@ -14,13 +14,14 @@ const BackTestimonialCard = ({ name, handleDelete, handleEdit }) => {
       <Stack
         justifyContent={'space-between'}
         direction={'row'}
-        spacing={{ base: 8, md: 10 }}
+        spacing={{ base: 5, md: 10 }}
         py={{ base: 10, md: 10 }}
       >
-        <Heading
-          fontWeight={600}
-          fontSize={{ base: '1xl', sm: '1xl', md: '3xl' }}
-          lineHeight={'10%'}
+        <Heading 
+          isTruncated
+          fontSize={{ base: '2x1', sm: '1xl', md: '3xl' }}
+          lineHeight={'70%'}
+          maxWidth={'90%'}
         >
           {name}
         </Heading>
