@@ -139,7 +139,13 @@ export default function Router () {
             />
           </Box>
         </Switch>
-        <Footer />
+        <Footer webLinks={[
+          { name: 'Nosotros', path: '/nosotros' },
+          { name: 'Novedades', path: '/novedades' },
+          { name: 'Actividades', path: '/actividades' },
+          { name: 'Testimonios', path: '/testimoniales' },
+          { name: 'Contacto', path: '/contacto' },
+        ]}/>
       </Suspense>
     </BrowserRouter>
   )
