@@ -32,7 +32,11 @@ const Header = ({
   const history = useHistory()
   const getImage = () =>
     sendRequest('GET', '/organizations/1').then(res => {
+      document.title = res.name
       const { image, alt } = res
+      const favicon = document.getElementById('favicon')
+      favicon.href = res.image
+
       setImage({ image, alt })
     })
   const userData = useSelector(state => state.user.userData)
@@ -116,13 +120,13 @@ const Header = ({
               <br />
               <MenuDivider />
               {userData.isAdmin && (
-                <MenuItem>
-                  <Link to='/backoffice'>Administrar</Link>
-                </MenuItem>
+                <Link to='/backoffice'>
+                  <MenuItem>Administrar</MenuItem>
+                </Link>
               )}
-              <MenuItem>
-                <Link to='/perfil'>Cuenta</Link>
-              </MenuItem>
+              <Link to='/perfil'>
+                <MenuItem>Cuenta</MenuItem>
+              </Link>
               <MenuItem color='red' onClick={handleLogout}>
                 Desconectarse
               </MenuItem>

@@ -36,12 +36,12 @@ const OrganizationForm = () => {
       try {
         const res = await sendRequest('get', `/organizations/1`)
         const obNew = {
-          name: res[0].name,
-          image: res[0].image,
+          name: res.name,
+          image: res.image,
         }
         // Pass data to inputs
         setOrganizationIniValues(obNew)
-        setOrgLinks(res[0].OrganizationLinks)
+        setOrgLinks(res.OrganizationLinks)
       } catch (error) {
         setOrganizationIniValues({
           name: '',
