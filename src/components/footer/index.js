@@ -55,6 +55,9 @@ export default function Footer ({
             <Text fontSize={'lg'} fontWeight={'700'}>
               {organization.name}
             </Text>
+            <Text >
+              © Copyright by {organization.name} 2021
+            </Text>
           </Stack>
           <Stack align={'flex-center'}>
             <ListHeader text='Social Networks' />
