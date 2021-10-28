@@ -49,7 +49,7 @@ const AllUsers = () => {
   useEffect(() => {
     const getUsers = async () => {
       try {
-        const response = await sendRequest('get', '/categories')
+        const response = await sendRequest('get', '/users')
         if (response) setUsers(response)
       } catch (error) {
         alertError('Error', 'Something was wrong')
@@ -89,10 +89,10 @@ const AllUsers = () => {
                     <Td>{user.email}</Td>
                     <Td>
                       <Button
-                        bg="blue.400"
+                        bg="gray.300"
                         color="white"
                         _hover={{
-                          bg: 'blue.500',
+                          bg: 'yellow.300',
                         }}
                         size="xs"
                         onClick={() => {
@@ -104,10 +104,10 @@ const AllUsers = () => {
                     </Td>
                     <Td>
                       <Button
-                        bg="blue.400"
+                        bg="gray.300"
                         color="white"
                         _hover={{
-                          bg: 'blue.500',
+                          bg: 'red.300',
                         }}
                         size="xs"
                         onClick={() => {
