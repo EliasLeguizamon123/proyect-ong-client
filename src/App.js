@@ -7,7 +7,7 @@ import Router from './router'
 
 function App() {
   return (
-    <div style={{ background: '#e1e1e1' }}>
+    <div style={{ background: '#DDEDFE' }}>
       <Container maxW="container.lg" bg="white" boxShadow={'lg'}>
         <Router />
       </Container>
