@@ -9,11 +9,15 @@ import {
   TableCaption,
   Td,
   Center,
+  Heading,
+  Stack,
+  IconButton,
 } from '@chakra-ui/react'
 import Spinner from '../../utils/Spinner'
 import { useHistory } from 'react-router-dom'
 import { sendRequest } from '../../utils/sendRequest'
 import { alertError, Swal } from '../../utils/alerts'
+import { ArrowBackIcon } from '@chakra-ui/icons'
 
 const handleDelete = async (id) => {
   const res = await Swal.fire({
@@ -65,7 +69,28 @@ const AllUsers = () => {
           <Spinner />
         </Center>
       ) : (
-        <Table colorScheme="red" marginTop="10vh" marginBottom="10vh">
+        <Stack
+          pt={12}
+          direction="column"
+          align='center'
+          justifyContent='space-between'
+          spacing={4}
+        >
+          <Stack 
+            direction="row"
+            spacing={3}
+          >
+            <Heading>
+              Listado de usuarios registrados
+            </Heading>
+            <IconButton
+              icon={<ArrowBackIcon />}
+              colorScheme='gray'
+              width='2rem'
+              onClick={() => history.goBack()}
+            />
+          </Stack>
+          <Table colorScheme="red" marginTop="10vh" marginBottom="10vh">
           <TableCaption>
             En esta tabla se puede visualizar los usuarios registrados hasta el
             momento
@@ -121,6 +146,7 @@ const AllUsers = () => {
                 ))}
           </Tbody>
         </Table>
+        </Stack>
       )}
     </div>
   )
