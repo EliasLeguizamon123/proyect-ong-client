@@ -28,7 +28,7 @@ const FormSchema = Yup.object().shape({
 
 const CategoriesForm = () => {
   const { id } = useParams()
-  const isCreating = id ? true : false
+  const isCreating = id ? false : true
   const [loading, setLoading] = useState(true)
   const [category, setCategory] = useState({
     name: '',
