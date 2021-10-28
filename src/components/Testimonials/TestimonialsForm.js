@@ -1,6 +1,6 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
-import { useParams } from 'react-router-dom'
+import { useParams, useHistory } from 'react-router-dom'
 
 import { Formik, Form } from 'formik'
 import { FormSchema } from './testimonialsValidationSchema'
@@ -15,7 +15,7 @@ import {
 } from '@chakra-ui/react'
 import ChakraInput from '../ChakraInput'
 import ChakraInputCKEditor from './ChakraInputCKEditor'
-
+import { alertError, alertSuccess } from '../../utils/alerts'
 import { sendRequest } from '../../utils/sendRequest'
 
 const TestimonialsForm = () => {
@@ -26,6 +26,7 @@ const TestimonialsForm = () => {
     content: '',
   })
   const { id } = useParams()
+  const history = useHistory()
 
   useEffect(() => {
     if (id) {
@@ -49,8 +50,14 @@ const TestimonialsForm = () => {
   }, [id])
 
   const handleSubmit = async (values) => {
-    if (isUpdate) await sendRequest('put', `/testimonials/${id}`, { ...values })
-    else await sendRequest('post', '/testimonials', { ...values })
+    if (isUpdate){
+      await sendRequest('put', `/testimonials/${id}`, { ...values })
+      await alertSuccess('La información se actualizó exitosamente')
+      history.replace('/backoffice')
+    } else {
+      await alertError('Error al modificar el testimonio')
+    }
+    
   }
 
   return (
