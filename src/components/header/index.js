@@ -178,7 +178,7 @@ const Header = ({
               activeTextColor={activeTextColor}
             />
             {itemsNav}
-            <hr />{!isAuth ? {userNav} : null}
+            <hr />{!isAuth ? userNav : null}
           </Flex>
         </Flex>
       </Flex>

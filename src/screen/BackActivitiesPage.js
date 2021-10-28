@@ -15,6 +15,7 @@ import {
   Center,
   Heading,
   Stack,
+  Box
 } from '@chakra-ui/react'
 import { AddIcon, ArrowBackIcon, DeleteIcon, EditIcon } from '@chakra-ui/icons'
 import { useHistory } from 'react-router-dom'
@@ -61,7 +62,7 @@ const BackActivitiesPage = () => {
   }
 
   return (
-    <div>
+    <Box>
       <Center minH='70vh' display='flex' flexDirection='column'>
         <Stack
           width='70%'
@@ -99,45 +100,12 @@ const BackActivitiesPage = () => {
             </Tr>
           </Thead>
           <Tbody>
-            {/* {itemsToShow?.map(element => {
-              return (
-                <Tr key={element.id} _hover={{ boxShadow: 'lg' }}>
-                  <Td>{element.name}</Td>
-                  <Td padding='10px'>
-                    <Image src={element.image} maxH='130px' />
-                  </Td>
-                  <Td display={['none', 'table-cell']}>
-                    {element.createdAt.slice(8, 10)}/
-                    {element.createdAt.slice(5, 7)}
-                  </Td>
-                  <Td>
-                    <Flex direction='column' maxW='50px'>
-                      <IconButton
-                        variant='outline'
-                        margin='10px'
-                        aria-label='Borrar novedad'
-                        fontSize='20px'
-                        icon={<DeleteIcon />}
-                        onClick={() => handleDelete(element.id)}
-                      />
-                      <IconButton
-                        variant='outline'
-                        margin='10px'
-                        aria-label='Editar novedad'
-                        fontSize='20px'
-                        icon={<EditIcon />}
-                        onClick={() => handleEdit(element.id)}
-                      />
-                    </Flex>
-                  </Td>
-                </Tr>
-              )
-            })} */}
+            
           </Tbody>
         </Table>
       </Center>
       <Paginator onPageChange={handlePageClick} pageCount={pageCount} />
-    </div>
+    </Box>
   )
 }
 
