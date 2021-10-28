@@ -79,6 +79,7 @@ const AllUsers = () => {
           <Stack 
             direction="row"
             spacing={3}
+            w={['100%', '100%', '80%', '60%']}
           >
             <Heading>
               Listado de usuarios registrados
@@ -90,7 +91,12 @@ const AllUsers = () => {
               onClick={() => history.goBack()}
             />
           </Stack>
-          <Table colorScheme="red" marginTop="10vh" marginBottom="10vh">
+          <Table 
+            colorScheme="red" 
+            marginTop="10vh" 
+            marginBottom="10vh"
+            w={['100%', '100%', '80%', '60%']}
+            >
           <TableCaption>
             En esta tabla se puede visualizar los usuarios registrados hasta el
             momento
