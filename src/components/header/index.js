@@ -171,6 +171,12 @@ const Header = ({
           align='center' 
           onClick={() => changeDisplay('none')}
           >
+            <ActiveLink
+              activeOnlyWhenExact={true}
+              to='/'
+              label="Home"
+              activeTextColor={activeTextColor}
+            />
             {itemsNav}
             <hr />{!isAuth ? {userNav} : null}
           </Flex>
