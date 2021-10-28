@@ -5,12 +5,13 @@ import {
   Container,
   Divider,
   IconButton,
+  Flex,
 } from '@chakra-ui/react'
 import { DeleteIcon, EditIcon } from '@chakra-ui/icons'
 
 const BackTestimonialCard = ({ name, handleDelete, handleEdit }) => {
   return (
-    <Container sx={{ _hover: { borderRadius: 'lg', boxShadow: 'lg' } }}>
+    <Container sx={{ _hover: { borderRadius: 'lg', boxShadow: 'lg' } }} maxW="container.md">
       <Stack
         justifyContent={'space-between'}
         direction={'row'}
@@ -25,20 +26,22 @@ const BackTestimonialCard = ({ name, handleDelete, handleEdit }) => {
         >
           {name}
         </Heading>
-        <Stack direction={'row'}>
+        <Flex direction='column' maxW='50px'>
           <IconButton
-            aria-label="Edit"
-            colorScheme={'blue'}
-            icon={<EditIcon />}
-            onClick={handleEdit}
-          />
-          <IconButton
-            aria-label="Delete"
-            colorScheme={'red'}
+            variant='outline'
+            margin='10px'
+            aria-label='Borrar novedad'
+            fontSize='20px'
             icon={<DeleteIcon />}
-            onClick={handleDelete}
           />
-        </Stack>
+          <IconButton
+            variant='outline'
+            margin='10px'
+            aria-label='Editar novedad'
+            fontSize='20px'
+            icon={<EditIcon />}
+          />
+        </Flex>
       </Stack>
       <Divider h={'1'} />
     </Container>
