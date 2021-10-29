@@ -44,7 +44,7 @@ const EditUserForm = () => {
   let history = useHistory()
   useEffect(() => {
     if (id) {
-      async function fetchData() {
+      async function fetchData () {
         const response = await sendRequest('get', `/users/${id}`)
         if (response && response.id) {
           const obUser = {
@@ -59,8 +59,8 @@ const EditUserForm = () => {
       fetchData()
     } else setIsUpdate(false)
   }, [id])
-  const handleSubmit = async (values) => {
-    if(isUpdate){
+  const handleSubmit = async values => {
+    if (isUpdate) {
       await sendRequest('put', `/users/${id}`, { ...values })
       await alertSuccess('Usuario modificado exitosamente')
       history.push('/backoffice')
@@ -70,21 +70,21 @@ const EditUserForm = () => {
   }
   return (
     <Flex
-      minH="100vh"
-      align="center"
-      justify="center"
+      minH='100vh'
+      align='center'
+      justify='center'
       bg={useColorModeValue('gray.50', 'gray.800')}
     >
-      <Stack spacing={8} mx="auto" maxW="lg" py={12} px={6}>
-        <Stack 
+      <Stack spacing={8} mx='auto' maxW='lg' py={12} px={6}>
+        <Stack
           align='center'
           display='flex'
           flexDir='row'
           justifyContent='space-between'
           spacing={3}
-          >
+        >
           <Heading px={4} py={6}>
-            Editar usuario {id}
+            Editar usuario
           </Heading>
           <IconButton
             icon={<ArrowBackIcon />}
@@ -94,9 +94,9 @@ const EditUserForm = () => {
           />
         </Stack>
         <Box
-          rounded="lg"
+          rounded='lg'
           bg={useColorModeValue('white', 'gray.700')}
-          boxShadow="lg"
+          boxShadow='lg'
           p={8}
         >
           <Formik
@@ -108,39 +108,39 @@ const EditUserForm = () => {
             <Form>
               <div>
                 <ChakraInput
-                  name="firstName"
-                  type="text"
-                  label="Nombre"
+                  name='firstName'
+                  type='text'
+                  label='Nombre'
                   defaultValue={initialValues.firstName}
                 />
                 <ChakraInput
-                  name="lastName"
-                  type="text"
-                  label="Apellido"
+                  name='lastName'
+                  type='text'
+                  label='Apellido'
                   defaultValue={initialValues.lastName}
                 />
                 {initialValues.roleId === 1 ? (
-                  <FormControl id="roleId">
+                  <FormControl id='roleId'>
                     <FormLabel>Role</FormLabel>
                     <Select
-                      placeholder="Seleccione un Rol"
+                      placeholder='Seleccione un Rol'
                       defaultValue={initialValues.roleId}
                     >
-                      <option value="1">Administrador</option>
-                      <option value="2">Standard</option>
+                      <option value='1'>Administrador</option>
+                      <option value='2'>Standard</option>
                     </Select>
                   </FormControl>
                 ) : null}
               </div>
               <Button
-                bg="blue.400"
-                color="white"
-                width="100%"
-                marginTop="10px"
+                bg='blue.400'
+                color='white'
+                width='100%'
+                marginTop='10px'
                 _hover={{
                   bg: 'blue.500',
                 }}
-                type="submit"
+                type='submit'
               >
                 Editar Usuario
               </Button>
