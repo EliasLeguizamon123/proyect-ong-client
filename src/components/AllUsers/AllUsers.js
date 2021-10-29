@@ -9,11 +9,15 @@ import {
   TableCaption,
   Td,
   Center,
+  Heading,
+  Stack,
+  IconButton,
 } from '@chakra-ui/react'
 import Spinner from '../../utils/Spinner'
 import { useHistory } from 'react-router-dom'
 import { sendRequest } from '../../utils/sendRequest'
 import { alertError, Swal } from '../../utils/alerts'
+import { ArrowBackIcon } from '@chakra-ui/icons'
 
 const handleDelete = async (id) => {
   const res = await Swal.fire({
@@ -49,7 +53,7 @@ const AllUsers = () => {
   useEffect(() => {
     const getUsers = async () => {
       try {
-        const response = await sendRequest('get', '/categories')
+        const response = await sendRequest('get', '/users')
         if (response) setUsers(response)
       } catch (error) {
         alertError('Error', 'Something was wrong')
@@ -65,7 +69,34 @@ const AllUsers = () => {
           <Spinner />
         </Center>
       ) : (
-        <Table colorScheme="red" marginTop="10vh" marginBottom="10vh">
+        <Stack
+          pt={12}
+          direction="column"
+          align='center'
+          justifyContent='space-between'
+          spacing={4}
+        >
+          <Stack 
+            direction="row"
+            spacing={3}
+            w={['100%', '100%', '80%', '60%']}
+          >
+            <Heading>
+              Listado de usuarios registrados
+            </Heading>
+            <IconButton
+              icon={<ArrowBackIcon />}
+              colorScheme='gray'
+              width='2rem'
+              onClick={() => history.goBack()}
+            />
+          </Stack>
+          <Table 
+            colorScheme="red" 
+            marginTop="10vh" 
+            marginBottom="10vh"
+            w={['100%', '100%', '80%', '60%']}
+            >
           <TableCaption>
             En esta tabla se puede visualizar los usuarios registrados hasta el
             momento
@@ -89,10 +120,10 @@ const AllUsers = () => {
                     <Td>{user.email}</Td>
                     <Td>
                       <Button
-                        bg="blue.400"
+                        bg="gray.300"
                         color="white"
                         _hover={{
-                          bg: 'blue.500',
+                          bg: 'yellow.300',
                         }}
                         size="xs"
                         onClick={() => {
@@ -104,10 +135,10 @@ const AllUsers = () => {
                     </Td>
                     <Td>
                       <Button
-                        bg="blue.400"
+                        bg="gray.300"
                         color="white"
                         _hover={{
-                          bg: 'blue.500',
+                          bg: 'red.300',
                         }}
                         size="xs"
                         onClick={() => {
@@ -121,6 +152,7 @@ const AllUsers = () => {
                 ))}
           </Tbody>
         </Table>
+        </Stack>
       )}
     </div>
   )

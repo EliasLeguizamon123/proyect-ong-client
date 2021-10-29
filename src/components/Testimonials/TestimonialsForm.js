@@ -1,10 +1,10 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
-import { useParams } from 'react-router-dom'
-
+import { useParams, useHistory } from 'react-router-dom'
+import DropImage from '../../components/DropImage'
 import { Formik, Form } from 'formik'
 import { FormSchema } from './testimonialsValidationSchema'
-
+import { uploadFile } from '../../utils/AS3'
 import {
   Flex,
   useColorModeValue,
@@ -15,7 +15,7 @@ import {
 } from '@chakra-ui/react'
 import ChakraInput from '../ChakraInput'
 import ChakraInputCKEditor from './ChakraInputCKEditor'
-
+import { alertError, alertSuccess } from '../../utils/alerts'
 import { sendRequest } from '../../utils/sendRequest'
 
 const TestimonialsForm = () => {
@@ -26,6 +26,7 @@ const TestimonialsForm = () => {
     content: '',
   })
   const { id } = useParams()
+  const history = useHistory()
 
   useEffect(() => {
     if (id) {
@@ -49,8 +50,14 @@ const TestimonialsForm = () => {
   }, [id])
 
   const handleSubmit = async (values) => {
-    if (isUpdate) await sendRequest('put', `/testimonials/${id}`, { ...values })
-    else await sendRequest('post', '/testimonials', { ...values })
+    if (isUpdate){
+      await sendRequest('put', `/testimonials/${id}`, { ...values })
+      await alertSuccess('La información se actualizó exitosamente')
+      history.replace('/backoffice')
+    } else {
+      await alertError('Error al modificar el testimonio')
+    }
+    
   }
 
   return (
@@ -76,24 +83,33 @@ const TestimonialsForm = () => {
             validationSchema={FormSchema}
             onSubmit={handleSubmit}
           >
+          {props => (
             <Form>
-              <ChakraInput name="name" type="text" label="Nombre" />
-              <ChakraInput name="image" type="text" label="Imagen" />
+            <ChakraInput name="name" type="text" label="Nombre" />
+            <DropImage
+              name='image'
+              image={iniValues.image}
+              onDrop={async file => {
+              const res = await uploadFile(file[0])
+                props.setFieldValue('image', res.location)
+                props.initialValues.image = res.location
+              }}
+            />      
+            <ChakraInputCKEditor name="content" label="Contenido" />
 
-              <ChakraInputCKEditor name="content" label="Contenido" />
-
-              <Input
-                type="submit"
-                bg="blue.400"
-                color="white"
-                width="100%"
-                marginTop="10px"
-                _hover={{
-                  bg: 'blue.500',
-                }}
-                value={isUpdate ? 'Actualiza testimonio' : 'Crea testimonio'}
-              />
-            </Form>
+            <Input
+              type="submit"
+              bg="blue.400"
+              color="white"
+              width="100%"
+              marginTop="10px"
+              _hover={{
+                bg: 'blue.500',
+              }}
+              value={isUpdate ? 'Actualiza testimonio' : 'Crea testimonio'}
+            />
+          </Form>
+          )}
           </Formik>
         </Box>
       </Stack>

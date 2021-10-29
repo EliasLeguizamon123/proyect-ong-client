@@ -13,9 +13,12 @@ import {
   FormControl,
   FormLabel,
   Select,
-  Text,
+  IconButton,
+  Heading,
 } from '@chakra-ui/react'
 import ChakraInput from './ChakraInput'
+import { ArrowBackIcon } from '@chakra-ui/icons'
+import { alertError, alertSuccess } from '../utils/alerts'
 
 const FormSchema = Yup.object().shape({
   firstName: Yup.string()
@@ -57,9 +60,13 @@ const EditUserForm = () => {
     } else setIsUpdate(false)
   }, [id])
   const handleSubmit = async (values) => {
-    if (isUpdate) await sendRequest('put', `/users/${id}`, { ...values })
-    else await sendRequest('post', '/users', { ...values })
-    history.push('/')
+    if(isUpdate){
+      await sendRequest('put', `/users/${id}`, { ...values })
+      await alertSuccess('Usuario modificado exitosamente')
+      history.push('/backoffice')
+    } else {
+      await alertError('Error, algo ocurrio')
+    }
   }
   return (
     <Flex
@@ -69,6 +76,23 @@ const EditUserForm = () => {
       bg={useColorModeValue('gray.50', 'gray.800')}
     >
       <Stack spacing={8} mx="auto" maxW="lg" py={12} px={6}>
+        <Stack 
+          align='center'
+          display='flex'
+          flexDir='row'
+          justifyContent='space-between'
+          spacing={3}
+          >
+          <Heading px={4} py={6}>
+            Editar usuario {id}
+          </Heading>
+          <IconButton
+            icon={<ArrowBackIcon />}
+            colorScheme='gray'
+            width='2rem'
+            onClick={() => history.goBack()}
+          />
+        </Stack>
         <Box
           rounded="lg"
           bg={useColorModeValue('white', 'gray.700')}
@@ -106,11 +130,7 @@ const EditUserForm = () => {
                       <option value="2">Standard</option>
                     </Select>
                   </FormControl>
-                ) : (
-                  <Text>
-                    Si desea ser administrador, consultelo con test@test.org.ar
-                  </Text>
-                )}
+                ) : null}
               </div>
               <Button
                 bg="blue.400"
