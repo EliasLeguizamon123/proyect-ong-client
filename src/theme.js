@@ -1,13 +1,17 @@
 // 1. import `extendTheme` function
 import { extendTheme } from "@chakra-ui/react"
-// 2. Add your color mode config
 
-const config = {
-  initialColorMode: "light",
-  useSystemColorMode: false,
-}
-
-// 3. extend the theme
-const theme = extendTheme({ config })
+const theme = extendTheme({
+    colors: {
+      primary: '#9AC9FB',   //Blue somos mas
+      secondary: '#FAFA88', //Yellow somos mas
+      tertiary: '#DB5752', //Red somos mas 
+      background:  '#DDEDFE', //Blue somos mas (degradado)
+      container: '#FFFFFF', //Blanco
+    },
+  config: {
+    initialColorMode: "light"
+  }
+})
 
 export default theme

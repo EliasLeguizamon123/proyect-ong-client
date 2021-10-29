@@ -10,6 +10,7 @@ import {
   Stack,
   Text,
   useColorModeValue,
+  useColorMode,
 } from '@chakra-ui/react'
 
 const ListHeader = ({ text }) => {
@@ -40,8 +41,10 @@ export default function Footer ({
     getLinks()
   }, [])
 
+  const { colorMode } = useColorMode()
+
   return (
-    <Box bg={useColorModeValue(bgColor)} color={useColorModeValue(textColor)}>
+    <Box maxW="100%" bg={useColorModeValue(bgColor) /*colorMode === "light" ? "gray.200" : "#718096"*/} color={useColorModeValue(textColor)}>
       <Container as={Stack} maxW={'6xl'} py={10}>
         <SimpleGrid
           justify={'flex-center'}

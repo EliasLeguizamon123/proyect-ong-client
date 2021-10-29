@@ -1,19 +1,16 @@
 import React from 'react'
-import { Container } from '@chakra-ui/react'
-import theme from './theme'
-import { ColorModeScript } from "@chakra-ui/react"
+import { Container, Box , useColorMode} from '@chakra-ui/react'
 import './App.css'
-
 import Router from './router'
 
 function App() {
+  const { colorMode } = useColorMode()
   return (
-    <div style={{ background: '#DDEDFE' }}>
-      <ColorModeScript initialColorMode={theme.config.initialColorMode} />
-      <Container maxW="container.lg" bg="white" boxShadow={'lg'}>
+    <Box bg="background">
+      <Container maxW="container.lg" bg={colorMode === "light" ? "container" : "#1A202C"} boxShadow={'lg'}>
         <Router />
       </Container>
-    </div>
+    </Box>
   )
 }
 
