@@ -1,6 +1,6 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
-import { useParams } from 'react-router-dom'
+import { useParams, useHistory } from 'react-router-dom'
 
 import { Formik, Form } from 'formik'
 import { FormSchema } from './activitiesValidationSchema'
@@ -12,23 +12,18 @@ import {
   Heading,
   Box,
   Input,
-  Image,
   IconButton,
 } from '@chakra-ui/react'
 import ChakraInput from '../ChakraInput'
 import ChakraInputCKEditor from './ChakraInputCKEditor'
-import ImageInput from '../ImageInput/ImageInput'
 import { uploadFile } from '../../utils/AS3'
-
 import { sendRequest } from '../../utils/sendRequest'
 import { alertError, alertSuccess } from '../../utils/alerts'
 import { CloseIcon } from '@chakra-ui/icons'
-import { useHistory } from 'react-router-dom'
+import DropImage from '../DropImage'
 
 const ActivitiesForm = () => {
   const [isUpdate, setIsUpdate] = useState(false)
-  const [imgData, setImgData] = useState(null)
-  const [loadedFile, setLoadedFile] = useState(null)
   const [iniValues, setIniValues] = useState({
     name: '',
     image: '',
@@ -59,30 +54,10 @@ const ActivitiesForm = () => {
   }, [id])
 
   const handleSubmit = async values => {
-    try {
-      if (loadedFile) {
-        // Uploads image to S3 and gets the uploaded file url
-        const res = await uploadFile(loadedFile)
-        values.image = res.location
-      }
-      if (!values.image)
-        throw new Error('Debes elegir una imagen para la actividad')
-
-      if (isUpdate) await sendRequest('put', `/activities/${id}`, { ...values })
-      else await sendRequest('post', '/activities', { ...values })
-
-      alertSuccess('La actividad se guardó exitosamente')
-    } catch (error) {
-      alertError('Algo salió mal', error.message)
-    }
-  }
-
-  const handleOnImageLoad = (file, imgData) => {
-    // imgData has the image encoded with base 64 to show in component
-    setImgData(imgData)
-
-    // LoadedFile has the File object that we will send to S3 when submitting
-    setLoadedFile(file)
+    if (isUpdate) await sendRequest('put', `/activities/${id}`, { ...values })
+    else await sendRequest('post', '/activities', { ...values })
+    await alertSuccess('La actividad se guardó exitosamente')
+    history.goBack()
   }
 
   return (
@@ -119,33 +94,34 @@ const ActivitiesForm = () => {
             validationSchema={FormSchema}
             onSubmit={handleSubmit}
           >
-            <Form>
-              <ChakraInput name='name' type='text' label='Título' />
-              {(imgData || iniValues.image) && (
-                <Image
-                  rounded='sm'
-                  src={imgData || iniValues.image}
-                  marginTop='20px'
-                />
-              )}
-              <ImageInput
-                buttonText={isUpdate ? 'Cambiar imagen' : 'Cargar imagen'}
-                onImageLoad={handleOnImageLoad}
-              />
-              <ChakraInputCKEditor name='content' label='Contenido' />
+            {props => (
+              <Form>
+                <ChakraInput name='name' type='text' label='Título' />
+                <DropImage
+                  onDrop={async file => {
+                    const res = await uploadFile(file[0])
 
-              <Input
-                type='submit'
-                bg='blue.400'
-                color='white'
-                width='100%'
-                marginTop='10px'
-                _hover={{
-                  bg: 'blue.500',
-                }}
-                value={isUpdate ? 'Actualiza actividad' : 'Crea actividad'}
-              />
-            </Form>
+                    props.setFieldValue('image', res.location)
+                    props.initialValues.image = res.location
+                  }}
+                  name='image'
+                  image={iniValues.image}
+                />
+                <ChakraInputCKEditor name='content' label='Contenido' />
+
+                <Input
+                  type='submit'
+                  bg='blue.400'
+                  color='white'
+                  width='100%'
+                  marginTop='10px'
+                  _hover={{
+                    bg: 'blue.500',
+                  }}
+                  value={isUpdate ? 'Actualiza actividad' : 'Crea actividad'}
+                />
+              </Form>
+            )}
           </Formik>
         </Box>
       </Stack>

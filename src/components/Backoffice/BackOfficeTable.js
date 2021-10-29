@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { useHistory } from 'react-router-dom'
 import {
   Table,
@@ -14,49 +14,34 @@ import {
   Heading,
   Stack,
 } from '@chakra-ui/react'
-import { AddIcon, ArrowBackIcon, DeleteIcon, EditIcon } from '@chakra-ui/icons'
-import Paginator from '../components/Paginator'
-import { sendRequest } from '../utils/sendRequest'
-import { alertSuccess, alertConfirm } from '../utils/alerts'
+import {
+  AddIcon,
+  ArrowBackIcon,
+  DeleteIcon,
+  EditIcon,
+  ViewIcon,
+} from '@chakra-ui/icons'
+import Paginator from '../../components/Paginator'
 
-const NewsListEdit = () => {
+const BackOfficeTable = ({
+  limit,
+  allItems,
+  itemsToShow,
+  pageCount,
+  handleDelete,
+  handleEdit,
+  formRoute,
+  tableHead,
+  title,
+  setItemsToShow,
+  contacts,
+  users,
+}) => {
   let history = useHistory()
-  const [allNnews, setAllNews] = useState([])
-  const [itemsToShow, setItemsToShow] = useState([])
-  const [pageCount, setPageCount] = useState(0)
-  const limit = 5
-
-  useEffect(() => {
-    fetchNews()
-  }, [])
-
-  const fetchNews = async () => {
-    const res = await sendRequest('get', `/news`)
-
-    setPageCount(Math.ceil(res.count / limit))
-    setAllNews(res.rows)
-    setItemsToShow(res.rows.slice(0, limit))
-  }
 
   const handlePageChange = async ({ selected }) => {
-    const sliceStart = selected * limit
-    setItemsToShow(allNnews.slice(sliceStart, sliceStart + limit))
-  }
-  const handleDelete = id => {
-    alertConfirm(
-      'Seguro deseas borrar esta novedad?',
-      'Esta accion es irreversible',
-      async () => {
-        await sendRequest('delete', `/news/${id}`)
-        await alertSuccess('Novedad borrada con éxito')
-        fetchNews()
-        history.push('/')
-      }
-    )
-  }
-
-  const handleEdit = id => {
-    history.push(`/backoffice/novedades/${id}`)
+    const start = selected * limit
+    setItemsToShow(allItems.slice(start, start + limit))
   }
 
   return (
@@ -75,12 +60,14 @@ const NewsListEdit = () => {
             width='2rem'
             onClick={() => history.goBack()}
           />
-          <Heading>Listado de Novedades</Heading>
-          <IconButton
-            icon={<AddIcon />}
-            colorScheme='blue'
-            onClick={() => history.push('/backoffice/novedades')}
-          />
+          <Heading>Listado de {title}</Heading>
+          {!contacts && (
+            <IconButton
+              icon={<AddIcon />}
+              colorScheme='blue'
+              onClick={() => history.push(`/backoffice/${formRoute}`)}
+            />
+          )}
         </Stack>
         <Table
           bg='white'
@@ -91,10 +78,16 @@ const NewsListEdit = () => {
         >
           <Thead>
             <Tr p={8}>
-              <Th>Nombre</Th>
-              <Th>Imagen</Th>
-              <Th display={['none', 'table-cell']}>Creada</Th>
-              <Th>Acciones</Th>
+              {tableHead.map((thead, i) => {
+                if (i === 2) {
+                  return (
+                    <Th key={i} display={['none', 'table-cell']}>
+                      {thead}
+                    </Th>
+                  )
+                }
+                return <Th key={i}>{thead}</Th>
+              })}
             </Tr>
           </Thead>
           <Tbody>
@@ -103,18 +96,25 @@ const NewsListEdit = () => {
                 <Tr key={element.id} _hover={{ boxShadow: 'lg' }}>
                   <Td>{element.name}</Td>
                   <Td padding='10px'>
-                    <Image src={element.image} maxH='130px' />
+                    {contacts || users ? (
+                      element.email
+                    ) : (
+                      <Image src={element.image} maxH='130px' />
+                    )}
                   </Td>
                   <Td display={['none', 'table-cell']}>
-                    {element.createdAt.slice(8, 10)}/
-                    {element.createdAt.slice(5, 7)}
+                    {contacts
+                      ? element.phone
+                      : `${element.createdAt.slice(
+                          8,
+                          10
+                        )}-${element.createdAt.slice(5, 7)}`}
                   </Td>
                   <Td>
                     <Flex direction='column' maxW='50px'>
                       <IconButton
                         variant='outline'
                         margin='10px'
-                        aria-label='Borrar novedad'
                         fontSize='20px'
                         icon={<DeleteIcon />}
                         onClick={() => handleDelete(element.id)}
@@ -122,10 +122,11 @@ const NewsListEdit = () => {
                       <IconButton
                         variant='outline'
                         margin='10px'
-                        aria-label='Editar novedad'
                         fontSize='20px'
-                        icon={<EditIcon />}
-                        onClick={() => handleEdit(element.id)}
+                        icon={!contacts ? <EditIcon /> : <ViewIcon />}
+                        onClick={() =>
+                          handleEdit(contacts ? element : element.id)
+                        }
                       />
                     </Flex>
                   </Td>
@@ -140,4 +141,4 @@ const NewsListEdit = () => {
   )
 }
 
-export default NewsListEdit
+export default BackOfficeTable
