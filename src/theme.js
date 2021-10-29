@@ -10,7 +10,7 @@ const theme = extendTheme({
       container: '#FFFFFF', //Blanco
     },
   config: {
-    initialColorMode: "light"
+    initialColorMode: "dark"
   }
 })
 
