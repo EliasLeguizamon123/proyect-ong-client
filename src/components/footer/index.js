@@ -44,7 +44,7 @@ export default function Footer ({
   const { colorMode } = useColorMode()
 
   return (
-    <Box maxW="100%" bg={colorMode === "light" ? "gray.200" : "#2D3748"} color={useColorModeValue(textColor)}>
+    <Box maxW="100%" bg={colorMode === "light" ? "gray.200" : "darkGray"} color={useColorModeValue(textColor)}>
       <Container as={Stack} maxW={'6xl'} py={10}>
         <SimpleGrid
           justify={'flex-center'}

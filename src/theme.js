@@ -8,7 +8,9 @@ const theme = extendTheme({
       tertiary: '#DB5752', //Red somos mas 
       background:  '#DDEDFE', //Blue somos mas (degradado)
       container: '#FFFFFF', //Blanco
-      spinner: '#000000' //Negro
+      darkBg: '#1A202C',  //gray.800 of chakra
+      darkGray: '#2D3748', //gray.600 of chakra
+      
     },
   config: {
     initialColorMode: "light"
