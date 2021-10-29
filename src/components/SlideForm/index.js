@@ -1,5 +1,6 @@
 import React from 'react'
 import { useState } from 'react'
+import store from '../../app/store'
 
 import { Formik, Form } from 'formik'
 import { FormSchema } from './slidesValidationSchema'
@@ -21,6 +22,9 @@ import ChakraInput from '../ChakraInput'
 import { sendRequest } from '../../utils/sendRequest'
 
 const SliderForm = () => {
+  const {
+    user: { authenticated, userData },
+  } = store.getState()
   const [imgData, setImgData] = useState(null)
   const [loadedFile, setLoadedFile] = useState(null)
   const iniValues = {
@@ -32,6 +36,7 @@ const SliderForm = () => {
 
   const handleSubmit = async (values) => {
     try {
+      const valueSlide = { ...values, roleId: userData.roleId }
       if (loadedFile) {
         // Uploads image to S3 and gets the uploaded file url
         const res = await uploadFile(loadedFile)
@@ -40,7 +45,7 @@ const SliderForm = () => {
       if (!values.imageUrl)
         throw new Error('Debes elegir una imagen para el slider')
 
-      await sendRequest('POST', '/slides', { ...values })
+      await sendRequest('POST', '/slides', { ...valueSlide })
         .then(() => {
           alertSuccess('El slider se guardó exitosamente')
         })
