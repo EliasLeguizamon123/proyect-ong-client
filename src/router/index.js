@@ -61,7 +61,7 @@ const BackOfficeMembers = lazy(() =>
   import('../screen/Backoffice/BackofficeMembers')
 )
 
-export default function Router () {
+export default function Router() {
   return (
     <BrowserRouter>
       <Header
@@ -77,26 +77,32 @@ export default function Router () {
           { name: 'Login', path: '/login' },
         ]}
       />
-      <Suspense fallback={<Spinner type='ThreeDots' />}>
+      <Suspense fallback={<Spinner type="ThreeDots" />}>
         <Switch>
-          <Box minH='55vh'>
-            <Route exact path='/' component={Home} />
-            <Route exact path='/about' component={About} />
-            <Route exact path='/register' component={RegisterPage} />
-            <Route exact path='/login' component={LoginPage} />
-            <Route exact path='/novedades' component={NewsPage} />
-            <Route exact path='/novedades/:id' component={NewsDetail} />
-            <Route exact path='/actividades/:id' component={ActivityDetail} />
-            <Route exact path='/actividades' component={ActivitiesPage} />
-            <Route path='/testimoniales/' component={TestimonialsPage} />
+          <Box minH="55vh">
+            <Route exact path="/" component={Home} />
+            <Route exact path="/about" component={About} />
+            <Route exact path="/register" component={RegisterPage} />
+            <Route exact path="/login" component={LoginPage} />
+            <Route exact path="/novedades" component={NewsPage} />
+            <Route exact path="/novedades/:id" component={NewsDetail} />
+            <Route exact path="/actividades/:id" component={ActivityDetail} />
+            <Route exact path="/actividades" component={ActivitiesPage} />
+            <Route path="/testimoniales/" component={TestimonialsPage} />
 
-            <Route path='/contacto' component={ContactPage} />
+            <Route path="/contacto" component={ContactPage} />
 
-            <Route path='/nosotros' component={Members} />
-            <Route exact path='/perfil' component={MyProfile} />
+            <Route path="/users/:id?" component={EditUserForm} />
+            <Route path="/nosotros" component={Members} />
+            <Route exact path="/perfil" component={MyProfile} />
+            <PrivateRoute path="/backoffice/slides" component={SlideForm} />
             <PrivateRoute
-              path='/backoffice/activities/:id?'
+              path="/backoffice/activities/:id?"
               component={ActivitiesForm}
+            />
+            <PrivateRoute
+              path="/backoffice/activities-list"
+              component={BackActivitiesPage}
             />
             <PrivateRoute
               path='/backoffice/users/:id?'
@@ -107,7 +113,7 @@ export default function Router () {
               component={BackofficeActivities}
             />
             <PrivateRoute
-              path='/backoffice/novedades/:id?'
+              path="/backoffice/novedades/:id?"
               component={NewsForm}
             />
             <PrivateRoute
@@ -141,11 +147,11 @@ export default function Router () {
               component={BackofficeTestimonials}
             />
             <PrivateRoute
-              path='/backoffice/testimonials/:id?'
+              path="/backoffice/testimonials/:id?"
               component={TestimonialsForm}
             />
             <PrivateRoute
-              path='/backoffice/edit-organization'
+              path="/backoffice/edit-organization"
               component={OrganizationForm}
             />
             <PrivateRoute

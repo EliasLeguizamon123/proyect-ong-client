@@ -5,7 +5,7 @@
   margin-top: 2rem;
 }
 .slideShowContainer {
-  max-width: 80rem; /*1280 px */
+  width: 100vw; /*1280 px */
 
   overflow: hidden;
   position: relative;
