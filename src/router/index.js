@@ -77,10 +77,11 @@ export default function Router () {
           { name: 'Login', path: '/login' },
         ]}
       />
-      <Suspense fallback={<Spinner type='ThreeDots' />}>
+      <Suspense fallback={<Spinner type='ThreeDots'/>}>
         <Switch>
           <Box minH='55vh'>
             <Route exact path='/' component={Home} />
+            <Route exact path='/spinner' component={Spinner} />
             <Route exact path='/about' component={About} />
             <Route exact path='/register' component={RegisterPage} />
             <Route exact path='/login' component={LoginPage} />

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Formik, Form } from 'formik'
 import { sendRequest } from '../../utils/sendRequest'
-import { Flex, Stack, Heading, Box, Text, Input, Image } from '@chakra-ui/react'
+import { Flex, Stack, Heading, Box, Text, Input, Image, useColorMode } from '@chakra-ui/react'
 import { Link } from 'react-router-dom'
 import ChakraInput from '../ChakraInput'
 import { useHistory } from 'react-router-dom'
@@ -74,9 +74,9 @@ const LoginRegisterForm = ({ isRegister }) => {
       }
     }
   }
-
+  const { colorMode } = useColorMode()
   return (
-    <Flex minH="100vh" align="center" justify="center" bg={'white'} >
+    <Flex minH="100vh" align="center" justify="center" bg={colorMode === 'light' ? "container" : "#1A202C"} >
       <Stack spacing={8} mx="auto" maxW="lg" py={12} px={6}>
         <Stack align="center" width="20rem">
           <Box>
@@ -84,7 +84,7 @@ const LoginRegisterForm = ({ isRegister }) => {
           </Box>
           <Heading fontSize="4xl">{isRegister ? 'Sign In' : 'Login'}</Heading>
         </Stack>
-        <Box rounded="lg" bg={'white'} boxShadow="lg" p={8} >
+        <Box rounded="lg" bg={colorMode === 'light' ? "white" : "#2D3748"} boxShadow="lg" p={8} >
           <Formik
             initialValues={initialValues()}
             validationSchema={isRegister ? RegisterSchema : LoginSchema}

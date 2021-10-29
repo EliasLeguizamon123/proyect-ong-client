@@ -12,9 +12,10 @@ import {
   Center,
   MenuDivider,
   MenuItem,
+  useColorMode,
 } from '@chakra-ui/react'
 import { Link, useRouteMatch, useHistory } from 'react-router-dom'
-import { HamburgerIcon, CloseIcon, ChevronDownIcon } from '@chakra-ui/icons'
+import { HamburgerIcon, CloseIcon, ChevronDownIcon, SunIcon, MoonIcon } from '@chakra-ui/icons'
 import { sendRequest } from '../../utils/sendRequest'
 import { useSelector } from 'react-redux'
 import { useDispatch } from 'react-redux'
@@ -42,6 +43,7 @@ const Header = ({
   const userData = useSelector(state => state.user.userData)
   const isAuth = useSelector(state => state.user.authenticated)
   const profileImage = useSelector(state => state.user.userData.image)
+  const { colorMode, toggleColorMode } = useColorMode()
 
   let itemsNav = webLinks.map((link, index) => (
     <ActiveLink
@@ -106,7 +108,7 @@ const Header = ({
               <Avatar size={'sm'} src={profileImage} />
               <ChevronDownIcon />
             </MenuButton>
-            <MenuList alignItems={'center'}>
+            <MenuList alignItems={'center'} justify="center">
               <br />
               <Center>
                 <Avatar size={'2xl'} src={profileImage} />
@@ -127,6 +129,9 @@ const Header = ({
               <Link to='/perfil'>
                 <MenuItem>Cuenta</MenuItem>
               </Link>
+              <MenuItem onClick={toggleColorMode}>
+                {colorMode === 'light' ? <SunIcon /> : <MoonIcon />}
+              </MenuItem>
               <MenuItem color='red' onClick={handleLogout}>
                 Desconectarse
               </MenuItem>

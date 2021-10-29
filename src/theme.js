@@ -8,9 +8,10 @@ const theme = extendTheme({
       tertiary: '#DB5752', //Red somos mas 
       background:  '#DDEDFE', //Blue somos mas (degradado)
       container: '#FFFFFF', //Blanco
+      spinner: '#000000' //Negro
     },
   config: {
-    initialColorMode: "dark"
+    initialColorMode: "light"
   }
 })
 
