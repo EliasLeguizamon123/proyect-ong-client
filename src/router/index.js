@@ -100,10 +100,10 @@ export default function Router() {
               path="/backoffice/activities/:id?"
               component={ActivitiesForm}
             />
-            <PrivateRoute
+           {/* <PrivateRoute
               path="/backoffice/activities-list"
               component={BackActivitiesPage}
-            />
+            />*/}
             <PrivateRoute
               path='/backoffice/users/:id?'
               component={EditUserForm}
