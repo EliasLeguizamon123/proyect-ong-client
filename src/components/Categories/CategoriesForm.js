@@ -8,14 +8,12 @@ import {
   IconButton,
   Box,
   Input,
-  Center,
   Heading,
 } from '@chakra-ui/react'
 import ChakraInput from '../ChakraInput'
 import ChakraTextArea from '../ContactForm/ChakraTextArea'
-import { alertSuccess, alertError } from '../../utils/alerts'
+import { alertSuccess } from '../../utils/alerts'
 import { sendRequest } from '../../utils/sendRequest'
-import Spinner from '../../utils/Spinner'
 import { useParams, useHistory } from 'react-router-dom'
 import { CloseIcon } from '@chakra-ui/icons'
 

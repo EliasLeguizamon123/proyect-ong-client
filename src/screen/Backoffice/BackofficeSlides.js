@@ -40,7 +40,7 @@ const BackofficeSlides = () => {
 
   const formattedSlides = []
   if (itemsToShow.length > 0) {
-    itemsToShow.map(slide => {
+    itemsToShow.forEach(slide => {
       formattedSlides.push({
         name: slide.text,
         image: slide.imageUrl,

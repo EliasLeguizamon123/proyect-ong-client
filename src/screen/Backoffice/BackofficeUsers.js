@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import Spinner from '../../utils/Spinner'
 import { useHistory } from 'react-router-dom'
 import { sendRequest } from '../../utils/sendRequest'
 import { alertConfirm, alertSuccess } from '../../utils/alerts'
@@ -25,7 +24,7 @@ const BackofficeUsers = () => {
 
   const formattedUsers = []
   if (itemsToShow.length > 0) {
-    itemsToShow.map(user => {
+    itemsToShow.forEach(user => {
       formattedUsers.push({
         id: user.id,
         name: `${user.firstName} ${user.lastName}`,

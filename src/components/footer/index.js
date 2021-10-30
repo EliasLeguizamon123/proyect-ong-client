@@ -1,5 +1,12 @@
 import React, { useEffect, useState } from 'react'
-import {FaInstagram, FaFacebook, FaTwitter, FaSnapchat, FaYoutube, FaTiktok } from 'react-icons/fa'
+import {
+  FaInstagram,
+  FaFacebook,
+  FaTwitter,
+  FaSnapchat,
+  FaYoutube,
+  FaTiktok
+} from 'react-icons/fa'
 
 import { sendRequest } from '../../utils/sendRequest'
 
@@ -8,7 +15,6 @@ import {
   Container,
   Link,
   SimpleGrid,
-  Stack,
   Text,
   useColorModeValue,
   Flex,
@@ -16,13 +22,6 @@ import {
   Image
 } from '@chakra-ui/react'
 
-const ListHeader = ({ text }) => {
-  return (
-    <Text fontWeight={'500'} fontSize={'lg'} mb={2}>
-      {text}
-    </Text>
-  )
-}
 export default function Footer ({
   webLinks = [{ name: 'Home', path: '/Home' }],
   bgColor = 'gray.50',

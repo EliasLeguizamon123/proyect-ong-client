@@ -30,7 +30,7 @@ const iniValues = {
 
 const SliderForm = () => {
   const {
-    user: { authenticated, userData },
+    user: { userData },
   } = store.getState()
   const [imgData, setImgData] = useState(null)
   const [loadedFile, setLoadedFile] = useState(null)

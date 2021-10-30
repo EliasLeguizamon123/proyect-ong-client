@@ -4,7 +4,6 @@ import {
   Center,
   useColorModeValue,
   Heading,
-  Text,
   Stack,
   Image,
 } from '@chakra-ui/react'
