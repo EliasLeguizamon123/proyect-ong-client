@@ -7,7 +7,7 @@ const SlideShow = () => {
   const intervalSlideShow = useRef(null)
   const [slides, setSlides] = useState([])
   const next = () => {
-    if (slideshow.current.children.length > 0) {
+    if (slideshow.current.children.length > 1) {
       const firstElement = slideshow.current.children[0]
 
       slideshow.current.style.transition = '300ms ease-out all '
@@ -27,7 +27,7 @@ const SlideShow = () => {
     }
   }
   const previous = () => {
-    if (slideshow.current.children.length > 0) {
+    if (slideshow.current.children.length > 1) {
       const index = slideshow.current.children.length - 1
       const lastElement = slideshow.current.children[index]
       slideshow.current.insertBefore(lastElement, slideshow.current.firstChild)
@@ -43,9 +43,9 @@ const SlideShow = () => {
   }
 
   const getSlides = () =>
-    sendRequest('GET', '/slides/getAll/1').then((res) => {
-      if (res && res.length) {
-        setSlides(res[0].Slides)
+    sendRequest('GET', '/slides').then(res => {
+      if (res) {
+        setSlides(res.rows)
       }
     })
   useEffect(() => {
@@ -56,23 +56,23 @@ const SlideShow = () => {
     return () => clearInterval(interval)
   }, [])
   return (
-    <div className="slideContainer">
-      <div className="slideShowContainer">
-        <div className="slides" ref={slideshow}>
-          {slides.map((slide) => (
-            <div key={slide.id} className="slide">
-              <img src={slide.imageUrl} alt="slideImage" />
-              <div className="textSlide">
+    <div className='slideContainer'>
+      <div className='slideShowContainer'>
+        <div className='slides' ref={slideshow}>
+          {slides.map(slide => (
+            <div key={slide.id} className='slide'>
+              <img src={slide.imageUrl} alt='slide' />
+              <div className='textSlide'>
                 <p>{slide.text}</p>
               </div>
             </div>
           ))}
         </div>
-        <div className="controls">
-          <button className="btnRight" onClick={next}>
+        <div className='controls'>
+          <button className='btnRight' onClick={next}>
             &gt;
           </button>
-          <button className="btnLeft" onClick={previous}>
+          <button className='btnLeft' onClick={previous}>
             &lt;
           </button>
         </div>

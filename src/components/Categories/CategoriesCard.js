@@ -2,37 +2,44 @@ import React from 'react'
 import {
   Heading,
   Stack,
-  Container,
+  Center,
   Divider,
   IconButton,
+  Text
 } from '@chakra-ui/react'
-import { DeleteIcon } from '@chakra-ui/icons'
+import { DeleteIcon, ChevronRightIcon} from '@chakra-ui/icons'
 
-const CategoriesCard = ({ name, handleDelete }) => {
+const CategoriesCard = ({ name, handleDelete, description }) => {
   return (
-    <Container sx={{ _hover: { borderRadius: 'lg', boxShadow: 'lg' } }}>
+    <Center sx={{ _hover: { borderRadius: 'xl', boxShadow: 'xl' } }}>
+      <ChevronRightIcon width="10%" w={10} h={10} color="red.500" />
       <Stack
-        justifyContent={'space-between'}
-        direction={'row'}
-        spacing={{ base: 8, md: 10 }}
-        py={{ base: 10, md: 10 }}
+        width="65%"
+        spacing={{ base: 5, md: 5 }}
+        py={{ base: 1, md: 1 }}
       >
         <Heading
+          marginTop="5%"
           fontWeight={600}
-          fontSize={{ base: '1xl', sm: '1xl', md: '3xl' }}
-          lineHeight={'10%'}
+          fontSize="2xl"
         >
           {name}
+
         </Heading>
-        <IconButton
-          aria-label="Delete"
-          colorScheme={'red'}
-          icon={<DeleteIcon />}
-          onClick={handleDelete}
-        />
+        <Text color="gray.500" isTruncated>
+          {description}
+        </Text>
+        <Divider h={'3'} />
       </Stack>
-      <Divider h={'1'} />
-    </Container>
+      <IconButton
+        aria-label="Delete"
+        colorScheme={'red'}
+        icon={<DeleteIcon />}
+        onClick={handleDelete}
+        width="5%"
+        marginLeft="20%"
+      />
+    </Center>
   )
 }
 

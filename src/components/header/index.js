@@ -166,10 +166,19 @@ const Header = ({
               onClick={() => changeDisplay('none')}
             />
           </Flex>
-          <Flex flexDir='column' align='center'>
+          <Flex 
+          flexDir='column' 
+          align='center' 
+          onClick={() => changeDisplay('none')}
+          >
+            <ActiveLink
+              activeOnlyWhenExact={true}
+              to='/'
+              label="Home"
+              activeTextColor={activeTextColor}
+            />
             {itemsNav}
-            <hr />
-            {userNav}
+            <hr />{!isAuth ? userNav : null}
           </Flex>
         </Flex>
       </Flex>

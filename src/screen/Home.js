@@ -2,11 +2,12 @@ import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import SlideShow from '../components/SlideShow'
 import { sendRequest } from '../utils/sendRequest'
-import NewsCard from '../components/News/NewsCard'
-import { Heading } from '@chakra-ui/react'
+import NewsCardBox from '../components/News/NewsCardBox'
+import { Heading, Text, Stack, SimpleGrid } from '@chakra-ui/react'
 
 export default function Home () {
   const [news, setNews] = useState([])
+  const [testimonies, setTestimonies] = useState([])
   const [welcome, setWelcome] = useState('')
   const getMessage = () => {
     sendRequest('GET', '/organizations/1').then(res => {
@@ -22,22 +23,64 @@ export default function Home () {
         setNews(newArray)
       }
     })
+  const getTestimonies = () =>
+    sendRequest('GET', '/testimonials').then((res) => {
+      if (res) {
+        const newArray = res.rows.slice(0, 4)
+        setTestimonies(newArray)
+      }
+    })
 
   useEffect(() => {
     getNews()
+    getTestimonies()
     getMessage()
   }, [])
   return (
     <div>
-      <Heading fontSize='4xl' my='10px'>
+      <SlideShow />
+      <Heading fontSize="38px" align="center" my="10px">
         {welcome}
       </Heading>
-      <SlideShow />
-      {news.map(neew => (
-        <Link key={neew.id} to={`/novedades/${neew.id}`}>
-          <NewsCard title={neew.name} image={neew.image} />
-        </Link>
-      ))}
+      {news && (
+        <Text fontSize="25px" align="center" my="20px">
+          Últimas novedades
+        </Text>
+      )}
+      {news && (
+        <SimpleGrid
+          columns={{ sm: 1, md: 2, lg: 4 }}
+          justifyContent="center"
+          alignItems="center"
+          direction="row"
+        >
+          {news.map((neew) => (
+            <Link key={neew.id} to={`/novedades/${neew.id}`}>
+              <NewsCardBox title={neew.name} IMAGE={neew.image} />
+            </Link>
+          ))}
+        </SimpleGrid>
+      )}
+
+      {testimonies && (
+        <Text fontSize="25px" align="center" my="20px">
+          Últimos Testimonios
+        </Text>
+      )}
+      {testimonies && (
+        <SimpleGrid
+          columns={{ sm: 1, md: 2, lg: 4 }}
+          justifyContent="center"
+          alignItems="center"
+          direction="row"
+        >
+          {testimonies.map((testimony) => (
+            <Link key={testimony.id} to={`/novedades/${testimony.id}`}>
+              <NewsCardBox title={testimony.name} IMAGE={testimony.image} />
+            </Link>
+          ))}
+        </SimpleGrid>
+      )}
     </div>
   )
 }

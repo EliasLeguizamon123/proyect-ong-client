@@ -154,7 +154,7 @@ const OrganizationForm = () => {
   const handleSubmit = async values => {
     try {
       await sendRequest('patch', `/organizations/1`, { ...values })
-      await alertSuccess('Exito', 'La novedad fue actualizada')
+      await alertSuccess('Exito', 'Los datos de la ONG fueron actualizados')
       window.location.replace('/backoffice')
     } catch (error) {
       alertError('Error', error.message)

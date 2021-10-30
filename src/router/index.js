@@ -21,32 +21,47 @@ const NewsForm = lazy(() => import('../components/News/NewsForm'))
 
 const Footer = lazy(() => import('../components/footer'))
 const ContactPage = lazy(() => import('../screen/ContactPage'))
-const BackContactPage = lazy(() => import('../screen/BackContactPage'))
-const Categories = lazy(() => import('../components/Categories/Categories'))
+const BackofficeContacts = lazy(() =>
+  import('../screen/Backoffice/BackofficeContacts')
+)
+const BackofficeCategories = lazy(() =>
+  import('../screen/Backoffice/BackofficeCategories')
+)
 
 const SlideForm = lazy(() => import('../components/SlideForm'))
 const CategoriesForm = lazy(() =>
   import('../components/Categories/CategoriesForm')
 )
-const NewsListEdit = lazy(() => import('../screen/NewsListEdit'))
+const BackofficeNews = lazy(() => import('../screen/Backoffice/BackofficeNews'))
 const PrivateRoute = lazy(() => import('./PrivateRouter'))
 const Members = lazy(() => import('../components/Members/Members'))
 const EditUserForm = lazy(() => import('../components/EditUserForm'))
-const AllUsers = lazy(() => import('../screen/AllUsers'))
-const BackTestimonialsPage = lazy(() =>
-  import('../screen/BackTestimonialsPage')
+const BackofficeUsers = lazy(() =>
+  import('../screen/Backoffice/BackofficeUsers')
+)
+const BackofficeTestimonials = lazy(() =>
+  import('../screen/Backoffice/BackofficeTestimonials')
 )
 const OrganizationForm = lazy(() =>
   import('../components/Organization/OrganizationForm')
 )
-const Activities = lazy(() => import('../screen/Activities'))
 const MyProfile = lazy(() => import('../screen/MyProfile'))
-const LayoutBackoffice = lazy(() => import('../screen/LayoutBackoffice'))
+const BackofficeIndex = lazy(() =>
+  import('../screen/Backoffice/BackofficeIndex')
+)
 const ActivitiesPage = lazy(() => import('../screen/ActivitiesPage'))
-const BackActivitiesPage = lazy(() => import('../screen/BackActivitiesPage'))
+const BackofficeActivities = lazy(() =>
+  import('../screen/Backoffice/BackofficeActivities')
+)
 const TestimonialsPage = lazy(() => import('../screen/TestimonialsPage'))
+const BackOfficeSlides = lazy(() =>
+  import('../screen/Backoffice/BackofficeSlides')
+)
+const BackOfficeMembers = lazy(() =>
+  import('../screen/Backoffice/BackofficeMembers')
+)
 
-export default function Router () {
+export default function Router() {
   return (
     <BrowserRouter>
       <Header
@@ -62,90 +77,106 @@ export default function Router () {
           { name: 'Login', path: '/login' },
         ]}
       />
-      <Suspense fallback={<Spinner type='ThreeDots' />}>
+      <Suspense fallback={<Spinner type="ThreeDots" />}>
         <Switch>
-          <Box minH='55vh'>
-            <Route exact path='/' component={Home} />
-            <Route exact path='/about' component={About} />
-            <Route exact path='/register' component={RegisterPage} />
-            <Route exact path='/login' component={LoginPage} />
-            <Route exact path='/novedades' component={NewsPage} />
-            <Route exact path='/novedades/:id' component={NewsDetail} />
-            <Route exact path='/actividades/:id' component={ActivityDetail} />
-            <Route exact path='/actividades' component={ActivitiesPage} />
-            <Route path='/testimoniales/' component={TestimonialsPage} />
+          <Box minH="55vh">
+            <Route exact path="/" component={Home} />
+            <Route exact path="/about" component={About} />
+            <Route exact path="/register" component={RegisterPage} />
+            <Route exact path="/login" component={LoginPage} />
+            <Route exact path="/novedades" component={NewsPage} />
+            <Route exact path="/novedades/:id" component={NewsDetail} />
+            <Route exact path="/actividades/:id" component={ActivityDetail} />
+            <Route exact path="/actividades" component={ActivitiesPage} />
+            <Route path="/testimoniales/" component={TestimonialsPage} />
 
-            <Route path='/contacto' component={ContactPage} />
+            <Route path="/contacto" component={ContactPage} />
 
-            <Route path='/users/:id?' component={EditUserForm} />
-            <Route path='/slides' component={SlideForm} />
-            <Route path='/nosotros' component={Members} />
-            <Route exact path='/perfil' component={MyProfile} />
+            <Route path="/users/:id?" component={EditUserForm} />
+            <Route path="/nosotros" component={Members} />
+            <Route exact path="/perfil" component={MyProfile} />
+            <PrivateRoute path="/backoffice/slides" component={SlideForm} />
             <PrivateRoute
-              path='/backoffice/activities/:id?'
+              path="/backoffice/activities/:id?"
               component={ActivitiesForm}
             />
-            <PrivateRoute
-              path='/backoffice/activities-list'
+           {/* <PrivateRoute
+              path="/backoffice/activities-list"
               component={BackActivitiesPage}
+            />*/}
+            <PrivateRoute
+              path='/backoffice/users/:id?'
+              component={EditUserForm}
             />
             <PrivateRoute
-              path='/backoffice/novedades/:id?'
+              path='/backoffice/listado-actividades'
+              component={BackofficeActivities}
+            />
+            <PrivateRoute
+              path="/backoffice/novedades/:id?"
               component={NewsForm}
             />
             <PrivateRoute
-              path='/backoffice/categorias'
-              component={Categories}
+              path='/backoffice/listado-categorias'
+              component={BackofficeCategories}
             />
             <PrivateRoute
-              path='/backoffice/contactos'
-              component={BackContactPage}
+              path='/backoffice/listado-contactos'
+              component={BackofficeContacts}
             />
-            <PrivateRoute path='/backoffice/usuarios' component={AllUsers} />
+            <PrivateRoute
+              path='/backoffice/listado-usuarios'
+              component={BackofficeUsers}
+            />
             <PrivateRoute
               exact
               path='/backoffice/listado-novedades/'
-              component={NewsListEdit}
+              component={BackofficeNews}
             />
             <PrivateRoute
               exact
               path='/backoffice'
-              component={LayoutBackoffice}
+              component={BackofficeIndex}
             />
             <PrivateRoute
-              path='/backoffice/categories/form/:id?'
+              path='/backoffice/categories/:id?'
               component={CategoriesForm}
             />
             <PrivateRoute
-              path='/backoffice/testimonials-list'
-              component={BackTestimonialsPage}
+              path='/backoffice/listado-testimonios'
+              component={BackofficeTestimonials}
             />
             <PrivateRoute
-              path='/backoffice/testimonials/:id?'
+              path="/backoffice/testimonials/:id?"
               component={TestimonialsForm}
             />
             <PrivateRoute
-              path='/backoffice/edit-organization'
+              path="/backoffice/edit-organization"
               component={OrganizationForm}
             />
-
             <PrivateRoute
-              path='/backoffice/categories'
-              component={Categories}
+              path='/backoffice/listado-slides'
+              component={BackOfficeSlides}
             />
             <PrivateRoute
-              path='/backoffice/activities'
-              component={Activities}
+              path='/backoffice/slides/:id?'
+              component={SlideForm}
+            />
+            <PrivateRoute
+              path='/backoffice/listado-miembros'
+              component={BackOfficeMembers}
             />
           </Box>
         </Switch>
-        <Footer webLinks={[
-          { name: 'Nosotros', path: '/nosotros' },
-          { name: 'Novedades', path: '/novedades' },
-          { name: 'Actividades', path: '/actividades' },
-          { name: 'Testimonios', path: '/testimoniales' },
-          { name: 'Contacto', path: '/contacto' },
-        ]}/>
+        <Footer
+          webLinks={[
+            { name: 'Nosotros', path: '/nosotros' },
+            { name: 'Novedades', path: '/novedades' },
+            { name: 'Actividades', path: '/actividades' },
+            { name: 'Testimonios', path: '/testimoniales' },
+            { name: 'Contacto', path: '/contacto' },
+          ]}
+        />
       </Suspense>
     </BrowserRouter>
   )
