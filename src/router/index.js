@@ -100,16 +100,16 @@ export default function Router() {
               path="/backoffice/activities/:id?"
               component={ActivitiesForm}
             />
-           {/* <PrivateRoute
+            {/* <PrivateRoute
               path="/backoffice/activities-list"
               component={BackActivitiesPage}
             />*/}
             <PrivateRoute
-              path='/backoffice/users/:id?'
+              path="/backoffice/users/:id?"
               component={EditUserForm}
             />
             <PrivateRoute
-              path='/backoffice/listado-actividades'
+              path="/backoffice/listado-actividades"
               component={BackofficeActivities}
             />
             <PrivateRoute
@@ -117,33 +117,33 @@ export default function Router() {
               component={NewsForm}
             />
             <PrivateRoute
-              path='/backoffice/listado-categorias'
+              path="/backoffice/listado-categorias"
               component={BackofficeCategories}
             />
             <PrivateRoute
-              path='/backoffice/listado-contactos'
+              path="/backoffice/listado-contactos"
               component={BackofficeContacts}
             />
             <PrivateRoute
-              path='/backoffice/listado-usuarios'
+              path="/backoffice/listado-usuarios"
               component={BackofficeUsers}
             />
             <PrivateRoute
               exact
-              path='/backoffice/listado-novedades/'
+              path="/backoffice/listado-novedades/"
               component={BackofficeNews}
             />
             <PrivateRoute
               exact
-              path='/backoffice'
+              path="/backoffice"
               component={BackofficeIndex}
             />
             <PrivateRoute
-              path='/backoffice/categories/:id?'
+              path="/backoffice/categories/:id?"
               component={CategoriesForm}
             />
             <PrivateRoute
-              path='/backoffice/listado-testimonios'
+              path="/backoffice/listado-testimonios"
               component={BackofficeTestimonials}
             />
             <PrivateRoute
@@ -155,15 +155,15 @@ export default function Router() {
               component={OrganizationForm}
             />
             <PrivateRoute
-              path='/backoffice/listado-slides'
+              path="/backoffice/listado-slides"
               component={BackOfficeSlides}
             />
             <PrivateRoute
-              path='/backoffice/slides/:id?'
+              path="/backoffice/slides/:id?"
               component={SlideForm}
             />
             <PrivateRoute
-              path='/backoffice/listado-miembros'
+              path="/backoffice/listado-miembros"
               component={BackOfficeMembers}
             />
           </Box>
