@@ -13,6 +13,7 @@ import {
   Center,
   Heading,
   Stack,
+  useColorMode,
 } from '@chakra-ui/react'
 import {
   AddIcon,
@@ -38,7 +39,7 @@ const BackOfficeTable = ({
   users,
 }) => {
   let history = useHistory()
-
+  const { colorMode } = useColorMode()
   const handlePageChange = async ({ selected }) => {
     const start = selected * limit
     setItemsToShow(allItems.slice(start, start + limit))
@@ -70,10 +71,10 @@ const BackOfficeTable = ({
           )}
         </Stack>
         <Table
-          bg="white"
-          rounded="lg"
-          boxShadow="lg"
-          margin="10px 0"
+          bg={colorMode === "light" ? "background" : "darkGray"}
+          rounded='lg'
+          boxShadow='lg'
+          margin='10px 0'
           w={['100%', '90%', '80%']}
         >
           <Thead>

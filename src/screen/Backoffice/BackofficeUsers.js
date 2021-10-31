@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import Spinner from '../../utils/Spinner'
 import { useHistory } from 'react-router-dom'
 import { sendRequest } from '../../utils/sendRequest'
 import { alertConfirm, alertSuccess } from '../../utils/alerts'

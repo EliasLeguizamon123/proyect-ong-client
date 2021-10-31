@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import SlideShow from '../components/SlideShow'
 import { sendRequest } from '../utils/sendRequest'
 import NewsCardBox from '../components/News/NewsCardBox'
-import { Heading, Text, Stack, SimpleGrid } from '@chakra-ui/react'
+import { Heading, Text, SimpleGrid } from '@chakra-ui/react'
 
 export default function Home () {
   const [news, setNews] = useState([])

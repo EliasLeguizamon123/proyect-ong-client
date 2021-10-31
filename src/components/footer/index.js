@@ -11,6 +11,7 @@ import {
   Stack,
   Text,
   useColorModeValue,
+  useColorMode,
   Flex,
   Center,
   Image
@@ -52,8 +53,10 @@ export default function Footer ({
     getLinks()
   }, [])
 
+  const { colorMode } = useColorMode()
+
   return (
-    <Box bg={useColorModeValue(bgColor)} color={useColorModeValue(textColor)}>
+    <Box bg={colorMode === "light" ? "gray.200" : "darkGray"} color={useColorModeValue(textColor)}>
       <Container maxW={'6xl'} py={10} >
         <Center>
           <SimpleGrid
