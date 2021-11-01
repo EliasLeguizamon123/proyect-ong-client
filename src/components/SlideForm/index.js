@@ -36,7 +36,7 @@ const SliderForm = () => {
 
   const handleSubmit = async (values) => {
     try {
-      const valueSlide = { ...values, roleId: userData.roleId }
+      const valueSlide = { ...values, roleId: userData.roleId, organizationId:1 }
       if (loadedFile) {
         // Uploads image to S3 and gets the uploaded file url
         const res = await uploadFile(loadedFile)
@@ -101,11 +101,6 @@ const SliderForm = () => {
               <span>Se recomienda cargar una imagen de 1280x500 px</span>
               <ChakraInput name="text" type="text" label="Texto" />
               <ChakraInput name="order" type="text" label="Orden" />
-              <ChakraInput
-                name="organizationId"
-                type="text"
-                label="Organization Id"
-              />
 
               <Input
                 type="submit"
