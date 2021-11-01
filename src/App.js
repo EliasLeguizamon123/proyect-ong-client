@@ -6,10 +6,10 @@ import Router from './router'
 function App() {
   const { colorMode } = useColorMode()
   return (
-    <Box bg="background">
-      <Container maxW="container.lg" bg={colorMode === "light" ? "container" : "#1A202C"} boxShadow={'lg'}>
+    <Box bg={colorMode === "light" ? "background" : "darkGray"}>
+      <Container maxW="container.lg" bg={colorMode === "light" ? "container" : "darkBg"} boxShadow={'lg'}>
         <Router />
-      </Container>
+      </Container> 
     </Box>
   )
 }

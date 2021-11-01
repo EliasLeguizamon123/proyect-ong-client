@@ -1,8 +1,7 @@
 import React from 'react'
 
-import { SimpleGrid, Center } from '@chakra-ui/react'
+import { SimpleGrid, Center, useColorMode, Box } from '@chakra-ui/react'
 import BackofficeCard from '../../components/BackofficeCard'
-
 import newsImg from '../../assets/backnews.png'
 import activitiesImg from '../../assets/activities.png'
 import categoriesImg from '../../assets/categories.png'
@@ -62,15 +61,20 @@ const cardList = [
 ]
 
 const LayoutBackoffice = () => {
+  const { colorMode } = useColorMode()
   return (
     <>
-      <Center>
-        <SimpleGrid columns={[2, 2, 4, 4, 4]} bg='gray.100'>
+        <SimpleGrid 
+          columns={[2, 2, 3, 3, 3]} 
+          bg={colorMode === "light" ? "container" : "darkBg"} 
+          p={4} 
+          spacing={3}
+          
+        >
           {cardList.map((cardInfo, index) => (
             <BackofficeCard {...cardInfo} key={index} />
           ))}
         </SimpleGrid>
-      </Center>
     </>
   )
 }

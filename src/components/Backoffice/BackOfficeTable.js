@@ -13,6 +13,7 @@ import {
   Center,
   Heading,
   Stack,
+  useColorMode,
 } from '@chakra-ui/react'
 import {
   AddIcon,
@@ -38,7 +39,7 @@ const BackOfficeTable = ({
   users,
 }) => {
   let history = useHistory()
-
+  const { colorMode } = useColorMode()
   const handlePageChange = async ({ selected }) => {
     const start = selected * limit
     setItemsToShow(allItems.slice(start, start + limit))
@@ -46,31 +47,31 @@ const BackOfficeTable = ({
 
   return (
     <>
-      <Center minH='70vh' display='flex' flexDirection='column'>
+      <Center minH="70vh" display="flex" flexDirection="column">
         <Stack
-          width='70%'
-          align='center'
-          display='flex'
-          flexDir='row'
-          justifyContent='space-between'
+          width="70%"
+          align="center"
+          display="flex"
+          flexDir="row"
+          justifyContent="space-between"
         >
           <IconButton
             icon={<ArrowBackIcon />}
-            colorScheme='gray'
-            width='2rem'
+            colorScheme="gray"
+            width="2rem"
             onClick={() => history.goBack()}
           />
           <Heading>Listado de {title}</Heading>
           {!contacts && (
             <IconButton
               icon={<AddIcon />}
-              colorScheme='blue'
+              colorScheme="blue"
               onClick={() => history.push(`/backoffice/${formRoute}`)}
             />
           )}
         </Stack>
         <Table
-          bg='white'
+          bg={colorMode === "light" ? "background" : "darkGray"}
           rounded='lg'
           boxShadow='lg'
           margin='10px 0'
@@ -91,15 +92,15 @@ const BackOfficeTable = ({
             </Tr>
           </Thead>
           <Tbody>
-            {itemsToShow?.map(element => {
+            {itemsToShow?.map((element) => {
               return (
                 <Tr key={element.id} _hover={{ boxShadow: 'lg' }}>
                   <Td>{element.name}</Td>
-                  <Td padding='10px'>
+                  <Td padding="10px">
                     {contacts || users ? (
                       element.email
                     ) : (
-                      <Image src={element.image} maxH='130px' />
+                      <Image src={element.image} maxH="130px" />
                     )}
                   </Td>
                   <Td display={['none', 'table-cell']}>
@@ -111,18 +112,18 @@ const BackOfficeTable = ({
                         )}-${element.createdAt.slice(5, 7)}`}
                   </Td>
                   <Td>
-                    <Flex direction='column' maxW='50px'>
+                    <Flex direction="column" maxW="50px">
                       <IconButton
-                        variant='outline'
-                        margin='10px'
-                        fontSize='20px'
+                        variant="outline"
+                        margin="10px"
+                        fontSize="20px"
                         icon={<DeleteIcon />}
                         onClick={() => handleDelete(element.id)}
                       />
                       <IconButton
-                        variant='outline'
-                        margin='10px'
-                        fontSize='20px'
+                        variant="outline"
+                        margin="10px"
+                        fontSize="20px"
                         icon={!contacts ? <EditIcon /> : <ViewIcon />}
                         onClick={() =>
                           handleEdit(contacts ? element : element.id)

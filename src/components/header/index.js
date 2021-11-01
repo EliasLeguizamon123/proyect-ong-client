@@ -13,6 +13,7 @@ import {
   MenuDivider,
   MenuItem,
   useColorMode,
+  Stack,
 } from '@chakra-ui/react'
 import { Link, useRouteMatch, useHistory } from 'react-router-dom'
 import { HamburgerIcon, CloseIcon, ChevronDownIcon, SunIcon, MoonIcon } from '@chakra-ui/icons'
@@ -26,7 +27,7 @@ const Header = ({
   userLinks = [{ name: 'registro', path: '/registro' }],
 }) => {
   const dispatch = useDispatch()
-  const activeTextColor = '#DB5752'
+  const activeTextColor = 'tertiary'
   //states
   const [display, changeDisplay] = useState('none')
   const [image, setImage] = useState({})
@@ -73,7 +74,7 @@ const Header = ({
   }
 
   return (
-    <nav>
+    <Stack>
       <Flex>
         <Flex display={['none', 'none', 'flex', 'flex']}>
           <Link to='/'>
@@ -94,7 +95,29 @@ const Header = ({
         <Spacer />
         {!isAuth ? (
           <Flex ml='auto' mr={5}>
-            <Flex display={['none', 'none', 'flex', 'flex']}>{userNav}</Flex>
+            <Flex display={['none', 'none', 'flex', 'flex']}>  
+                {colorMode === 'light' ? 
+                  <Button 
+                  onClick={toggleColorMode}
+                  mt={3}
+                  mr={2}
+                  variant = "outline"
+                  color="tertiary"
+                  >
+                    <SunIcon />
+                  </Button> 
+                  : 
+                  <Button 
+                  onClick={toggleColorMode}
+                  mt={3}
+                  mr={2}
+                  variant = "outline"
+                  color={"secondary"}
+                  >
+                    <MoonIcon />
+                  </Button>}
+              {userNav}
+              </Flex>
           </Flex>
         ) : (
           <Menu>
@@ -129,10 +152,16 @@ const Header = ({
               <Link to='/perfil'>
                 <MenuItem>Cuenta</MenuItem>
               </Link>
-              <MenuItem onClick={toggleColorMode}>
-                {colorMode === 'light' ? <SunIcon /> : <MoonIcon />}
-              </MenuItem>
-              <MenuItem color='red' onClick={handleLogout}>
+              {colorMode === 'light' ? 
+                <MenuItem onClick={toggleColorMode} color={'tertiary'}>
+                  <SunIcon />
+                </MenuItem> 
+                : 
+                <MenuItem onClick={toggleColorMode} color={'secondary'}>
+                  <MoonIcon />
+                </MenuItem> 
+                }
+              <MenuItem color='tertiary' onClick={handleLogout}>
                 Desconectarse
               </MenuItem>
             </MenuList>
@@ -151,7 +180,7 @@ const Header = ({
         </Flex>
         <Flex
           w='100vw'
-          bgColor='gray.50'
+          bgColor={colorMode === "light" ? "background" : "darkGray"}
           zIndex={20}
           h='100vh'
           pos='fixed'
@@ -187,7 +216,7 @@ const Header = ({
           </Flex>
         </Flex>
       </Flex>
-    </nav>
+    </Stack>
   )
 }
 function ActiveLink ({ activeOnlyWhenExact, to, label, activeTextColor }) {
