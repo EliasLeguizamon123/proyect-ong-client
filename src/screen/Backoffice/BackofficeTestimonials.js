@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react'
 import { sendRequest } from '../../utils/sendRequest'
 import { useHistory } from 'react-router-dom'
 import BackOfficeTable from '../../components/Backoffice/BackOfficeTable'
-import { alertConfirm, alertSuccess } from '../../utils/alerts'
+
+import { alertSuccess, alertConfirm } from '../../utils/alerts'
 
 const BackTestimonialsPage = () => {
   const [allData, setAllData] = useState([])
@@ -10,10 +11,6 @@ const BackTestimonialsPage = () => {
   const [pageCount, setPageCount] = useState(0)
   const limit = 8
   const history = useHistory()
-
-  useEffect(() => {
-    getTestimonials()
-  }, [])
 
   const getTestimonials = async () => {
     const res = await sendRequest('get', '/testimonials')
@@ -23,7 +20,11 @@ const BackTestimonialsPage = () => {
     setItems(res.rows.slice(0, limit))
   }
 
-  const handleDelete = id => {
+  useEffect(() => {
+    getTestimonials()
+  }, [allData.length, pageCount])
+
+  const handleDelete = (id) => {
     alertConfirm(
       'Seguro deseas borrar este testimonio?',
       'Esta accion es irreversible',
@@ -34,11 +35,12 @@ const BackTestimonialsPage = () => {
       }
     )
   }
-  const handleEdit = id => {
-    history.push(`/backoffice/testimonials/${id}`)
+
+  const handleEdit = (id) => {
+    history.push(`/backoffice/testimonios/${id}`)
   }
 
-  const tableHead = ['Nombre', 'Imagen', 'Creado', 'Acciones']
+  const tableHead = ['Nombre', 'Imagen', 'Creada', 'Acciones']
 
   return (
     <BackOfficeTable
@@ -49,9 +51,9 @@ const BackTestimonialsPage = () => {
       handleDelete={handleDelete}
       handleEdit={handleEdit}
       setItemsToShow={setItems}
-      title='Testimonios'
+      title="Testimonios"
       tableHead={tableHead}
-      formRoute='testimonials'
+      formRoute="testimonios"
     />
   )
 }

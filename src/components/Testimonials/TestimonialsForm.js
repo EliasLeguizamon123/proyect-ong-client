@@ -32,7 +32,7 @@ const TestimonialsForm = () => {
 
   useEffect(() => {
     if (id) {
-      async function fetchData () {
+      async function fetchData() {
         const response = await sendRequest('get', `/testimonials/${id}`)
 
         if (response && response.id) {
@@ -51,7 +51,7 @@ const TestimonialsForm = () => {
     } else setIsUpdate(false)
   }, [id])
 
-  const handleSubmit = async values => {
+  const handleSubmit = async (values) => {
     if (isUpdate) {
       await sendRequest('put', `/testimonials/${id}`, { ...values })
       await alertSuccess('La información se actualizó exitosamente')
@@ -59,35 +59,32 @@ const TestimonialsForm = () => {
     } else {
       await alertError('Error al modificar el testimonio')
     }
+    
   }
 
   return (
     <Flex
-      minH='100vh'
-      align='center'
-      justify='center'
+      minH="100vh"
+      align="center"
+      justify="center"
       bg={useColorModeValue('gray.50', 'gray.800')}
     >
-      <Stack spacing={8} mx='auto' maxW='lg' py={12} px={6} minW='60vw'>
-        <Stack
-          align='center'
-          display='flex'
-          flexDir='row'
-          justifyContent='space-between'
-        >
-          <Heading fontSize='4xl'>Testimonios</Heading>
-          <IconButton
-            icon={<CloseIcon />}
-            colorScheme='red'
-            width='2rem'
-            onClick={() => history.goBack()}
-          />
+      <Stack
+        spacing={8}
+        mx="auto"
+        maxW="lg"
+        py={12}
+        px={[0, 0, 3, 4, 6]}
+        minW="60vw"
+      >
+        <Stack align="center">
+          <Heading fontSize="4xl">Testimonios</Heading>
         </Stack>
         <Box
-          rounded='lg'
+          rounded="lg"
           bg={useColorModeValue('white', 'gray.700')}
-          boxShadow='lg'
-          p={8}
+          boxShadow="lg"
+          p={[3, 5, 5, 8, 8]}
         >
           <Formik
             enableReinitialize={true}
@@ -95,26 +92,26 @@ const TestimonialsForm = () => {
             validationSchema={FormSchema}
             onSubmit={handleSubmit}
           >
-            {props => (
+            {(props) => (
               <Form>
-                <ChakraInput name='name' type='text' label='Nombre' />
+                <ChakraInput name="name" type="text" label="Nombre" />
                 <DropImage
-                  name='image'
+                  name="image"
                   image={iniValues.image}
-                  onDrop={async file => {
+                  onDrop={async (file) => {
                     const res = await uploadFile(file[0])
                     props.setFieldValue('image', res.location)
                     props.initialValues.image = res.location
                   }}
                 />
-                <ChakraInputCKEditor name='content' label='Contenido' />
+                <ChakraInputCKEditor name="content" label="Contenido" />
 
                 <Input
-                  type='submit'
-                  bg='blue.400'
-                  color='white'
-                  width='100%'
-                  marginTop='10px'
+                  type="submit"
+                  bg="blue.400"
+                  color="white"
+                  width="100%"
+                  marginTop="10px"
                   _hover={{
                     bg: 'blue.500',
                   }}

@@ -34,7 +34,7 @@ const BackofficeUsers = () => {
     })
   }
 
-  const handleDelete = async id => {
+  const handleDelete = async (id) => {
     alertConfirm(
       'Seguro deseas borrar este usuario?',
       'Esta accion es irreversible',
@@ -46,7 +46,7 @@ const BackofficeUsers = () => {
     )
   }
 
-  const handleEdit = id => {
+  const handleEdit = (id) => {
     history.push(`/backoffice/users/${id}`)
   }
   const tableHead = ['Nombre', 'Email', 'Creado', 'Acciones']
@@ -60,9 +60,9 @@ const BackofficeUsers = () => {
       handleDelete={handleDelete}
       handleEdit={handleEdit}
       setItemsToShow={setItemsToShow}
-      title='Usuarios'
+      title="Usuarios"
       tableHead={tableHead}
-      formRoute='users'
+      formRoute="users"
       users
     />
   )

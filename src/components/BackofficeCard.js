@@ -1,13 +1,14 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-import { Image, Heading, Center, Box } from '@chakra-ui/react'
+import { Image, Heading, Center, Box, useColorMode } from '@chakra-ui/react'
 
 const BackofficeCard = ({ title, path, img }) => {
+  const { colorMode } = useColorMode()
   return (
     <Link to={path}>
       <Box
-        bg='white'
+        bg={colorMode === "light" ? "container" : "darkGray"}
         display='flex'
         flexDirection='column'
         justifyContent='space-around'
@@ -26,7 +27,7 @@ const BackofficeCard = ({ title, path, img }) => {
           <Heading
             fontWeight='semibold'
             fontSize={['sm', 'md', 'md']}
-            color='#9AC9FB'
+            color= {colorMode === "light" ? "primary" : "secondary"}
           >
             {title}
           </Heading>
@@ -34,7 +35,6 @@ const BackofficeCard = ({ title, path, img }) => {
         <Center>
           <Image maxH='60%' maxW='60%' src={img} />
         </Center>
-        <Center></Center>
       </Box>
     </Link>
   )
