@@ -131,7 +131,7 @@ const Header = ({
               <Avatar size={'sm'} src={profileImage} />
               <ChevronDownIcon />
             </MenuButton>
-            <MenuList alignItems={'center'} justify="center">
+            <MenuList alignItems={'center'} justify="center" zIndex={2}>
               <br />
               <Center>
                 <Avatar size={'2xl'} src={profileImage} />
