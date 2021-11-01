@@ -11,14 +11,12 @@ import {
   Stack,
   Heading,
   Box,
-  Input,
-  IconButton,
+  Input
 } from '@chakra-ui/react'
 import ChakraInput from '../ChakraInput'
 import ChakraInputCKEditor from './ChakraInputCKEditor'
 import { alertError, alertSuccess } from '../../utils/alerts'
 import { sendRequest } from '../../utils/sendRequest'
-import { CloseIcon } from '@chakra-ui/icons'
 
 const TestimonialsForm = () => {
   const [isUpdate, setIsUpdate] = useState(false)

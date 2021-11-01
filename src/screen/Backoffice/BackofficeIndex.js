@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { SimpleGrid, Center, useColorMode, Box } from '@chakra-ui/react'
+import { SimpleGrid, useColorMode } from '@chakra-ui/react'
 import BackofficeCard from '../../components/BackofficeCard'
 import newsImg from '../../assets/backnews.png'
 import activitiesImg from '../../assets/activities.png'
