@@ -5,18 +5,21 @@ import {
   Stack,
   Box,
   useColorModeValue,
+  IconButton,
 } from '@chakra-ui/react'
 import React, { useEffect, useState } from 'react'
 import parse from 'html-react-parser'
-import { useParams } from 'react-router-dom'
+import { useParams, useHistory } from 'react-router-dom'
 import { sendRequest } from '../utils/sendRequest'
 import { alertError } from '../utils/alerts'
 import Spinner from '../utils/Spinner'
+import { ArrowBackIcon } from '@chakra-ui/icons'
 
-const ActivityDetail = (props) => {
+const ActivityDetail = props => {
   const { id } = useParams()
   const [activity, setActivity] = useState(null)
   const [loading, setLoading] = useState(true)
+  const history = useHistory()
 
   useEffect(() => {
     const fetchActivity = async () => {
@@ -33,36 +36,50 @@ const ActivityDetail = (props) => {
   }, [id])
 
   return (
-    <Center p={6}>
-      <Stack
-        bg={useColorModeValue('white', 'gray.700')}
-        boxShadow="lg"
-        p={6}
-        borderRadius={'lg'}
-      >
-        {loading ? (
-          <Spinner />
-        ) : (
-          activity && (
-            <>
+    <Box>
+      <IconButton
+        icon={<ArrowBackIcon />}
+        bg='#9AC9FB'
+        color='white'
+        display={['none', 'none', 'flex']}
+        width='2rem'
+        onClick={() => history.goBack()}
+        marginBottom='-12'
+        marginLeft='5'
+      />
+      {loading ? (
+        <Spinner />
+      ) : (
+        <>
+          <Heading textAlign='center'>{activity.name}</Heading>
+          <Center p={6}>
+            <Stack
+              bg={'gray.700'}
+              boxShadow='lg'
+              p={6}
+              borderRadius={'lg'}
+              maxW='60vW'
+            >
               <Image
                 maxH={'50vh'}
                 borderRadius={6}
                 src={activity.image}
-                objectFit="contain"
                 fallbackSrc={'https://via.placeholder.com/200'}
                 sx={{
                   _hover: { transform: 'scale(1.1)' },
                   transition: '.5s ease-in-out',
                 }}
+                marginBottom='30px'
               />
-              <Heading textAlign="center">{activity.name}</Heading>
-              <Box maxW="550px">{parse(activity.content)}</Box>
-            </>
-          )
-        )}
-      </Stack>
-    </Center>
+
+              <Box marginTop='2rem'>
+                {activity.content ? parse(activity.content) : null}
+              </Box>
+            </Stack>
+          </Center>
+        </>
+      )}
+    </Box>
   )
 }
 

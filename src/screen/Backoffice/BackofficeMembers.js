@@ -35,7 +35,7 @@ const BackofficeMembers = () => {
   }
 
   const handleEdit = id => {
-    history.push(`/backoffice/members/${id}`)
+    history.push(`/backoffice/miembros/${id}`)
   }
 
   const tableHead = ['Nombre', 'Imagen', 'Creado', 'Acciones']
@@ -51,7 +51,7 @@ const BackofficeMembers = () => {
       setItemsToShow={setItemsToShow}
       title='Miembros'
       tableHead={tableHead}
-      formRoute='members'
+      formRoute='miembros'
     />
   )
 }

@@ -11,6 +11,11 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
-.conditionalLinks{
+
+.conditionalLinks {
   color: #9AC9FB;
-} 
+}
+
+.ck-editor {
+  color: #000000;
+}

@@ -8,14 +8,12 @@ import {
   IconButton,
   Box,
   Input,
-  Center,
   Heading,
 } from '@chakra-ui/react'
 import ChakraInput from '../ChakraInput'
 import ChakraTextArea from '../ContactForm/ChakraTextArea'
-import { alertSuccess, alertError } from '../../utils/alerts'
+import { alertSuccess } from '../../utils/alerts'
 import { sendRequest } from '../../utils/sendRequest'
-import Spinner from '../../utils/Spinner'
 import { useParams, useHistory } from 'react-router-dom'
 import { CloseIcon } from '@chakra-ui/icons'
 
@@ -72,7 +70,15 @@ const CategoriesForm = () => {
       justify='center'
       bg={useColorModeValue('gray.50', 'gray.800')}
     >
-      <Stack spacing={8} mx='auto' maxW='lg' py={12} px={6} minW='60vw'>
+      <Stack
+        spacing={8}
+        mx='auto'
+        maxW='lg'
+        py={2}
+        px={2}
+        minW='50vw'
+        width={['100%', '100%', '70%']}
+      >
         <Stack
           align='center'
           display='flex'

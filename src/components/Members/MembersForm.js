@@ -10,45 +10,32 @@ import {
 } from '@chakra-ui/react'
 import { Form, Formik } from 'formik'
 import ChakraInput from '../ChakraInput'
-import ChakraInputCKEditor from '../ChakraInputCKEditor'
 import { sendRequest } from '../../utils/sendRequest'
 import { useParams } from 'react-router-dom'
-import { NewsFormSchema } from '../News/NewsFormSchema'
+import { MembersFormSchema } from '../Members/MembersFormSchema'
 import { uploadFile } from '../../utils/AS3'
 import { alertError, alertSuccess } from '../../utils/alerts'
 import DropImage from '../DropImage'
-import ChakraSelect from '../ChakraSelect'
 import { useHistory } from 'react-router-dom'
 import { CloseIcon } from '@chakra-ui/icons'
 
-const NewsForm = () => {
+const MembersForm = () => {
   const [isUpdate, setIsUpdate] = useState(false)
   const [iniValues, setIniValues] = useState({
     name: '',
     image: '',
-    content: '',
-    categoryId: '',
   })
-  const [categories, setCategories] = useState({})
   const { id } = useParams()
   const history = useHistory()
 
   useEffect(() => {
-    const fetchCategories = async () => {
-      const res = await sendRequest('get', '/categories')
-      setCategories(res.rows)
-    }
-
-    fetchCategories()
     if (id) {
       const fetchData = async () => {
-        const res = await sendRequest('get', `/news/${id}`)
+        const res = await sendRequest('get', `/members/${id}`)
         if (res && res.id) {
           const obNew = {
             name: res.name,
             image: res.image,
-            content: res.content,
-            categoryId: res.categoryId,
           }
           // Pass data to inputs
           setIniValues(obNew)
@@ -60,31 +47,19 @@ const NewsForm = () => {
     } else setIsUpdate(false)
   }, [id])
 
-  const handleCategories = () => {
-    if (categories.length > 0) {
-      return categories.map(category => {
-        return (
-          <option value={category.id} key={category.id}>
-            {category.name}
-          </option>
-        )
-      })
-    }
-  }
-
   const handleSubmit = async values => {
     if (isUpdate) {
       try {
-        await sendRequest('put', `/news/${id}`, { ...values })
-        await alertSuccess('Exito', 'La novedad fue actualizada')
+        await sendRequest('put', `/members/${id}`, { ...values })
+        await alertSuccess('Exito', 'El miembro fue actualizado')
         history.goBack()
       } catch (error) {
         alertError('Error', error.message)
       }
     } else {
       try {
-        await sendRequest('post', `/news`, { ...values })
-        alertSuccess('Exito', 'La novedad fue creada')
+        await sendRequest('post', `/members`, { ...values })
+        alertSuccess('Exito', 'El miembro fue creado con éxito')
       } catch (error) {
         alertError('Error', error.message)
       }
@@ -113,7 +88,7 @@ const NewsForm = () => {
           flexDir='row'
           justifyContent='space-between'
         >
-          <Heading fontSize='4xl'>Novedades</Heading>
+          <Heading fontSize='4xl'>Miembros</Heading>
           <IconButton
             icon={<CloseIcon />}
             colorScheme='red'
@@ -131,12 +106,12 @@ const NewsForm = () => {
           <Formik
             enableReinitialize
             initialValues={iniValues}
-            validationSchema={NewsFormSchema}
+            validationSchema={MembersFormSchema}
             onSubmit={handleSubmit}
           >
             {props => (
               <Form>
-                <ChakraInput name='name' type='text' label='Titulo' />
+                <ChakraInput name='name' type='text' label='Nombre' />
                 <DropImage
                   onDrop={async file => {
                     const res = await uploadFile(file[0])
@@ -147,18 +122,6 @@ const NewsForm = () => {
                   name='image'
                   image={iniValues.image}
                 />
-                <ChakraSelect
-                  onChange={value => {
-                    props.setFieldValue('categoryId', value.target.value)
-                    props.initialValues.categoryId = value.target.value
-                  }}
-                  placeholder='Selecciona una categoría'
-                  name='categoryId'
-                  label='Categoría'
-                  handleOptions={handleCategories}
-                  iniValues={iniValues}
-                />
-                <ChakraInputCKEditor name='content' label='Contenido' />
                 <Box>
                   <Input
                     type='submit'
@@ -169,7 +132,7 @@ const NewsForm = () => {
                     _hover={{
                       bg: 'blue.500',
                     }}
-                    value={isUpdate ? 'Actualiza novedad' : 'Crea novedad'}
+                    value={isUpdate ? 'Actualiza Miembro' : 'Crea Miembro'}
                   />
                 </Box>
               </Form>
@@ -181,4 +144,4 @@ const NewsForm = () => {
   )
 }
 
-export default NewsForm
+export default MembersForm

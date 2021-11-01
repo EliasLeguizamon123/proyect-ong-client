@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { SimpleGrid } from '@chakra-ui/react'
+import { Center, Heading, SimpleGrid, Text } from '@chakra-ui/react'
 import Paginator from '../components/Paginator'
 import ActivitiesCard from '../components/Activities/ActivitiesCard'
 import { Link } from 'react-router-dom'
@@ -39,6 +39,19 @@ const ActivitiesPage = () => {
 
   return (
     <>
+      <Center h='25vh' marginBottom='2vh'>
+        <Heading size='lg' fontSize='3rem'>
+          <Text as={'span'} background={'#DB5752'}>
+            Acti
+          </Text>
+          <Text as={'span'} background={'#FAFA88'}>
+            vida
+          </Text>
+          <Text as={'span'} background={'#9AC9FB'}>
+            des
+          </Text>
+        </Heading>
+      </Center>
       <SimpleGrid columns={{ sm: 1, md: 2 }}>{renderCards()}</SimpleGrid>
       <Paginator onPageChange={handlePageClick} pageCount={pageCount} />
     </>

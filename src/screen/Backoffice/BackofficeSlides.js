@@ -45,12 +45,12 @@ const BackofficeSlides = () => {
         name: slide.text,
         image: slide.imageUrl,
         id: slide.id,
-        createdAt: slide.createdAt,
+        order: slide.order,
       })
     })
   }
 
-  const tableHead = ['Texto', 'Imagen', 'Creado', 'Acciones']
+  const tableHead = ['Texto', 'Imagen', 'Orden', 'Acciones']
 
   return (
     <BackOfficeTable
@@ -64,6 +64,7 @@ const BackofficeSlides = () => {
       title='Slides'
       tableHead={tableHead}
       formRoute='slides'
+      slides
     />
   )
 }

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { SimpleGrid, Heading } from '@chakra-ui/react'
+import { SimpleGrid, Heading, Text, Center } from '@chakra-ui/react'
 import Paginator from '../components/Paginator'
 import NewsCard from '../components/News/NewsCard'
 import { Link } from 'react-router-dom'
@@ -35,7 +35,7 @@ const NewsPage = () => {
     })
   }
 
-  const handlePageClick = async data => {
+  const handlePageClick = data => {
     let currentPage = data.selected * limit
     setItems(fetchAllNews.slice(currentPage, currentPage + limit))
   }
@@ -46,7 +46,19 @@ const NewsPage = () => {
         <Spinner />
       ) : (
         <>
-          <Heading textAlign='center'>Novedades</Heading>
+          <Center h='25vh' marginBottom='2vh'>
+            <Heading size='lg' fontSize='3rem'>
+              <Text as={'span'} background={'#DB5752'}>
+                Nov
+              </Text>
+              <Text as={'span'} background={'#FAFA88'}>
+                eda
+              </Text>
+              <Text as={'span'} background={'#9AC9FB'}>
+                des
+              </Text>
+            </Heading>
+          </Center>
           <SimpleGrid columns={{ sm: 1, md: 2 }} p={8}>
             {renderCards()}
           </SimpleGrid>

@@ -5,6 +5,7 @@ import {
   FormErrorMessage,
   FormLabel,
   Image,
+  Text,
 } from '@chakra-ui/react'
 import { Field } from 'formik'
 import Dropzone from 'react-dropzone'
@@ -47,15 +48,21 @@ const DropImage = ({ onDrop, name, image, ...rest }) => {
                 <input {...getInputProps()} />
                 {!isDragActive && (
                   <Box textAlign='center'>
-                    Click here or drop a file to upload!
+                    <Text color='blue.400'>
+                      Click here or drop a file to upload!
+                    </Text>
                   </Box>
                 )}
                 {isDragActive && !isDragReject && (
-                  <Box textAlign='center'>Drop it here!</Box>
+                  <Box textAlign='center'>
+                    <Text color='green.400'>Drop it here!</Text>
+                  </Box>
                 )}
                 {isDragReject && (
                   <Box textAlign='center'>
-                    File type not accepted, only images!
+                    <Text color='red.300'>
+                      File type not accepted, only images!
+                    </Text>
                   </Box>
                 )}
                 {image !== '' && (

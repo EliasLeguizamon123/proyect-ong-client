@@ -60,8 +60,9 @@ const BackOfficeSlides = lazy(() =>
 const BackOfficeMembers = lazy(() =>
   import('../screen/Backoffice/BackofficeMembers')
 )
+const MembersForm = lazy(() => import('../components/Members/MembersForm'))
 
-export default function Router() {
+export default function Router () {
   return (
     <BrowserRouter>
       <Header
@@ -77,94 +78,93 @@ export default function Router() {
           { name: 'Login', path: '/login' },
         ]}
       />
-      <Suspense fallback={<Spinner type="ThreeDots" />}>
+      <Suspense fallback={<Spinner type='ThreeDots' />}>
         <Switch>
-          <Box minH="55vh">
-            <Route exact path="/" component={Home} />
-            <Route exact path="/about" component={About} />
-            <Route exact path="/register" component={RegisterPage} />
-            <Route exact path="/login" component={LoginPage} />
-            <Route exact path="/novedades" component={NewsPage} />
-            <Route exact path="/novedades/:id" component={NewsDetail} />
-            <Route exact path="/actividades/:id" component={ActivityDetail} />
-            <Route exact path="/actividades" component={ActivitiesPage} />
-            <Route path="/testimoniales/" component={TestimonialsPage} />
+          <Box minH='55vh'>
+            <Route exact path='/' component={Home} />
+            <Route exact path='/about' component={About} />
+            <Route exact path='/register' component={RegisterPage} />
+            <Route exact path='/login' component={LoginPage} />
+            <Route exact path='/novedades' component={NewsPage} />
+            <Route exact path='/novedades/:id' component={NewsDetail} />
+            <Route exact path='/actividades/:id' component={ActivityDetail} />
+            <Route exact path='/actividades' component={ActivitiesPage} />
+            <Route path='/testimoniales/' component={TestimonialsPage} />
 
-            <Route path="/contacto" component={ContactPage} />
+            <Route path='/contacto' component={ContactPage} />
 
-            <Route path="/users/:id?" component={EditUserForm} />
-            <Route path="/nosotros" component={Members} />
-            <Route exact path="/perfil" component={MyProfile} />
-            <PrivateRoute path="/backoffice/slides" component={SlideForm} />
+            <Route path='/users/:id?' component={EditUserForm} />
+            <Route path='/nosotros' component={Members} />
+            <Route exact path='/perfil' component={MyProfile} />
             <PrivateRoute
-              path="/backoffice/activities/:id?"
+              path='/backoffice/activities/:id?'
               component={ActivitiesForm}
             />
-            {/* <PrivateRoute
-              path="/backoffice/activities-list"
-              component={BackActivitiesPage}
-            />*/}
             <PrivateRoute
-              path="/backoffice/users/:id?"
+              path='/backoffice/users/:id?'
               component={EditUserForm}
             />
             <PrivateRoute
-              path="/backoffice/listado-actividades"
+              path='/backoffice/listado-actividades'
               component={BackofficeActivities}
             />
             <PrivateRoute
-              path="/backoffice/novedades/:id?"
+              path='/backoffice/novedades/:id?'
               component={NewsForm}
             />
             <PrivateRoute
-              path="/backoffice/listado-categorias"
+              path='/backoffice/listado-categorias'
               component={BackofficeCategories}
             />
             <PrivateRoute
-              path="/backoffice/listado-contactos"
+              path='/backoffice/listado-contactos'
               component={BackofficeContacts}
             />
             <PrivateRoute
-              path="/backoffice/listado-usuarios"
+              path='/backoffice/listado-usuarios'
               component={BackofficeUsers}
             />
             <PrivateRoute
               exact
-              path="/backoffice/listado-novedades/"
+              path='/backoffice/listado-novedades/'
               component={BackofficeNews}
             />
             <PrivateRoute
               exact
-              path="/backoffice"
+              path='/backoffice'
               component={BackofficeIndex}
             />
             <PrivateRoute
-              path="/backoffice/categories/:id?"
+              path='/backoffice/categories/:id?'
               component={CategoriesForm}
             />
             <PrivateRoute
-              path="/backoffice/listado-testimonios"
+              path='/backoffice/listado-testimonios'
               component={BackofficeTestimonials}
             />
             <PrivateRoute
-              path="/backoffice/testimonios/:id?"
+              path='/backoffice/testimonios/:id?'
               component={TestimonialsForm}
             />
             <PrivateRoute
-              path="/backoffice/edit-organization"
+              path='/backoffice/edit-organization'
               component={OrganizationForm}
             />
             <PrivateRoute
-              path="/backoffice/listado-slides"
+              path='/backoffice/listado-slides'
               component={BackOfficeSlides}
             />
             <PrivateRoute
-              path="/backoffice/slides/:id?"
+              path='/backoffice/slides/:id?'
               component={SlideForm}
             />
             <PrivateRoute
-              path="/backoffice/listado-miembros"
+              path='/backoffice/listado-miembros'
               component={BackOfficeMembers}
+            />
+            <PrivateRoute
+              path='/backoffice/miembros/:id?'
+              component={MembersForm}
             />
           </Box>
         </Switch>
