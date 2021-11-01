@@ -147,7 +147,7 @@ export default function Router() {
               component={BackofficeTestimonials}
             />
             <PrivateRoute
-              path="/backoffice/testimonials/:id?"
+              path="/backoffice/testimonios/:id?"
               component={TestimonialsForm}
             />
             <PrivateRoute
