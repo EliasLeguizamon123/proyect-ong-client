@@ -14,6 +14,7 @@ import {
   Heading,
   Stack,
   useColorMode,
+  Box,
 } from '@chakra-ui/react'
 import {
   AddIcon,
@@ -37,6 +38,7 @@ const BackOfficeTable = ({
   setItemsToShow,
   contacts,
   users,
+  slides,
 }) => {
   let history = useHistory()
   const { colorMode } = useColorMode()
@@ -45,33 +47,54 @@ const BackOfficeTable = ({
     setItemsToShow(allItems.slice(start, start + limit))
   }
 
+  const handleRender3rdColumn = element => {
+    if (contacts) {
+      return element.phone
+    } else if (slides) {
+      return element.order
+    } else {
+      return `${element.createdAt.slice(8, 10)}-${element.createdAt.slice(
+        5,
+        7
+      )}`
+    }
+  }
+
   return (
     <>
-      <Center minH="70vh" display="flex" flexDirection="column">
+      <Center minH='70vh' display='flex' flexDirection='column'>
         <Stack
-          width="70%"
-          align="center"
-          display="flex"
-          flexDir="row"
-          justifyContent="space-between"
+          width={['90%', '90%', '70%']}
+          align='center'
+          display='flex'
+          flexDir='row'
+          justifyContent='space-between'
         >
           <IconButton
             icon={<ArrowBackIcon />}
-            colorScheme="gray"
-            width="2rem"
+            colorScheme='gray'
+            width='2rem'
+            display={['none', 'none', 'flex']}
             onClick={() => history.goBack()}
           />
-          <Heading>Listado de {title}</Heading>
-          {!contacts && (
+          <Heading
+            fontSize={['1.6rem', '2rem', '3rem']}
+            minW={['67vw', '67vw', '0']}
+          >
+            Listado de {title}
+          </Heading>
+          {contacts || users ? (
+            <Box></Box>
+          ) : (
             <IconButton
               icon={<AddIcon />}
-              colorScheme="blue"
+              colorScheme='blue'
               onClick={() => history.push(`/backoffice/${formRoute}`)}
             />
           )}
         </Stack>
         <Table
-          bg={colorMode === "light" ? "background" : "darkGray"}
+          bg={colorMode === 'light' ? 'background' : 'darkGray'}
           rounded='lg'
           boxShadow='lg'
           margin='10px 0'
@@ -92,38 +115,33 @@ const BackOfficeTable = ({
             </Tr>
           </Thead>
           <Tbody>
-            {itemsToShow?.map((element) => {
+            {itemsToShow?.map(element => {
               return (
                 <Tr key={element.id} _hover={{ boxShadow: 'lg' }}>
-                  <Td>{element.name}</Td>
-                  <Td padding="10px">
+                  <Td maxW='30vw'>{element.name}</Td>
+                  <Td padding='10px'>
                     {contacts || users ? (
                       element.email
                     ) : (
-                      <Image src={element.image} maxH="130px" />
+                      <Image src={element.image} maxH='130px' />
                     )}
                   </Td>
                   <Td display={['none', 'table-cell']}>
-                    {contacts
-                      ? element.phone
-                      : `${element.createdAt.slice(
-                          8,
-                          10
-                        )}-${element.createdAt.slice(5, 7)}`}
+                    {handleRender3rdColumn(element)}{' '}
                   </Td>
                   <Td>
-                    <Flex direction="column" maxW="50px">
+                    <Flex direction='column' maxW='50px'>
                       <IconButton
-                        variant="outline"
-                        margin="10px"
-                        fontSize="20px"
+                        variant='outline'
+                        margin='10px'
+                        fontSize='20px'
                         icon={<DeleteIcon />}
                         onClick={() => handleDelete(element.id)}
                       />
                       <IconButton
-                        variant="outline"
-                        margin="10px"
-                        fontSize="20px"
+                        variant='outline'
+                        margin='10px'
+                        fontSize='20px'
                         icon={!contacts ? <EditIcon /> : <ViewIcon />}
                         onClick={() =>
                           handleEdit(contacts ? element : element.id)

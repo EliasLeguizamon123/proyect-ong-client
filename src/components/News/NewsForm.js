@@ -10,7 +10,7 @@ import {
 } from '@chakra-ui/react'
 import { Form, Formik } from 'formik'
 import ChakraInput from '../ChakraInput'
-import ChakraInputCKEditor from '../Testimonials/ChakraInputCKEditor'
+import ChakraInputCKEditor from '../ChakraInputCKEditor'
 import { sendRequest } from '../../utils/sendRequest'
 import { useParams } from 'react-router-dom'
 import { NewsFormSchema } from '../News/NewsFormSchema'
@@ -36,7 +36,7 @@ const NewsForm = () => {
   useEffect(() => {
     const fetchCategories = async () => {
       const res = await sendRequest('get', '/categories')
-      setCategories(res)
+      setCategories(res.rows)
     }
 
     fetchCategories()
@@ -77,7 +77,7 @@ const NewsForm = () => {
       try {
         await sendRequest('put', `/news/${id}`, { ...values })
         await alertSuccess('Exito', 'La novedad fue actualizada')
-        history.push('/backoffice/listado-novedades')
+        history.goBack()
       } catch (error) {
         alertError('Error', error.message)
       }
@@ -98,7 +98,15 @@ const NewsForm = () => {
       justify='center'
       bg={useColorModeValue('gray.50', 'gray.800')}
     >
-      <Stack spacing={8} mx='auto' maxW='lg' py={12} px={6} minW='60vw'>
+      <Stack
+        spacing={8}
+        mx='auto'
+        maxW='lg'
+        py={2}
+        px={2}
+        minW='50vw'
+        width={['100%', '100%', '70%']}
+      >
         <Stack
           align='center'
           display='flex'

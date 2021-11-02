@@ -1,61 +1,63 @@
 import React from 'react'
 
-import { SimpleGrid, useColorMode } from '@chakra-ui/react'
+import { SimpleGrid, Center, useColorMode } from '@chakra-ui/react'
 import BackofficeCard from '../../components/BackofficeCard'
-import newsImg from '../../assets/backnews.png'
-import activitiesImg from '../../assets/activities.png'
-import categoriesImg from '../../assets/categories.png'
-import testimonialsImg from '../../assets/testimonials.png'
-import organizationImg from '../../assets/organization.png'
-import slidesImg from '../../assets/slides.png'
-import usersImg from '../../assets/users.png'
-import membersImg from '../../assets/members.png'
-import emailImg from '../../assets/email.png'
+import {
+  BiNews,
+  FaListAlt,
+  FaThList,
+  FaComments,
+  GiOrganigram,
+  FaFileImage,
+  FaUsers,
+  FaUserFriends,
+  ImMail,
+} from 'react-icons/all'
 
 const cardList = [
   {
     title: 'Novedades',
-    img: newsImg,
+    icon: BiNews,
     path: '/backoffice/listado-novedades',
   },
   {
     title: 'Actividades',
-    img: activitiesImg,
+    icon: FaListAlt,
     path: '/backoffice/listado-actividades',
   },
   {
     title: 'Categorías',
-    img: categoriesImg,
+    icon: FaThList,
     path: '/backoffice/listado-categorias',
   },
   {
     title: 'Testimonios',
-    img: testimonialsImg,
+    icon: FaComments,
     path: '/backoffice/listado-testimonios',
   },
   {
     title: 'Organización',
-    img: organizationImg,
+    icon: GiOrganigram,
     path: '/backoffice/edit-organization',
   },
   {
     title: 'Slides',
-    img: slidesImg,
+    icon: FaFileImage,
     path: '/backoffice/listado-slides',
   },
   {
     title: 'Usuarios',
-    img: usersImg,
+    icon: FaUsers,
     path: '/backoffice/listado-usuarios',
   },
   {
     title: 'Miembros',
-    img: membersImg,
+    icon: FaUserFriends,
     path: '/backoffice/listado-miembros',
   },
   {
     title: 'Contactos',
-    img: emailImg,
+    icon: ImMail,
     path: '/backoffice/listado-contactos',
   },
 ]
@@ -63,19 +65,19 @@ const cardList = [
 const LayoutBackoffice = () => {
   const { colorMode } = useColorMode()
   return (
-    <>
-        <SimpleGrid 
-          columns={[2, 2, 3, 3, 3]} 
-          bg={colorMode === "light" ? "container" : "darkBg"} 
-          p={4} 
-          spacing={3}
-          
-        >
-          {cardList.map((cardInfo, index) => (
-            <BackofficeCard {...cardInfo} key={index} />
-          ))}
-        </SimpleGrid>
-    </>
+    <Center>
+      <SimpleGrid
+        columns={[2, 2, 3, 3, 3]}
+        bg={colorMode === 'light' ? 'container' : 'darkBg'}
+        p={4}
+        spacing={5}
+        alignContent='center'
+      >
+        {cardList.map((cardInfo, index) => (
+          <BackofficeCard {...cardInfo} key={index} />
+        ))}
+      </SimpleGrid>
+    </Center>
   )
 }
 

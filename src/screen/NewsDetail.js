@@ -57,6 +57,7 @@ const NewsDetail = props => {
               _hover: { transform: 'scale(1.1)' },
               transition: '.5s ease-in-out',
             }}
+            marginBottom='30px'
           />
 
           <Box marginTop='2rem'>

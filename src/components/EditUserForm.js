@@ -19,6 +19,7 @@ import {
 import ChakraInput from './ChakraInput'
 import { ArrowBackIcon } from '@chakra-ui/icons'
 import { alertError, alertSuccess } from '../utils/alerts'
+import ChakraSelect from './ChakraSelect'
 
 const FormSchema = Yup.object().shape({
   firstName: Yup.string()
@@ -41,6 +42,19 @@ const EditUserForm = () => {
   })
   const { id } = useParams()
 
+  const handleOptions = () => {
+    return (
+      <>
+        <option value={1} key={1}>
+          Administrador
+        </option>
+        <option value={2} key={2}>
+          Standard
+        </option>
+      </>
+    )
+  }
+
   let history = useHistory()
   useEffect(() => {
     if (id) {
@@ -61,9 +75,9 @@ const EditUserForm = () => {
   }, [id])
   const handleSubmit = async values => {
     if (isUpdate) {
-      await sendRequest('put', `/users/${id}`, { ...values })
+      await sendRequest('patch', `/users/${id}`, { ...values })
       await alertSuccess('Usuario modificado exitosamente')
-      history.push('/backoffice')
+      history.goBack()
     } else {
       await alertError('Error, algo ocurrio')
     }
@@ -75,7 +89,15 @@ const EditUserForm = () => {
       justify='center'
       bg={useColorModeValue('gray.50', 'gray.800')}
     >
-      <Stack spacing={8} mx='auto' maxW='lg' py={12} px={6}>
+      <Stack
+        spacing={8}
+        mx='auto'
+        maxW='lg'
+        py={2}
+        px={2}
+        minW='50vw'
+        width={['100%', '100%', '70%']}
+      >
         <Stack
           align='center'
           display='flex'
@@ -105,46 +127,47 @@ const EditUserForm = () => {
             validationSchema={FormSchema}
             onSubmit={handleSubmit}
           >
-            <Form>
-              <div>
-                <ChakraInput
-                  name='firstName'
-                  type='text'
-                  label='Nombre'
-                  defaultValue={initialValues.firstName}
-                />
-                <ChakraInput
-                  name='lastName'
-                  type='text'
-                  label='Apellido'
-                  defaultValue={initialValues.lastName}
-                />
-                {initialValues.roleId === 1 ? (
-                  <FormControl id='roleId'>
-                    <FormLabel>Role</FormLabel>
-                    <Select
-                      placeholder='Seleccione un Rol'
-                      defaultValue={initialValues.roleId}
-                    >
-                      <option value='1'>Administrador</option>
-                      <option value='2'>Standard</option>
-                    </Select>
-                  </FormControl>
-                ) : null}
-              </div>
-              <Button
-                bg='blue.400'
-                color='white'
-                width='100%'
-                marginTop='10px'
-                _hover={{
-                  bg: 'blue.500',
-                }}
-                type='submit'
-              >
-                Editar Usuario
-              </Button>
-            </Form>
+            {props => (
+              <Form>
+                <div>
+                  <ChakraInput
+                    name='firstName'
+                    type='text'
+                    label='Nombre'
+                    defaultValue={initialValues.firstName}
+                  />
+                  <ChakraInput
+                    name='lastName'
+                    type='text'
+                    label='Apellido'
+                    defaultValue={initialValues.lastName}
+                  />
+                  <ChakraSelect
+                    onChange={value => {
+                      props.setFieldValue('roleId', value.target.value)
+                      props.initialValues.roleId = value.target.value
+                    }}
+                    placeholder='Selecciona un rol...'
+                    name='roleId'
+                    label='Rol'
+                    handleOptions={handleOptions}
+                    iniValues={initialValues}
+                  />
+                </div>
+                <Button
+                  bg='blue.400'
+                  color='white'
+                  width='100%'
+                  marginTop='10px'
+                  _hover={{
+                    bg: 'blue.500',
+                  }}
+                  type='submit'
+                >
+                  Editar Usuario
+                </Button>
+              </Form>
+            )}
           </Formik>
         </Box>
       </Stack>

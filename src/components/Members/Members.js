@@ -5,22 +5,30 @@ import Spinner from '../../utils/Spinner'
 import MemberCard from './MemberCard'
 
 const Members = () => {
-  const [members, setMembers] = useState()
+  const [allMembers, setAllMembers] = useState([])
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     const getMembers = async () => {
       const response = await sendRequest('get', '/members')
-      if (response) setMembers(response)
+      if (response) setAllMembers(response.rows)
     }
     getMembers()
     setLoading(false)
   }, [])
 
+  const handleMembers = () => {
+    return allMembers.map(member => {
+      return (
+        <MemberCard key={member.id} name={member.name} image={member.image} />
+      )
+    })
+  }
+
   return (
-    <Box spacing="20vh">
-      <Center h="25vh" marginBottom="2vh">
-        <Heading size="lg" fontSize="3rem">
+    <Box spacing='20vh'>
+      <Center h='25vh' marginBottom='2vh'>
+        <Heading size='lg' fontSize='3rem'>
           <Text as={'span'} background={'#DB5752'}>
             Mi
           </Text>
@@ -32,18 +40,12 @@ const Members = () => {
           </Text>
         </Heading>
       </Center>
-      <Center marginBottom="20vh">
-        {loading && members.length > 0 ? (
+      <Center marginBottom='20vh'>
+        {loading ? (
           <Spinner />
         ) : (
-          <Wrap marginLeft="15vh" marginRight="15vh">
-            {members? members.map((member) => (
-              <MemberCard
-                key={member.id}
-                name={member.name}
-                image={member.image}
-              />
-            )) : null}
+          <Wrap marginLeft='15vh' marginRight='15vh'>
+            {handleMembers()}
           </Wrap>
         )}
       </Center>

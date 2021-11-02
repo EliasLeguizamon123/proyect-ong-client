@@ -15,7 +15,7 @@ import {
   IconButton,
 } from '@chakra-ui/react'
 import ChakraInput from '../ChakraInput'
-import ChakraInputCKEditor from './ChakraInputCKEditor'
+import ChakraInputCKEditor from '../ChakraInputCKEditor'
 import { uploadFile } from '../../utils/AS3'
 import { sendRequest } from '../../utils/sendRequest'
 import { alertSuccess } from '../../utils/alerts'
@@ -54,10 +54,14 @@ const ActivitiesForm = () => {
   }, [id])
 
   const handleSubmit = async values => {
-    if (isUpdate) await sendRequest('put', `/activities/${id}`, { ...values })
-    else await sendRequest('post', '/activities', { ...values })
-    await alertSuccess('La actividad se guardó exitosamente')
-    history.goBack()
+    try {
+      if (isUpdate) await sendRequest('put', `/activities/${id}`, { ...values })
+      else await sendRequest('post', '/activities', { ...values })
+      await alertSuccess('La actividad se guardó exitosamente')
+      history.goBack()
+    } catch (error) {
+      alertError('Error', 'Contacte a su administrador')
+    }
   }
 
   return (
@@ -67,7 +71,15 @@ const ActivitiesForm = () => {
       justify='center'
       bg={useColorModeValue('gray.50', 'gray.800')}
     >
-      <Stack spacing={8} mx='auto' maxW='lg' py={12} px={6} minW='60vw'>
+      <Stack
+        spacing={8}
+        mx='auto'
+        maxW='lg'
+        py={2}
+        px={2}
+        minW='50vw'
+        width={['100%', '100%', '70%']}
+      >
         <Stack
           align='center'
           display='flex'

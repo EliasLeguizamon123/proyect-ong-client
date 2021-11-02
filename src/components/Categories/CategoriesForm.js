@@ -70,7 +70,15 @@ const CategoriesForm = () => {
       justify='center'
       bg={useColorModeValue('gray.50', 'gray.800')}
     >
-      <Stack spacing={8} mx='auto' maxW='lg' py={12} px={6} minW='60vw'>
+      <Stack
+        spacing={8}
+        mx='auto'
+        maxW='lg'
+        py={2}
+        px={2}
+        minW='50vw'
+        width={['100%', '100%', '70%']}
+      >
         <Stack
           align='center'
           display='flex'

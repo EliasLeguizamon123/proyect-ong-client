@@ -28,7 +28,7 @@ import ChakraInput from '../components/ChakraInput'
 import DropImage from '../components/DropImage'
 
 import { sendRequest } from '../utils/sendRequest'
-import { alertError, alertSuccess } from '../utils/alerts'
+import { alertError, alertSuccess, alertConfirm } from '../utils/alerts'
 import authentication from '../utils/authentication'
 
 const FormSchema = Yup.object().shape({
@@ -121,10 +121,16 @@ const MyProfile = () => {
 
   const handleDelete = async () => {
     try {
-      await sendRequest('delete', `/users/${userId}`)
-      dispatch(logout())
-      await alertSuccess('La cuenta se borró exitosamente')
-      history.push('/')
+      await alertConfirm(
+        'Estas seguro?',
+        'Esta acción no tiene vuelta atras',
+        async () => {
+          await sendRequest('delete', `/users/${userId}`)
+          dispatch(logout())
+          await alertSuccess('La cuenta se borró exitosamente')
+          history.push('/')
+        }
+      )
     } catch (error) {
       alertError('Algo salió mal', error.message)
     }
@@ -137,7 +143,7 @@ const MyProfile = () => {
       justify='center'
       bg={useColorModeValue('gray.50', 'gray.800')}
     >
-      <Stack spacing={8} mx='auto' maxW='lg' py={12} px={6} minW='60vw'>
+      <Stack spacing={8} mx='auto' maxW='lg' py={12} px={6} minW='50vw'>
         <Stack align='center'>
           <Heading fontSize='4xl'>Mi perfil</Heading>
         </Stack>

@@ -1,48 +1,44 @@
-import React from 'react'
-import { useState, useEffect } from 'react'
-import { useParams, useHistory } from 'react-router-dom'
-import DropImage from '../../components/DropImage'
-import { Formik, Form } from 'formik'
-import { FormSchema } from './testimonialsValidationSchema'
-import { uploadFile } from '../../utils/AS3'
+import React, { useState, useEffect } from 'react'
 import {
-  Flex,
-  useColorModeValue,
-  Stack,
-  Heading,
   Box,
+  Flex,
+  Heading,
+  IconButton,
   Input,
-  IconButton
+  Stack,
+  useColorModeValue,
 } from '@chakra-ui/react'
+import { Form, Formik } from 'formik'
 import ChakraInput from '../ChakraInput'
-import ChakraInputCKEditor from '../ChakraInputCKEditor'
-import { alertError, alertSuccess } from '../../utils/alerts'
 import { sendRequest } from '../../utils/sendRequest'
+import { useParams } from 'react-router-dom'
+import { MembersFormSchema } from '../Members/MembersFormSchema'
+import { uploadFile } from '../../utils/AS3'
+import { alertError, alertSuccess } from '../../utils/alerts'
+import DropImage from '../DropImage'
+import { useHistory } from 'react-router-dom'
 import { CloseIcon } from '@chakra-ui/icons'
 
-const TestimonialsForm = () => {
+const MembersForm = () => {
   const [isUpdate, setIsUpdate] = useState(false)
   const [iniValues, setIniValues] = useState({
     name: '',
     image: '',
-    content: '',
   })
   const { id } = useParams()
   const history = useHistory()
 
   useEffect(() => {
     if (id) {
-      async function fetchData () {
-        const response = await sendRequest('get', `/testimonials/${id}`)
-
-        if (response && response.id) {
-          const obTestimony = {
-            name: response.name || '',
-            image: response.image || '',
-            content: response.content || '',
+      const fetchData = async () => {
+        const res = await sendRequest('get', `/members/${id}`)
+        if (res && res.id) {
+          const obNew = {
+            name: res.name,
+            image: res.image,
           }
           // Pass data to inputs
-          setIniValues(obTestimony)
+          setIniValues(obNew)
           setIsUpdate(true)
         } else setIsUpdate(false)
       }
@@ -53,11 +49,20 @@ const TestimonialsForm = () => {
 
   const handleSubmit = async values => {
     if (isUpdate) {
-      await sendRequest('put', `/testimonials/${id}`, { ...values })
-      await alertSuccess('La información se actualizó exitosamente')
-      history.replace('/backoffice')
+      try {
+        await sendRequest('put', `/members/${id}`, { ...values })
+        await alertSuccess('Exito', 'El miembro fue actualizado')
+        history.goBack()
+      } catch (error) {
+        alertError('Error', error.message)
+      }
     } else {
-      await alertError('Error al modificar el testimonio')
+      try {
+        await sendRequest('post', `/members`, { ...values })
+        alertSuccess('Exito', 'El miembro fue creado con éxito')
+      } catch (error) {
+        alertError('Error', error.message)
+      }
     }
   }
 
@@ -83,7 +88,7 @@ const TestimonialsForm = () => {
           flexDir='row'
           justifyContent='space-between'
         >
-          <Heading fontSize='4xl'>Testiomonios</Heading>
+          <Heading fontSize='4xl'>Miembros</Heading>
           <IconButton
             icon={<CloseIcon />}
             colorScheme='red'
@@ -91,43 +96,45 @@ const TestimonialsForm = () => {
             onClick={() => history.goBack()}
           />
         </Stack>
+
         <Box
           rounded='lg'
           bg={useColorModeValue('white', 'gray.700')}
           boxShadow='lg'
-          p={[3, 5, 5, 8, 8]}
+          p={8}
         >
           <Formik
-            enableReinitialize={true}
+            enableReinitialize
             initialValues={iniValues}
-            validationSchema={FormSchema}
+            validationSchema={MembersFormSchema}
             onSubmit={handleSubmit}
           >
             {props => (
               <Form>
                 <ChakraInput name='name' type='text' label='Nombre' />
                 <DropImage
-                  name='image'
-                  image={iniValues.image}
                   onDrop={async file => {
                     const res = await uploadFile(file[0])
+
                     props.setFieldValue('image', res.location)
                     props.initialValues.image = res.location
                   }}
+                  name='image'
+                  image={iniValues.image}
                 />
-                <ChakraInputCKEditor name='content' label='Contenido' />
-
-                <Input
-                  type='submit'
-                  bg='blue.400'
-                  color='white'
-                  width='100%'
-                  marginTop='10px'
-                  _hover={{
-                    bg: 'blue.500',
-                  }}
-                  value={isUpdate ? 'Actualiza testimonio' : 'Crea testimonio'}
-                />
+                <Box>
+                  <Input
+                    type='submit'
+                    bg='blue.400'
+                    color='white'
+                    width='100%'
+                    marginTop='10px'
+                    _hover={{
+                      bg: 'blue.500',
+                    }}
+                    value={isUpdate ? 'Actualiza Miembro' : 'Crea Miembro'}
+                  />
+                </Box>
               </Form>
             )}
           </Formik>
@@ -137,4 +144,4 @@ const TestimonialsForm = () => {
   )
 }
 
-export default TestimonialsForm
+export default MembersForm
