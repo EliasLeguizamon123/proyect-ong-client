@@ -23,13 +23,6 @@ import { CloseIcon } from '@chakra-ui/icons'
 import DropImage from '../DropImage'
 import ChakraSelect from '../ChakraSelect'
 
-const iniValues = {
-  imageUrl: '',
-  text: '',
-  order: '',
-  organizationId: '',
-}
-
 const SliderForm = () => {
   const [isUpdate, setIsUpdate] = useState(false)
   const [iniValues, setIniValues] = useState({

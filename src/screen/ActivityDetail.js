@@ -4,7 +4,6 @@ import {
   Image,
   Stack,
   Box,
-  useColorModeValue,
   IconButton,
 } from '@chakra-ui/react'
 import React, { useEffect, useState } from 'react'
