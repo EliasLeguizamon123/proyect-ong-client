@@ -209,7 +209,6 @@ const Header = ({
               activeOnlyWhenExact={true}
               to='/'
               label="Home"
-              activeTextColor={activeTextColor}
             />
             {itemsNav}
             <hr />{!isAuth ? userNav : null}
@@ -219,7 +218,7 @@ const Header = ({
     </Stack>
   )
 }
-function ActiveLink ({ activeOnlyWhenExact, to, label, activeTextColor }) {
+function ActiveLink ({ activeOnlyWhenExact, to, label }) {
   let activeMatch = useRouteMatch({
     path: to,
     exact: activeOnlyWhenExact,
@@ -227,7 +226,7 @@ function ActiveLink ({ activeOnlyWhenExact, to, label, activeTextColor }) {
   if (activeMatch) {
     return (
       <Link to={to}>
-        <Button variant='ghost' my={3} w='100%' color={activeTextColor}>
+        <Button variant='ghost' my={3} w='100%' color={colorMode === 'light' ? "primary" : "secondary"}>
           {label}
         </Button>
       </Link>
