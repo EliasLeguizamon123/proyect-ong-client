@@ -10,9 +10,6 @@ import {
   useColorModeValue,
   Stack,
   Box,
-  FormControl,
-  FormLabel,
-  Select,
   IconButton,
   Heading,
 } from '@chakra-ui/react'

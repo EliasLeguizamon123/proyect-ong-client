@@ -44,7 +44,7 @@ const Header = ({
   const userData = useSelector(state => state.user.userData)
   const isAuth = useSelector(state => state.user.authenticated)
   const profileImage = useSelector(state => state.user.userData.image)
-  const { colorMode, toggleColorMode } = useColorMode()
+  
 
   let itemsNav = webLinks.map((link, index) => (
     <ActiveLink
@@ -72,7 +72,7 @@ const Header = ({
     dispatch(logout())
     history.push('/')
   }
-
+  const { colorMode, toggleColorMode } = useColorMode()
   return (
     <Stack>
       <Flex>
@@ -209,7 +209,6 @@ const Header = ({
               activeOnlyWhenExact={true}
               to='/'
               label="Home"
-              activeTextColor={activeTextColor}
             />
             {itemsNav}
             <hr />{!isAuth ? userNav : null}
@@ -219,7 +218,8 @@ const Header = ({
     </Stack>
   )
 }
-function ActiveLink ({ activeOnlyWhenExact, to, label, activeTextColor }) {
+function ActiveLink ({ activeOnlyWhenExact, to, label }) {
+  const { colorMode } = useColorMode()
   let activeMatch = useRouteMatch({
     path: to,
     exact: activeOnlyWhenExact,
@@ -227,7 +227,7 @@ function ActiveLink ({ activeOnlyWhenExact, to, label, activeTextColor }) {
   if (activeMatch) {
     return (
       <Link to={to}>
-        <Button variant='ghost' my={3} w='100%' color={activeTextColor}>
+        <Button variant='ghost' my={3} w='100%' color={colorMode === 'light' ? "primary" : "secondary"}>
           {label}
         </Button>
       </Link>

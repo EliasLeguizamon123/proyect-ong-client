@@ -12,7 +12,7 @@ import {
   Heading,
   Box,
   Input,
-  IconButton
+  IconButton,
 } from '@chakra-ui/react'
 import ChakraInput from '../ChakraInput'
 import ChakraInputCKEditor from '../ChakraInputCKEditor'
@@ -53,11 +53,21 @@ const TestimonialsForm = () => {
 
   const handleSubmit = async values => {
     if (isUpdate) {
-      await sendRequest('put', `/testimonials/${id}`, { ...values })
-      await alertSuccess('La información se actualizó exitosamente')
-      history.replace('/backoffice')
+      try {
+        await sendRequest('put', `/testimonials/${id}`, { ...values })
+        await alertSuccess('El testimonio se actualizó exitosamente')
+        history.goBack()
+      } catch (error) {
+        await alertError('Error al modificar el testimonio')
+      }
     } else {
-      await alertError('Error al modificar el testimonio')
+      try {
+        await sendRequest('post', `/testimonials/`, { ...values })
+        await alertSuccess('El testimonio se creó exitosamente')
+        history.goBack()
+      } catch (error) {
+        await alertError('Error al crear el testimonio')
+      }
     }
   }
 

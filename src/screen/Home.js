@@ -24,7 +24,7 @@ export default function Home () {
       }
     })
   const getTestimonies = () =>
-    sendRequest('GET', '/testimonials').then((res) => {
+    sendRequest('GET', '/testimonials').then(res => {
       if (res) {
         const newArray = res.rows.slice(0, 4)
         setTestimonies(newArray)
@@ -39,22 +39,22 @@ export default function Home () {
   return (
     <div>
       <SlideShow />
-      <Heading fontSize="38px" align="center" my="10px">
+      <Heading fontSize='38px' align='center' my='10px'>
         {welcome}
       </Heading>
       {news && (
-        <Text fontSize="25px" align="center" my="20px">
+        <Text fontSize='25px' align='center' my='20px'>
           Últimas novedades
         </Text>
       )}
       {news && (
         <SimpleGrid
           columns={{ sm: 1, md: 2, lg: 4 }}
-          justifyContent="center"
-          alignItems="center"
-          direction="row"
+          justifyContent='center'
+          alignItems='center'
+          direction='row'
         >
-          {news.map((neew) => (
+          {news.map(neew => (
             <Link key={neew.id} to={`/novedades/${neew.id}`}>
               <NewsCardBox title={neew.name} IMAGE={neew.image} />
             </Link>
@@ -63,21 +63,23 @@ export default function Home () {
       )}
 
       {testimonies && (
-        <Text fontSize="25px" align="center" my="20px">
+        <Text fontSize='25px' align='center' my='20px'>
           Últimos Testimonios
         </Text>
       )}
       {testimonies && (
         <SimpleGrid
           columns={{ sm: 1, md: 2, lg: 4 }}
-          justifyContent="center"
-          alignItems="center"
-          direction="row"
+          justifyContent='center'
+          alignItems='center'
+          direction='row'
         >
-          {testimonies.map((testimony) => (
-            <Link key={testimony.id} to={`/novedades/${testimony.id}`}>
-              <NewsCardBox title={testimony.name} IMAGE={testimony.image} />
-            </Link>
+          {testimonies.map(testimony => (
+            <NewsCardBox
+              key={testimony.id}
+              title={testimony.name}
+              IMAGE={testimony.image}
+            />
           ))}
         </SimpleGrid>
       )}

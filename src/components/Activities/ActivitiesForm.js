@@ -18,7 +18,7 @@ import ChakraInput from '../ChakraInput'
 import ChakraInputCKEditor from '../ChakraInputCKEditor'
 import { uploadFile } from '../../utils/AS3'
 import { sendRequest } from '../../utils/sendRequest'
-import { alertSuccess } from '../../utils/alerts'
+import { alertSuccess, alertError } from '../../utils/alerts'
 import { CloseIcon } from '@chakra-ui/icons'
 import DropImage from '../DropImage'
 
