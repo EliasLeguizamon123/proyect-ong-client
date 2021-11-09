@@ -85,6 +85,7 @@ const NewsForm = () => {
       try {
         await sendRequest('post', `/news`, { ...values })
         alertSuccess('Exito', 'La novedad fue creada')
+        history.goBack()
       } catch (error) {
         alertError('Error', error.message)
       }
